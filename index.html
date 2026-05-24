@@ -217,21 +217,21 @@
     .hero .sl:nth-child(16){stroke:rgba(0,229,160,.10);stroke-width:.9;animation-delay:1.82s}
     /* road */
     .hero .layer-road{z-index:3;background:linear-gradient(to top,rgba(4,4,4,1) 0%,rgba(8,8,8,.85) 18%,rgba(8,8,8,.4) 38%,transparent 60%)}
-    /* hero edge vignette */
-    .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,.9) 0%,transparent 30%),linear-gradient(to top,rgba(8,8,8,.7) 0%,transparent 35%),linear-gradient(to right,rgba(8,8,8,.95) 0%,transparent 25%),linear-gradient(to left,rgba(8,8,8,.98) 0%,transparent 20%);z-index:8;pointer-events:none}
+    /* hero edge vignette — lighter at bottom so car shows through */
+    .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,.88) 0%,rgba(8,8,8,.5) 30%,rgba(8,8,8,.18) 55%,rgba(8,8,8,.25) 80%,rgba(8,8,8,.55) 100%),linear-gradient(to right,rgba(8,8,8,.92) 0%,transparent 22%),linear-gradient(to left,rgba(8,8,8,.95) 0%,transparent 18%);z-index:8;pointer-events:none}
     /* car */
     .hero .layer-car{z-index:4;will-change:transform;opacity:0;transition:opacity 1.1s cubic-bezier(.22,1,.36,1)}
     .hero .layer-car.in{opacity:1}
     .hero .car-container{position:absolute;inset:0;overflow:hidden}
-    .hero .car-container::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 45% 55% at 40% 60%,rgba(8,8,8,0) 0%,rgba(8,8,8,0) 25%,rgba(8,8,8,.6) 55%,rgba(8,8,8,.92) 80%,rgba(8,8,8,.98) 100%);z-index:2;pointer-events:none}
-    .hero .car-img{width:100%;height:100%;object-fit:cover;object-position:35% 60%;display:block;filter:brightness(.35) saturate(1.4);transform:scale(1.15);transform-origin:35% 60%}
-    .hero .car-color-grade{position:absolute;bottom:25%;left:10%;width:50%;height:40%;background:radial-gradient(ellipse at 40% 70%,rgba(100,220,0,.15),transparent 65%);mix-blend-mode:color-dodge;pointer-events:none;z-index:6}
+    .hero .car-container::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 50% at 40% 58%,rgba(8,8,8,0) 0%,rgba(8,8,8,0) 20%,rgba(8,8,8,.35) 50%,rgba(8,8,8,.7) 75%,rgba(8,8,8,.88) 100%);z-index:2;pointer-events:none}
+    .hero .car-img{width:100%;height:100%;object-fit:cover;object-position:38% 52%;display:block;filter:brightness(.65) saturate(1.45) contrast(1.08);transform:scale(1.15);transform-origin:38% 52%}
+    .hero .car-color-grade{position:absolute;bottom:0;left:50%;transform:translateX(-60%);width:60%;height:55%;background:radial-gradient(ellipse at 40% 75%,rgba(120,230,0,.22),rgba(80,200,0,.1) 40%,transparent 70%);mix-blend-mode:screen;pointer-events:none;z-index:6}
     .hero .car-underglow{position:absolute;bottom:38%;left:50%;transform:translateX(-60%);width:45%;height:80px;background:radial-gradient(ellipse,rgba(150,255,0,.45) 0%,rgba(100,200,0,.25) 35%,transparent 70%);border-radius:50%;z-index:5;filter:blur(12px);animation:heroUnderglow 3s ease-in-out infinite;pointer-events:none}
     @keyframes heroUnderglow{0%,100%{opacity:.7;transform:translateX(-60%) scaleX(1) scaleY(1)}50%{opacity:1;transform:translateX(-60%) scaleX(1.12) scaleY(1.3)}}
-    @media(min-width:1440px){.hero .car-img{transform:scale(1.25);transform-origin:35% 58%}}
-    @media(min-width:1920px){.hero .car-img{transform:scale(1.4);transform-origin:35% 60%}}
-    @media(max-width:768px){.hero .car-img{object-position:40% 65%;transform:scale(1.05)}.hero .car-container::after{background:radial-gradient(ellipse 70% 65% at 50% 60%,transparent 0%,transparent 30%,rgba(8,8,8,.6) 55%,rgba(8,8,8,.95) 100%)}}
-    @media(min-width:769px) and (max-width:1199px){.hero .car-img{object-position:36% 60%;transform:scale(1.18)}}
+    @media(min-width:1440px){.hero .car-img{transform:scale(1.25);transform-origin:38% 50%;object-position:38% 50%}}
+    @media(min-width:1920px){.hero .car-img{transform:scale(1.4);transform-origin:38% 52%;object-position:38% 52%}}
+    @media(max-width:768px){.hero .car-img{object-position:32% 60%;transform:scale(1.05)}.hero .car-container::after{background:radial-gradient(ellipse 70% 60% at 50% 58%,rgba(8,8,8,0) 0%,rgba(8,8,8,0) 20%,rgba(8,8,8,.4) 50%,rgba(8,8,8,.88) 100%)}}
+    @media(min-width:769px) and (max-width:1199px){.hero .car-img{object-position:35% 55%;transform:scale(1.18)}}
     /* scanlines */
     .hero .layer-scanlines{z-index:6;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,.07) 3px,rgba(0,0,0,.07) 4px);opacity:.6}
     /* particles */
@@ -563,6 +563,29 @@
     .proof-author{font-family:var(--ff-d);font-size:.8rem;letter-spacing:.1em;color:var(--cp);text-transform:uppercase}
     @media(max-width:768px){.proof-cards{grid-template-columns:1fr}}
 
+    /* ── FEATURED STRIP (FIX 5) ── */
+    .featured-strip{background:#0d0d0d;padding:72px 24px}
+    .featured-strip-hdr{max-width:1200px;margin:0 auto 32px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .featured-strip-hdr .eyebrow{margin-bottom:6px}
+    .featured-strip-title{font-family:var(--ff-d);font-size:clamp(1.6rem,3.5vw,2.6rem);text-transform:uppercase;letter-spacing:.04em;color:var(--txt);margin:0}
+    .featured-see-all{font-family:var(--ff-d);font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cp);border:1px solid rgba(200,245,0,.35);padding:8px 20px;border-radius:100px;transition:background .2s,box-shadow .2s;white-space:nowrap}
+    .featured-see-all:hover{background:rgba(200,245,0,.1);box-shadow:0 0 14px rgba(200,245,0,.25)}
+    .featured-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    @media(max-width:900px){.featured-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:480px){.featured-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+
+    /* ── SECTION PADDING SAFETY (FIX 3) ── */
+    .vibe,.sgrid-sec,.prod-sec,.spot,.hrs,.email-sec,.insta-cta,.social-proof-strip,.faq-section,.featured-strip{padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right))}
+    @media(max-width:768px){.vibe-in,.hrs-in{padding:0 4px}.vibe-body,.hrs-addr{padding-left:4px}}
+
+    /* ── DARK PRODUCT CARDS — reinforced (FIX 4) ── */
+    .product-card{background:#141414 !important;border:1px solid #1e1e1e !important}
+    .product-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,#c8f500,#00e5a0);z-index:2}
+
+    /* ── VIBE/ABOUT IMAGE SHADOWS (FIX 9) ── */
+    .vibe-img img{border-radius:10px;box-shadow:0 4px 24px rgba(0,0,0,.7),0 0 0 1px #1e1e1e;transition:box-shadow .25s ease}
+    .vibe-img:hover img{box-shadow:0 0 0 2px #c8f500,0 8px 32px rgba(0,0,0,.8)}
+
     /* ── HERO PARTICLE CANVASES ── */
     #heroCanvas,#heroInteract{position:absolute;inset:0;width:100%;height:100%}
     #heroCanvas{z-index:2;pointer-events:none}
@@ -634,6 +657,12 @@
     @media(max-width:480px){.clover-modal-inner{padding:24px 18px}}
   </style>
 </head>
+<!--
+  DEVELOPER NOTE: Run via local server for best results.
+  Command:  npx serve . -p 8080
+  OR:       Double-click START-SERVER.bat
+  Then open: http://localhost:8080
+-->
 <body>
 
 <!-- INSTAGRAM BAR — first element on page -->
@@ -683,7 +712,7 @@
       <a href="about.html" class="nav-link">About</a>
       <a href="location.html" class="nav-link">Visit Us</a>
       <a href="faq.html" class="nav-link">FAQ</a>
-      <a href="admin.html" class="nav-link hl">+ Add Listing</a>
+      <a href="admin.html" class="nav-link hl" id="addListingLink">+ Add Listing</a>
     </nav>
     <div class="hdr-actions">
       <button class="icon-btn search-toggle" onclick="toggleSearch()" aria-label="Search">
@@ -771,7 +800,7 @@
     <p class="hero-sub" id="hSub">ON ROUTE 66 · 302 PARK CENTRAL EAST</p>
     <div class="hero-cta-row" id="hCta">
       <a href="#products" class="btn-hero-p">SHOP DROPS</a>
-      <a href="#faq" class="btn-hero-s">OUR STORY</a>
+      <a href="#hrs" class="btn-hero-s">FIND US 📍</a>
     </div>
   </div>
 
@@ -837,6 +866,20 @@
       </div>
     </div>
   </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- FEATURED DROPS STRIP -->
+<section class="featured-strip" aria-label="Featured drops">
+  <div class="featured-strip-hdr">
+    <div>
+      <span class="eyebrow">Just Landed</span>
+      <h2 class="featured-strip-title">Featured Drops</h2>
+    </div>
+    <a href="#products" class="featured-see-all">See All →</a>
+  </div>
+  <div class="featured-grid" id="featuredGrid"></div>
 </section>
 
 <div class="section-divider"></div>
@@ -1628,6 +1671,66 @@ var loopTick=0;
       if (modal && !modal.hidden) closeCloverModal();
     }
   });
+
+  // FIX 6 — hide "+ Add Listing" from public visitors
+  (function() {
+    var link = document.getElementById('addListingLink');
+    if (link) {
+      var isAdmin = sessionStorage.getItem('js_admin');
+      if (!isAdmin) link.style.display = 'none';
+    }
+  })();
+
+  // FIX 5 — featured drops strip
+  (function() {
+    function buildFeaturedGrid(products) {
+      var grid = document.getElementById('featuredGrid');
+      if (!grid) return;
+      var picks = products.filter(function(p) { return (p.stock == null ? 1 : p.stock) > 0; }).slice(0, 4);
+      if (!picks.length) { var sec = grid.closest('section'); if (sec) sec.style.display = 'none'; return; }
+      grid.innerHTML = picks.map(function(p) {
+        var imgSrc = p.image || p.imageUrl || '';
+        var img = imgSrc
+          ? '<img src="' + imgSrc + '" alt="' + p.name + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .3s">'
+          : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;background:#111">👟</div>';
+        var badge = p.badge ? '<span style="position:absolute;top:10px;left:10px;z-index:3;padding:4px 10px;border-radius:20px;font-family:var(--ff-d);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(135deg,#c8f500,#00e5a0);color:#000">' + p.badge.toUpperCase() + '</span>' : '';
+        var price = '$' + (parseFloat(p.price) || 0).toFixed(2);
+        var safeId = String(p.id).replace(/'/g, "\\'");
+        return '<div class="product-card" style="cursor:pointer" onclick="addToCart(\'' + safeId + '\')">' +
+          '<div class="product-img-wrap">' + img + badge +
+          '<div class="product-quick-add"><button class="quick-add-btn" onclick="event.stopPropagation();addToCart(\'' + safeId + '\')">Add to Cart</button></div></div>' +
+          '<div class="product-info"><div class="product-cat">' + (p.category || '') + '</div>' +
+          '<div class="product-name">' + p.name + '</div>' +
+          '<div class="product-bottom"><span class="product-price">' + price + '</span></div></div></div>';
+      }).join('');
+    }
+    var attempts = 0;
+    var poll = setInterval(function() {
+      attempts++;
+      if (window._productsLoaded && window.ALL_PRODUCTS && window.ALL_PRODUCTS.length) {
+        clearInterval(poll);
+        buildFeaturedGrid(window.ALL_PRODUCTS);
+      } else if (attempts > 40) {
+        clearInterval(poll);
+      }
+    }, 250);
+  })();
+
+  // FIX 1 — particle canvas diagnostic
+  (function() {
+    var testCanvas = document.getElementById('heroInteract');
+    if (testCanvas) {
+      console.log('%c✓ Particle canvas found — mouse interactions active', 'color:#c8f500;font-weight:bold');
+    } else {
+      console.warn('✗ Particle canvas NOT found — check hero HTML');
+    }
+    var protocol = window.location.protocol;
+    if (protocol === 'file:') {
+      console.warn('⚠ Running on file:// — start local server for best results: npx serve . -p 8080');
+    } else {
+      console.log('%c✓ Running on server — all features active', 'color:#00e5a0;font-weight:bold');
+    }
+  })();
 </script>
 </body>
 </html>

@@ -95,6 +95,8 @@ function init() {
   }
   buildFilterTabs();
   renderProducts();
+  window.ALL_PRODUCTS = getProducts();
+  window._productsLoaded = true;
   renderInsta();
   updateCartBadge();
   animateStats();
@@ -108,6 +110,8 @@ function init() {
     if (allProducts) {
       buildFilterTabs();
       renderProducts();
+      window.ALL_PRODUCTS = getProducts();
+      window._productsLoaded = true;
       renderLastUpdated();
       setInterval(renderLastUpdated, 60000);
     }
