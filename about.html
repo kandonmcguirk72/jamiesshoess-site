@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — JAMIESSHOESS | Springfield, MO</title>
+  <meta name="description" content="The story behind JAMIESSHOESS — Springfield's premier vintage sneaker and clothing boutique. Built on hustle, rooted in community.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .about-hero-stat {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      padding: 24px 20px; border-radius: var(--r-md); text-align: center;
+    }
+    .about-hero-stat-num {
+      font-family: var(--ff-display); font-size: 36px; font-weight: 800;
+      color: var(--orange); line-height: 1;
+    }
+    .about-hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 6px; letter-spacing: 0.5px; }
+    .about-stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; max-width: 800px; margin: 40px auto 0; }
+    .story-section { background: var(--white); padding: 96px 0; }
+    .story-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .story-text p { font-size: 16px; line-height: 1.8; color: var(--text-mid); margin-bottom: 20px; }
+    .story-text p:first-child { font-size: 18px; line-height: 1.75; color: var(--text); font-weight: 500; }
+    .story-visual { position: sticky; top: 100px; }
+    .story-img-main { width: 100%; aspect-ratio: 3/4; background: var(--ink); border-radius: var(--r-lg); overflow: hidden; position: relative; margin-bottom: 16px; }
+    .story-img-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: rgba(255,255,255,0.25); font-size: 13px; letter-spacing: 1px; }
+    .story-img-placeholder span { font-size: 64px; }
+    .story-img-caption { font-size: 12px; color: var(--text-soft); text-align: center; }
+    .story-img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .story-img-sm { aspect-ratio: 1; background: var(--cream-2); border-radius: var(--r-md); overflow: hidden; position: relative; }
+    .story-img-sm-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 36px; background: var(--cream-2); }
+    .brand-quote-big { background: var(--ink); padding: 80px 24px; text-align: center; }
+    .brand-quote-big blockquote { max-width: 760px; margin: 0 auto; font-family: var(--ff-display); font-size: clamp(24px, 3.5vw, 40px); font-weight: 700; color: white; line-height: 1.3; letter-spacing: -0.3px; }
+    .brand-quote-big blockquote::before { content: '"'; font-size: 80px; color: var(--orange); line-height: 0; vertical-align: -32px; margin-right: 8px; font-family: Georgia, serif; }
+    .brand-quote-big cite { display: block; font-size: 14px; color: rgba(255,255,255,0.35); font-style: normal; margin-top: 24px; letter-spacing: 1px; text-transform: uppercase; }
+    .mission-section { background: var(--cream); padding: 80px 0; }
+    .timeline { max-width: 720px; display: flex; flex-direction: column; gap: 0; }
+    .timeline-item { display: grid; grid-template-columns: 80px 1fr; gap: 24px; padding-bottom: 40px; position: relative; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before { content: ''; position: absolute; left: 39px; top: 32px; bottom: 0; width: 2px; background: var(--border); }
+    .timeline-item:last-child::before { display: none; }
+    .timeline-year { font-family: var(--ff-display); font-size: 13px; font-weight: 800; color: var(--orange); padding-top: 6px; text-align: right; }
+    .timeline-dot { position: absolute; left: 32px; top: 8px; width: 16px; height: 16px; border-radius: 50%; background: var(--orange); border: 3px solid var(--cream); z-index: 1; }
+    .timeline-content { padding-top: 0; }
+    .timeline-content h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .timeline-content p { font-size: 14px; color: var(--text-mid); line-height: 1.7; }
+    @media(max-width:900px) { .story-inner { grid-template-columns: 1fr; } .story-visual { position: static; } .about-stats-row { grid-template-columns: repeat(2,1fr); } }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="header-inner">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
+    <a href="index.html" class="logo">
+      <img src="https://images.squarespace-cdn.com/content/v1/62fbad74b2e83466d4f8bc87/9cd7d415-e20d-43c5-846f-766328bd5a1c/logo.jpg?format=300w" alt="JAMIESSHOESS" class="logo-img">
+      <span class="logo-tag">Sneakers &amp; Vintage · Springfield, MO</span>
+    </a>
+    <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+      <a href="index.html" class="nav-link">Shop</a>
+      <a href="about.html" class="nav-link active">About</a>
+      <a href="location.html" class="nav-link">Visit Us</a>
+      <a href="faq.html" class="nav-link">FAQ</a>
+      <a href="admin.html" class="nav-link highlight">+ Add Listing</a>
+    </nav>
+    <div class="header-actions">
+      <a href="index.html#products" class="btn-primary" style="font-size:13px;padding:10px 20px">Shop Now</a>
+      <button class="icon-btn cart-btn" onclick="toggleCart()" aria-label="Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge" id="cartBadge" aria-label="Cart items">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero" style="padding-bottom:56px">
+  <div class="page-hero-eyebrow">Our Story</div>
+  <h1>Built on Hustle.<br>Rooted in Springfield.</h1>
+  <p>A vintage boutique born from a love of rare finds, streetwear culture, and the belief that shopping secondhand is one of the most powerful choices you can make.</p>
+  <div class="about-stats-row">
+    <div class="about-hero-stat">
+      <div class="about-hero-stat-num">6K+</div>
+      <div class="about-hero-stat-label">Instagram Followers</div>
+    </div>
+    <div class="about-hero-stat">
+      <div class="about-hero-stat-num">100%</div>
+      <div class="about-hero-stat-label">Recommended Rating</div>
+    </div>
+    <div class="about-hero-stat">
+      <div class="about-hero-stat-num">50K+</div>
+      <div class="about-hero-stat-label">Items Resold</div>
+    </div>
+    <div class="about-hero-stat">
+      <div class="about-hero-stat-num">DTN</div>
+      <div class="about-hero-stat-label">Downtown Springfield</div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND QUOTE -->
+<div class="brand-quote-big">
+  <blockquote>
+    In a world of opportunity, it's your obligation to take action and create something for yourself.
+  </blockquote>
+  <cite>— Jamie · Founder, JAMIESSHOESS</cite>
+</div>
+
+<!-- STORY -->
+<section class="story-section">
+  <div class="story-inner">
+    <div class="story-text">
+      <p>JAMIESSHOESS wasn't built from a business plan — it was built from a genuine obsession with finding things that matter. Rare sneakers, vintage tees with real stories, pieces that mass retail will never produce again.</p>
+      <p>What started as a personal passion became something bigger: a curated space in the heart of downtown Springfield where sneakerheads, vintage enthusiasts, and anyone looking for something different can find exactly that.</p>
+      <p>Every single item in the store has been hand-selected. That means no filler, no low-effort inventory. Just pieces worth owning — at prices that make sense for the community we serve.</p>
+      <p>We're also deeply committed to sustainability. The fashion industry is one of the biggest polluters on the planet, and every vintage purchase is a direct action against that. When you shop JAMIESSHOESS, you're not just getting something unique — you're making a choice that matters.</p>
+      <p>We're at 302 Park Central East, Wednesday through Saturday. Come in. Tell us what you're looking for. We'll find it.</p>
+      <a href="location.html" class="btn-dark" style="margin-top:8px">Get Directions →</a>
+    </div>
+    <div class="story-visual">
+      <div class="story-img-main">
+        <img src="https://images.squarespace-cdn.com/content/v1/62fbad74b2e83466d4f8bc87/1769025392066-P7XJRKHLPSGAI1VDMF02/911DF987-D9D3-4530-AEB6-B7DE6E422C63.jpeg" alt="JAMIESSHOESS inventory" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <p class="story-img-caption">302 Park Central East · Downtown Springfield, MO</p>
+      <div class="story-img-grid" style="margin-top:10px">
+        <div class="story-img-sm">
+          <img src="https://images.squarespace-cdn.com/content/v1/62fbad74b2e83466d4f8bc87/1753149401458-JM7FT4UGDGQQ641OHKE5/694048B9-EDAB-4160-A293-B4C3FA6703CD.jpeg" alt="Vintage tees at JAMIESSHOESS" style="width:100%;height:100%;object-fit:cover">
+        </div>
+        <div class="story-img-sm">
+          <img src="https://images.squarespace-cdn.com/content/v1/62fbad74b2e83466d4f8bc87/1737153351329-UDJ7OM6TKE1QZHKFIO4N/A1BB25E7-F661-4053-A3D8-CDC147F3A500.jpeg" alt="JAMIESSHOESS exclusive collab gear" style="width:100%;height:100%;object-fit:cover">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="about-values-section section">
+  <div class="container">
+    <div class="section-label">What We Stand For</div>
+    <div class="section-title">Our Values</div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="v-icon">🔍</div>
+        <h3>Ruthless Curation</h3>
+        <p>Every item earns its place. We don't carry inventory just to fill shelves — only pieces we'd actually wear or collect ourselves.</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon">♻️</div>
+        <h3>Sustainability First</h3>
+        <p>Shopping vintage is one of the most powerful environmental choices you can make. We take that seriously and want our customers to as well.</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon">📍</div>
+        <h3>Community Over Everything</h3>
+        <p>We're a downtown Springfield business. We're here to serve the community that supports us, not just move product. That means fair prices and real relationships.</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon">🏷️</div>
+        <h3>Authenticity</h3>
+        <p>No replicas, no misleading descriptions. Every vintage piece is what we say it is — we do our homework so you don't have to.</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon">💬</div>
+        <h3>Real Talk</h3>
+        <p>We'll tell you honestly if something isn't your size or if we think you can do better. We'd rather build your trust than make a quick sale.</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon">🚀</div>
+        <h3>Always Evolving</h3>
+        <p>New drops every week. New categories. New ways to shop. JAMIESSHOESS is always growing because the culture is always growing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="mission-section">
+  <div class="container">
+    <div class="section-label">The Journey</div>
+    <div class="section-title" style="margin-bottom:40px">How We Got Here</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">Start</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h4>The Obsession Begins</h4>
+          <p>Like most things that become real businesses, it started with a personal obsession — finding rare sneakers and vintage pieces that mainstream retail simply doesn't carry. Every find felt like a win.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">Next</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h4>From Side Hustle to Storefront</h4>
+          <p>What began as personal collecting turned into reselling, then into a real community around curated vintage. The move to 302 Park Central East in downtown Springfield made it official.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">Today</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h4>Springfield's Vintage Authority</h4>
+          <p>Now with 6,000+ Instagram followers, a 100% recommendation rating, and a loyal local community, JAMIESSHOESS is the destination for anyone in Springfield who wants something real.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">Next</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h4>Growing the Vision</h4>
+          <p>More drops. More categories. More ways to engage with the community. The mission is the same — find the best, share it with Springfield, and keep the vintage culture alive.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section style="background:var(--orange);padding:64px 24px;text-align:center">
+  <div style="max-width:600px;margin:0 auto">
+    <div style="font-family:var(--ff-display);font-size:clamp(28px,4vw,44px);font-weight:800;color:white;line-height:1.1;margin-bottom:16px">
+      Come Find Something Rare.
+    </div>
+    <p style="color:rgba(255,255,255,0.75);font-size:16px;margin-bottom:28px">We're open Wed–Thu 12–6pm and Fri–Sat 12–7pm at 302 Park Central East, downtown Springfield.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="index.html#products" class="btn-dark">Browse Current Inventory</a>
+      <a href="location.html" class="btn-outline">Get Directions →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">JAMIESSHOESS</div>
+        <span class="footer-logo-tag">Sneakers &amp; Vintage · Springfield, MO</span>
+        <p class="footer-tagline">Shopping vintage reduces waste &amp; pollution, while giving you a more unique style.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/jamiesshoess" target="_blank" rel="noopener" class="social-btn">Instagram</a>
+          <a href="https://www.facebook.com/p/jamiesshoess-100080011887058/" target="_blank" rel="noopener" class="social-btn">Facebook</a>
+          <a href="https://www.tiktok.com/@jamiesshoess417" target="_blank" rel="noopener" class="social-btn">TikTok</a>
+        </div>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <a href="index.html#products">All Items</a>
+        <a href="index.html#products">Shoes</a>
+        <a href="index.html#products">Clothing</a>
+        <a href="index.html#products">Vintage</a>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <a href="https://maps.google.com/?q=302+Park+Central+East+Springfield+MO" target="_blank" rel="noopener" class="footer-address">302 Park Central East<br>Springfield, MO</a>
+        <p class="hours">Wed–Thu: 12pm–6pm<br>Fri–Sat: 12pm–7pm<br>Sun–Tue: Closed</p>
+        <h4 style="margin-top:20px">Info</h4>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 JAMIESSHOESS · Stay blessed 🙏</p>
+      <p>Made with ♻️ for the planet</p>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+<aside class="cart-sidebar" id="cartSidebar" aria-label="Shopping cart">
+  <div class="sidebar-header">
+    <h3>Your Cart</h3>
+    <button onclick="toggleCart()" class="close-btn" aria-label="Close cart">×</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-footer" id="cartFooter"></div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('header')?.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+function toggleMobileMenu() {
+  const nav = document.getElementById('mainNav');
+  nav?.classList.toggle('open');
+  const btn = document.querySelector('.mobile-menu-btn');
+  if (btn) btn.textContent = nav?.classList.contains('open') ? '×' : '☰';
+}
+</script>
+</body>
+</html>

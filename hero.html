@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JAMIESSHOESS — Springfield's Sneaker Spot</title>
+<link rel="icon" type="image/png" href="images/logo-circle-blue.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --lime:#c8f500;
+  --teal:#00e5a0;
+  --bg:#080808;
+  --font-display:'Boogaloo',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+}
+
+html,body{
+  width:100%;
+  height:100%;
+  background:var(--bg);
+  color:#f0f0f0;
+  font-family:var(--font-body);
+  overflow:hidden;
+}
+
+.hero{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  background:var(--bg);
+}
+
+.layer{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+
+/* === LAYER 1: GHOST TEXT === */
+.layer-ghost{
+  z-index:1;
+  display:flex;
+  flex-wrap:wrap;
+  align-content:flex-start;
+  overflow:hidden;
+  opacity:0;
+  transition:opacity 1.4s ease;
+}
+.layer-ghost.in{opacity:1}
+
+.ghost-word{
+  font-family:var(--font-display);
+  font-size:clamp(3.5rem,9vw,8rem);
+  font-weight:900;
+  letter-spacing:-0.01em;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(200,245,0,0.07);
+  text-stroke:1px rgba(200,245,0,0.07);
+  user-select:none;
+  line-height:1.05;
+  will-change:transform;
+  white-space:nowrap;
+}
+
+/* === LAYER 2: SPEED LINES === */
+.layer-speed{
+  z-index:2;
+  will-change:transform;
+  opacity:0;
+  transition:opacity 0.8s ease;
+}
+.layer-speed.in{opacity:1}
+
+.speed-svg{width:100%;height:100%}
+
+@keyframes speedShoot{
+  0%{stroke-dashoffset:800;opacity:0}
+  20%{opacity:1}
+  80%{opacity:0.6}
+  100%{stroke-dashoffset:0;opacity:0}
+}
+
+.sl{
+  fill:none;
+  stroke-dasharray:800;
+  stroke-dashoffset:800;
+  animation:speedShoot 2.6s ease-in-out infinite;
+}
+.sl:nth-child(1){stroke:rgba(200,245,0,0.18);stroke-width:1.5;animation-delay:0s}
+.sl:nth-child(2){stroke:rgba(0,229,160,0.14);stroke-width:1;animation-delay:0.28s}
+.sl:nth-child(3){stroke:rgba(200,245,0,0.12);stroke-width:1;animation-delay:0.56s}
+.sl:nth-child(4){stroke:rgba(0,229,160,0.10);stroke-width:0.8;animation-delay:0.84s}
+.sl:nth-child(5){stroke:rgba(200,245,0,0.16);stroke-width:1.2;animation-delay:1.12s}
+.sl:nth-child(6){stroke:rgba(0,229,160,0.12);stroke-width:1;animation-delay:1.40s}
+.sl:nth-child(7){stroke:rgba(200,245,0,0.10);stroke-width:0.8;animation-delay:0.14s}
+.sl:nth-child(8){stroke:rgba(0,229,160,0.14);stroke-width:1;animation-delay:0.42s}
+.sl:nth-child(9){stroke:rgba(200,245,0,0.08);stroke-width:0.7;animation-delay:0.70s}
+.sl:nth-child(10){stroke:rgba(0,229,160,0.12);stroke-width:1;animation-delay:0.98s}
+.sl:nth-child(11){stroke:rgba(200,245,0,0.15);stroke-width:1.3;animation-delay:1.26s}
+.sl:nth-child(12){stroke:rgba(0,229,160,0.10);stroke-width:0.9;animation-delay:1.54s}
+.sl:nth-child(13){stroke:rgba(200,245,0,0.09);stroke-width:0.7;animation-delay:0.21s}
+.sl:nth-child(14){stroke:rgba(0,229,160,0.13);stroke-width:1;animation-delay:0.63s}
+.sl:nth-child(15){stroke:rgba(200,245,0,0.11);stroke-width:0.8;animation-delay:1.05s}
+.sl:nth-child(16){stroke:rgba(0,229,160,0.10);stroke-width:0.9;animation-delay:1.82s}
+
+/* === LAYER 3: ROAD === */
+.layer-road{
+  z-index:3;
+  background:
+    linear-gradient(to top,
+      rgba(4,4,4,1) 0%,
+      rgba(8,8,8,0.85) 18%,
+      rgba(8,8,8,0.4) 38%,
+      transparent 60%
+    );
+}
+
+/* === HERO EDGE VIGNETTE === */
+.hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(to bottom, rgba(8,8,8,0.9) 0%, transparent 30%),
+    linear-gradient(to top,    rgba(8,8,8,0.7) 0%, transparent 35%),
+    linear-gradient(to right,  rgba(8,8,8,0.95) 0%, transparent 25%),
+    linear-gradient(to left,   rgba(8,8,8,0.98) 0%, transparent 20%);
+  z-index:8;
+  pointer-events:none;
+}
+
+/* === LAYER 4: CAR / STOREFRONT IMAGE === */
+.layer-car{
+  z-index:4;
+  will-change:transform;
+  opacity:0;
+  transition:opacity 1.1s cubic-bezier(.22,1,.36,1);
+}
+.layer-car.in{opacity:1}
+
+.car-container{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+.car-container::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(
+    ellipse 55% 70% at 52% 58%,
+    transparent 0%,
+    transparent 35%,
+    rgba(8,8,8,0.5) 55%,
+    rgba(8,8,8,0.85) 75%,
+    rgba(8,8,8,0.97) 100%
+  );
+  z-index:2;
+  pointer-events:none;
+}
+.car-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:35% 60%;
+  display:block;
+  filter:saturate(1.5) contrast(1.12) brightness(1.08);
+  transform:scale(1.15);
+  transform-origin:35% 60%;
+}
+.car-color-grade{
+  position:absolute;
+  left:10%;
+  right:30%;
+  top:35%;
+  bottom:5%;
+  background:radial-gradient(
+    ellipse at 40% 65%,
+    rgba(150,230,0,0.18),
+    rgba(100,200,0,0.08) 40%,
+    transparent 70%
+  );
+  mix-blend-mode:color-dodge;
+  pointer-events:none;
+  z-index:3;
+}
+.car-underglow{
+  position:absolute;
+  bottom:38%;
+  left:50%;
+  transform:translateX(-60%);
+  width:45%;
+  height:80px;
+  background:radial-gradient(
+    ellipse,
+    rgba(150,255,0,0.45) 0%,
+    rgba(100,200,0,0.25) 35%,
+    transparent 70%
+  );
+  border-radius:50%;
+  z-index:5;
+  filter:blur(12px);
+  animation:underglow-pulse 3s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes underglow-pulse{
+  0%,100%{opacity:0.7;transform:translateX(-60%) scaleX(1) scaleY(1)}
+  50%{opacity:1;transform:translateX(-60%) scaleX(1.12) scaleY(1.3)}
+}
+
+/* responsive car scaling */
+@media(min-width:1440px){
+  .car-img{transform:scale(1.25);transform-origin:35% 58%}
+}
+@media(min-width:1920px){
+  .car-img{transform:scale(1.4);transform-origin:35% 60%}
+}
+@media(max-width:768px){
+  .car-img{object-position:40% 65%;transform:scale(1.05)}
+  .car-container::after{
+    background:radial-gradient(
+      ellipse 70% 65% at 50% 60%,
+      transparent 0%,
+      transparent 30%,
+      rgba(8,8,8,0.6) 55%,
+      rgba(8,8,8,0.95) 100%
+    );
+  }
+}
+@media(min-width:769px) and (max-width:1199px){
+  .car-img{object-position:36% 60%;transform:scale(1.18)}
+}
+
+/* === LAYER 6: SCANLINES === */
+.layer-scanlines{
+  z-index:6;
+  background:repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.07) 3px,
+    rgba(0,0,0,0.07) 4px
+  );
+  opacity:0.6;
+}
+
+/* === LAYER 7: AMBIENT PARTICLES === */
+.layer-particles{
+  z-index:7;
+  width:100%;
+  height:100%;
+}
+
+/* === LAYER 8: VIGNETTE === */
+.layer-vignette{
+  z-index:8;
+  background:radial-gradient(
+    ellipse 90% 90% at 50% 50%,
+    transparent 35%,
+    rgba(0,0,0,0.55) 100%
+  );
+}
+
+/* === LAYER 9: LOGO === */
+.layer-logo{
+  z-index:9;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:clamp(1.2rem,4vh,2.5rem);
+  will-change:transform;
+  opacity:0;
+  transform:translateY(-28px);
+  transition:opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1);
+}
+.layer-logo.in{opacity:1;transform:translateY(0)}
+
+.logo-img{
+  width:clamp(160px,30vw,380px);
+  height:auto;
+  mix-blend-mode:screen;
+  filter:drop-shadow(0 0 22px rgba(200,245,0,0.45));
+  will-change:transform;
+  display:block;
+}
+
+/* === LAYER 10: TAGLINE + CTA === */
+.layer-content{
+  z-index:10;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end;
+  padding-bottom:clamp(2rem,8vh,5.5rem);
+  text-align:center;
+  gap:1rem;
+  pointer-events:none;
+}
+
+.tagline{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,6.5vw,5rem);
+  line-height:1.02;
+  letter-spacing:0.025em;
+  color:#f0f0f0;
+  text-shadow:0 0 50px rgba(200,245,0,0.25), 0 2px 6px rgba(0,0,0,0.8);
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1);
+}
+.tagline.in{opacity:1;transform:translateY(0)}
+.tagline em{color:var(--lime);font-style:normal}
+
+.sub-tagline{
+  font-family:var(--font-body);
+  font-size:clamp(0.78rem,1.8vw,1rem);
+  color:rgba(240,240,240,0.6);
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 0.8s cubic-bezier(.22,1,.36,1) 0.12s, transform 0.8s cubic-bezier(.22,1,.36,1) 0.12s;
+}
+.sub-tagline.in{opacity:1;transform:translateY(0)}
+
+.cta-row{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+  justify-content:center;
+  pointer-events:all;
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 0.8s cubic-bezier(.22,1,.36,1) 0.28s, transform 0.8s cubic-bezier(.22,1,.36,1) 0.28s;
+}
+.cta-row.in{opacity:1;transform:translateY(0)}
+
+.btn-shop{
+  display:inline-block;
+  font-family:var(--font-display);
+  font-size:clamp(1rem,2vw,1.2rem);
+  letter-spacing:0.1em;
+  padding:0.72em 2.1em;
+  background:var(--lime);
+  color:#080808;
+  text-decoration:none;
+  border-radius:100px;
+  box-shadow:0 0 32px rgba(200,245,0,0.4), 0 4px 14px rgba(0,0,0,0.5);
+  transition:transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+.btn-shop:hover{
+  transform:translateY(-4px) scale(1.05);
+  box-shadow:0 0 55px rgba(200,245,0,0.65), 0 8px 22px rgba(0,0,0,0.5);
+  filter:brightness(1.1);
+}
+.btn-shop:focus-visible{
+  outline:3px solid var(--lime);
+  outline-offset:3px;
+}
+
+.btn-story{
+  display:inline-block;
+  font-family:var(--font-display);
+  font-size:clamp(1rem,2vw,1.2rem);
+  letter-spacing:0.1em;
+  padding:0.72em 2.1em;
+  background:transparent;
+  color:#f0f0f0;
+  text-decoration:none;
+  border:2px solid rgba(240,240,240,0.38);
+  border-radius:100px;
+  transition:transform 0.22s ease, border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+}
+.btn-story:hover{
+  transform:translateY(-4px);
+  border-color:var(--teal);
+  color:var(--teal);
+  background:rgba(0,229,160,0.08);
+}
+.btn-story:focus-visible{
+  outline:3px solid var(--teal);
+  outline-offset:3px;
+}
+
+/* === ROUTE 66 SHIELD === */
+.layer-route66{
+  z-index:11;
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-end;
+  padding:clamp(0.9rem,2.5vh,1.8rem) clamp(0.9rem,2.5vw,2rem);
+  opacity:0;
+  transition:opacity 1s ease 0.6s;
+}
+.layer-route66.in{opacity:1}
+
+.shield{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:clamp(50px,7vw,68px);
+  height:clamp(58px,8vw,78px);
+  background:#080808;
+  border:2px solid rgba(240,240,240,0.72);
+  border-radius:4px 4px 50% 50% / 4px 4px 38% 38%;
+  box-shadow:0 0 18px rgba(200,245,0,0.2), inset 0 0 10px rgba(200,245,0,0.04);
+  gap:0;
+  cursor:default;
+  transition:box-shadow 0.3s;
+}
+.shield:hover{
+  box-shadow:0 0 28px rgba(200,245,0,0.45), inset 0 0 10px rgba(200,245,0,0.08);
+}
+.shield-top,.shield-bot{
+  font-family:var(--font-body);
+  font-size:clamp(0.3rem,0.85vw,0.44rem);
+  letter-spacing:0.14em;
+  font-weight:700;
+  text-transform:uppercase;
+  color:#f0f0f0;
+}
+.shield-top{margin-top:5px}
+.shield-bot{margin-bottom:9px}
+.shield-num{
+  font-family:var(--font-display);
+  font-size:clamp(1.3rem,3.5vw,1.85rem);
+  font-weight:900;
+  line-height:1;
+  color:var(--lime);
+  text-shadow:0 0 12px rgba(200,245,0,0.5);
+}
+
+/* === REDUCED MOTION === */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .layer-ghost,.layer-speed,.layer-car,.layer-logo,
+  .layer-route66,.tagline,.sub-tagline,.cta-row{
+    opacity:1!important;transform:none!important;
+  }
+  .car-underglow{animation:none!important;opacity:0.7!important}
+}
+
+/* === RESPONSIVE === */
+@media(max-width:600px){
+  .layer-content{padding-bottom:clamp(1.5rem,6vh,3rem)}
+  .cta-row{flex-direction:column;align-items:center}
+  .btn-shop,.btn-story{width:min(240px,78vw);text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="hero" id="hero">
+
+  <!-- L1: Ghost text background -->
+  <div class="layer layer-ghost" id="lghost" aria-hidden="true"></div>
+
+  <!-- L2: Speed lines -->
+  <div class="layer layer-speed" id="lspeed" aria-hidden="true">
+    <svg class="speed-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- origin: 720,540 (car center) radiating outward -->
+      <line class="sl" x1="720" y1="540" x2="0"    y2="240"/>
+      <line class="sl" x1="720" y1="540" x2="0"    y2="450"/>
+      <line class="sl" x1="720" y1="540" x2="0"    y2="660"/>
+      <line class="sl" x1="720" y1="540" x2="0"    y2="870"/>
+      <line class="sl" x1="720" y1="540" x2="260"  y2="900"/>
+      <line class="sl" x1="720" y1="540" x2="520"  y2="900"/>
+      <line class="sl" x1="720" y1="540" x2="780"  y2="900"/>
+      <line class="sl" x1="720" y1="540" x2="1040" y2="900"/>
+      <line class="sl" x1="720" y1="540" x2="1300" y2="900"/>
+      <line class="sl" x1="720" y1="540" x2="1440" y2="780"/>
+      <line class="sl" x1="720" y1="540" x2="1440" y2="570"/>
+      <line class="sl" x1="720" y1="540" x2="1440" y2="360"/>
+      <line class="sl" x1="720" y1="540" x2="1440" y2="150"/>
+      <line class="sl" x1="720" y1="540" x2="1200" y2="0"/>
+      <line class="sl" x1="720" y1="540" x2="900"  y2="0"/>
+      <line class="sl" x1="720" y1="540" x2="600"  y2="0"/>
+      <line class="sl" x1="720" y1="540" x2="380"  y2="0"/>
+      <line class="sl" x1="720" y1="540" x2="160"  y2="0"/>
+    </svg>
+  </div>
+
+  <!-- L3: Road gradient -->
+  <div class="layer layer-road" aria-hidden="true"></div>
+
+  <!-- L4: Car / storefront photo -->
+  <div class="layer layer-car" id="lcar">
+    <div class="car-container">
+      <img
+        src="images/storefront.jpg"
+        alt="JAMIESSHOESS — lime green muscle car parked outside the store on Historic Route 66, Springfield MO"
+        class="car-img"
+        width="1920" height="1080"
+        decoding="async"
+      >
+      <div class="car-color-grade" aria-hidden="true"></div>
+    </div>
+    <div class="car-underglow" aria-hidden="true"></div>
+  </div>
+
+  <!-- L6: Scanlines -->
+  <div class="layer layer-scanlines" aria-hidden="true"></div>
+
+  <!-- L7: Ambient floating particles -->
+  <canvas class="layer layer-particles" id="particlesCanvas" aria-hidden="true"></canvas>
+
+  <!-- L8: Radial vignette -->
+  <div class="layer layer-vignette" aria-hidden="true"></div>
+
+  <!-- L9: Graffiti logo -->
+  <div class="layer layer-logo" id="llogo">
+    <img
+      src="images/logo-graffiti.png"
+      alt="JAMIESSHOESS"
+      class="logo-img"
+      width="400" height="160"
+      decoding="async"
+    >
+  </div>
+
+  <!-- L10: Tagline + CTA -->
+  <div class="layer layer-content">
+    <h1 class="tagline" id="tagline">FRESH KICKS.<br><em>VINTAGE VIBES.</em></h1>
+    <p class="sub-tagline" id="subtag">Springfield's #1 Sneaker Spot &nbsp;·&nbsp; Historic Route 66</p>
+    <div class="cta-row" id="ctarow">
+      <a href="index.html" class="btn-shop">SHOP DROPS</a>
+      <a href="index.html#about" class="btn-story">OUR STORY</a>
+    </div>
+  </div>
+
+  <!-- Route 66 shield -->
+  <div class="layer layer-route66" id="lroute" aria-label="Historic Route 66">
+    <div class="shield" role="img" aria-label="Historic Route 66 shield">
+      <span class="shield-top">HISTORIC</span>
+      <span class="shield-num">66</span>
+      <span class="shield-bot">ROUTE</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+'use strict';
+
+var noMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ---- GHOST TEXT ---- */
+var ghostEl = document.getElementById('lghost');
+for(var g=0; g<48; g++){
+  var sp = document.createElement('span');
+  sp.className = 'ghost-word';
+  sp.setAttribute('aria-hidden','true');
+  sp.textContent = ' JAMIESSHOESS ';
+  ghostEl.appendChild(sp);
+}
+
+/* ---- ENTRANCE SEQUENCE ---- */
+var sequence = [
+  {id:'lghost',   delay:0},
+  {id:'lspeed',   delay:220},
+  {id:'lcar',     delay:450},
+  {id:'llogo',    delay:780},
+  {id:'tagline',  delay:1020},
+  {id:'subtag',   delay:1160},
+  {id:'ctarow',   delay:1340},
+  {id:'lroute',   delay:1600},
+];
+
+sequence.forEach(function(s){
+  var el = document.getElementById(s.id);
+  if(!el) return;
+  if(noMotion){ el.classList.add('in'); return; }
+  setTimeout(function(){ el.classList.add('in'); }, s.delay);
+});
+
+/* ---- PARALLAX ---- */
+if(!noMotion){
+  var carEl    = document.getElementById('lcar');
+  var logoEl   = document.getElementById('llogo');
+  var speedEl  = document.getElementById('lspeed');
+  var ghostEl2 = document.getElementById('lghost');
+
+  var tx=0, ty=0; // lerp targets
+  var cx=0, cy=0; // current values
+  var mouseActive = false;
+  var entranceDone = false;
+
+  setTimeout(function(){ entranceDone = true; }, 1700);
+
+  function lerp(a,b,t){ return a+(b-a)*t; }
+
+  var rafTick = null;
+  function tick(){
+    cx = lerp(cx, tx, 0.055);
+    cy = lerp(cy, ty, 0.055);
+
+    if(entranceDone){
+      ghostEl2.style.transform  = 'translate('+(-cx*14)+'px,'+(-cy*9)+'px)';
+      speedEl.style.transform   = 'translate('+(cx*6)+'px,'+(cy*4)+'px)';
+      carEl.style.transform     = 'translate('+(cx*20)+'px,'+(cy*12)+'px)';
+      logoEl.style.transform    = 'translate('+(cx*9)+'px,'+(cy*6)+'px)';
+    }
+    rafTick = requestAnimationFrame(tick);
+  }
+  rafTick = requestAnimationFrame(tick);
+
+  var mousePending = false;
+  document.addEventListener('mousemove', function(e){
+    if(mousePending) return;
+    mousePending = true;
+    requestAnimationFrame(function(){
+      tx = ((e.clientX/window.innerWidth)  - 0.5) * 2;
+      ty = ((e.clientY/window.innerHeight) - 0.5) * 2;
+      mousePending = false;
+    });
+  });
+
+  /* touch parallax */
+  document.addEventListener('touchmove', function(e){
+    var t = e.touches[0];
+    tx = ((t.clientX/window.innerWidth)  - 0.5) * 2;
+    ty = ((t.clientY/window.innerHeight) - 0.5) * 2;
+  }, {passive:true});
+}
+
+/* ---- AMBIENT PARTICLES CANVAS ---- */
+var pCanvas = document.getElementById('particlesCanvas');
+var pctx    = pCanvas.getContext('2d');
+var aParts  = [];
+
+function resizeP(){
+  pCanvas.width  = window.innerWidth;
+  pCanvas.height = window.innerHeight;
+}
+resizeP();
+
+function makeAmbient(){
+  return {
+    x:     Math.random()*window.innerWidth,
+    y:     window.innerHeight + 4,
+    vx:    (Math.random()-0.5)*0.25,
+    vy:    -(0.12 + Math.random()*0.45),
+    size:  0.5 + Math.random()*1.6,
+    alpha: 0.12 + Math.random()*0.5,
+    lime:  Math.random() > 0.68,
+  };
+}
+
+for(var pi=0; pi<65; pi++){
+  var ap = makeAmbient();
+  ap.y = Math.random()*window.innerHeight; // scatter initial positions
+  aParts.push(ap);
+}
+
+function drawParticles(){
+  pctx.clearRect(0,0,pCanvas.width,pCanvas.height);
+  for(var i=0; i<aParts.length; i++){
+    var p = aParts[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    if(p.y < -5){
+      aParts[i] = makeAmbient();
+      continue;
+    }
+    pctx.globalAlpha = p.alpha;
+    pctx.fillStyle   = p.lime ? '#c8f500' : '#00e5a0';
+    pctx.beginPath();
+    pctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+    pctx.fill();
+  }
+  pctx.globalAlpha = 1;
+}
+
+/* ---- MAIN ANIMATION LOOP ---- */
+function mainLoop(){
+  drawParticles();
+  requestAnimationFrame(mainLoop);
+}
+requestAnimationFrame(mainLoop);
+
+/* ---- RESIZE ---- */
+window.addEventListener('resize', function(){
+  resizeP();
+});
+
+})();
+</script>
+</body>
+</html>

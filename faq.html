@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ &amp; Contact — JAMIESSHOESS | Springfield, MO</title>
+  <meta name="description" content="Frequently asked questions about JAMIESSHOESS — vintage authentication, sizing, returns, pickup, and more. Get in touch with us directly.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .faq-section { background: var(--white); padding: 80px 0; }
+    .faq-layout { display: grid; grid-template-columns: 1fr 380px; gap: 64px; align-items: start; }
+    .faq-category { margin-bottom: 40px; }
+    .faq-category-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 12px; padding-bottom: 10px;
+      border-bottom: 2px solid var(--orange);
+    }
+    .contact-card {
+      background: var(--ink); border-radius: var(--r-lg); padding: 32px;
+      position: sticky; top: 100px;
+    }
+    .contact-card h3 { font-family: var(--ff-display); font-size: 22px; font-weight: 800; color: white; margin-bottom: 8px; }
+    .contact-card p { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 24px; line-height: 1.6; }
+    .contact-channel {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px; border-radius: var(--r-sm);
+      background: rgba(255,255,255,0.06); margin-bottom: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.2s;
+    }
+    .contact-channel:hover { background: rgba(255,255,255,0.1); }
+    .contact-channel .ch-icon { font-size: 22px; flex-shrink: 0; }
+    .contact-channel .ch-label { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: rgba(255,255,255,0.4); display: block; margin-bottom: 2px; }
+    .contact-channel .ch-val { font-size: 14px; font-weight: 600; color: white; }
+    .contact-divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 20px 0; }
+    .contact-form-card { background: var(--cream); border-radius: var(--r-lg); padding: 32px; margin-top: 20px; }
+    .contact-form-card h3 { font-family: var(--ff-display); font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .contact-form-card p { font-size: 14px; color: var(--text-soft); margin-bottom: 20px; }
+    @media(max-width:900px) { .faq-layout { grid-template-columns: 1fr; } .contact-card { position: static; } }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="header-inner">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
+    <a href="index.html" class="logo">
+      <img src="https://images.squarespace-cdn.com/content/v1/62fbad74b2e83466d4f8bc87/9cd7d415-e20d-43c5-846f-766328bd5a1c/logo.jpg?format=300w" alt="JAMIESSHOESS" class="logo-img">
+      <span class="logo-tag">Sneakers &amp; Vintage · Springfield, MO</span>
+    </a>
+    <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+      <a href="index.html" class="nav-link">Shop</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="location.html" class="nav-link">Visit Us</a>
+      <a href="faq.html" class="nav-link active">FAQ</a>
+      <a href="admin.html" class="nav-link highlight">+ Add Listing</a>
+    </nav>
+    <div class="header-actions">
+      <a href="index.html#products" class="btn-primary" style="font-size:13px;padding:10px 20px">Shop Now</a>
+      <button class="icon-btn cart-btn" onclick="toggleCart()" aria-label="Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge" id="cartBadge" aria-label="Cart items">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-eyebrow">FAQ &amp; Contact</div>
+  <h1>We've Got Answers.</h1>
+  <p>Everything you need to know before you shop, visit, or reach out. Can't find what you're looking for? DM us on Instagram.</p>
+</section>
+
+<!-- FAQ + CONTACT -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="faq-layout">
+      <!-- FAQ LIST -->
+      <div>
+
+        <!-- SHOPPING -->
+        <div class="faq-category">
+          <div class="faq-category-title">Shopping</div>
+          <div class="faq-list">
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                How do I buy something?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  Two ways: shop online and select local pickup at checkout, or come into the store at 302 Park Central East during open hours (Wed–Thu 12–6pm, Fri–Sat 12–7pm). We don't ship at this time — all purchases require local pickup.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                Is online payment available, or do I pay in store?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  Right now we do not process online payments. You can browse and add items to your cart online, then pay in store when you pick up. We accept cash, card, and digital payment methods in store.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                Do you ship?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  Not at this time. We offer free local pickup at 302 Park Central East, Springfield MO. If you're not local, DM us on Instagram — we may be able to work something out for specific pieces.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                What's your return policy?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  All sales are final on vintage items. We describe every piece as accurately as possible — condition, size, any flaws. If you have questions about a specific item before buying, reach out. We'd rather answer 10 questions than have an unhappy customer.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                Can I hold an item?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  DM us on Instagram or Facebook and we can discuss holds on a case-by-case basis. With low-stock vintage items, we generally can't hold indefinitely — but reach out and we'll work with you.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- VINTAGE & AUTHENTICITY -->
+        <div class="faq-category">
+          <div class="faq-category-title">Vintage &amp; Authenticity</div>
+          <div class="faq-list">
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                How do I know vintage items are authentic?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  Every piece we carry is verified before listing. We look at construction (stitching, tags, hardware), materials, and provenance. We do not carry replicas or fakes — ever. If there's any doubt about an item, we don't list it.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                What condition are vintage items in?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  We describe condition honestly in every listing. Common vintage grades: <strong>Excellent</strong> (like new or minimal wear), <strong>Good</strong> (normal vintage wear, all details intact), <strong>Fair</strong> (visible wear, still fully wearable). We call out any flaws — holes, stains, major fading — directly in the product description.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                How do vintage sizes run?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  Vintage sizing runs differently from modern sizing — often smaller. A vintage "Large" might fit like a modern "Medium." We list the tag size as well as measurements where available. When in doubt, DM us for measurements of a specific piece before you buy.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                Are your sneakers authentic? How do you verify?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  Yes. We authenticate every pair — checking stitching, tag placement, box labels, sole construction, and overall quality. We're sneakerheads ourselves, and we've been doing this long enough to spot a fake. No replicas. Period.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- VISITING THE STORE -->
+        <div class="faq-category">
+          <div class="faq-category-title">Visiting the Store</div>
+          <div class="faq-list">
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                What are your store hours?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  <strong>Wednesday – Thursday:</strong> 12:00 PM – 6:00 PM<br>
+                  <strong>Friday – Saturday:</strong> 12:00 PM – 7:00 PM<br>
+                  <strong>Sunday – Tuesday:</strong> Closed<br><br>
+                  Hours can occasionally change for events or holidays. Follow us on Instagram <a href="https://www.instagram.com/jamiesshoess" target="_blank" rel="noopener" style="color:var(--orange);font-weight:600">@jamiesshoess</a> for real-time updates.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                Where exactly is the store?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  302 Park Central East, Springfield, MO — right in downtown Springfield near Park Central Square. There's street parking on Park Central East and public lots nearby. See our <a href="location.html" style="color:var(--orange);font-weight:600">full directions page</a> for details.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                Do I need an appointment to visit?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  No appointment needed. Walk in during open hours. If you're looking for something specific or a larger size range, DM us on Instagram first so we can let you know if we have it in stock.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SELLING / CONSIGNMENT -->
+        <div class="faq-category">
+          <div class="faq-category-title">Selling &amp; Trade-In</div>
+          <div class="faq-list">
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                Do you buy vintage items or accept trade-ins?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  We selectively purchase vintage pieces that fit our curation. DM us on Instagram with photos and a description. We'll let you know quickly if it's something we'd be interested in. We don't accept everything — but if it's good, we want it.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                What kind of items do you buy?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">
+                  Primarily: vintage band/sports/character tees, vintage athletic wear, vintage outerwear (Carhartt, Starter, etc.), vintage sneakers, rare streetwear, and interesting vintage accessories. Must be authentic vintage — no reproductions or fast fashion.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONTACT SIDEBAR -->
+      <div id="contact">
+        <div class="contact-card">
+          <h3>Get in Touch</h3>
+          <p>Questions, holds, selling inquiries — we're most responsive on Instagram. Here's every way to reach us.</p>
+
+          <a href="https://www.instagram.com/jamiesshoess" target="_blank" rel="noopener" class="contact-channel">
+            <div class="ch-icon">📸</div>
+            <div>
+              <span class="ch-label">Instagram (Fastest)</span>
+              <span class="ch-val">@jamiesshoess</span>
+            </div>
+          </a>
+
+          <a href="https://www.facebook.com/p/jamiesshoess-100080011887058/" target="_blank" rel="noopener" class="contact-channel">
+            <div class="ch-icon">💬</div>
+            <div>
+              <span class="ch-label">Facebook</span>
+              <span class="ch-val">@jamiesshoess</span>
+            </div>
+          </a>
+
+          <a href="mailto:jamiesshoess@gmail.com" class="contact-channel">
+            <div class="ch-icon">✉️</div>
+            <div>
+              <span class="ch-label">Email</span>
+              <span class="ch-val">jamiesshoess@gmail.com</span>
+            </div>
+          </a>
+
+          <a href="https://www.tiktok.com/@jamiesshoess417" target="_blank" rel="noopener" class="contact-channel">
+            <div class="ch-icon">🎵</div>
+            <div>
+              <span class="ch-label">TikTok</span>
+              <span class="ch-val">@jamiesshoess417</span>
+            </div>
+          </a>
+
+          <hr class="contact-divider">
+
+          <a href="location.html" class="contact-channel">
+            <div class="ch-icon">📍</div>
+            <div>
+              <span class="ch-label">Visit In Person</span>
+              <span class="ch-val">302 Park Central East<br>Springfield, MO</span>
+            </div>
+          </a>
+
+          <div style="margin-top:16px;padding:12px 16px;background:rgba(34,197,94,0.12);border-radius:var(--r-sm);border:1px solid rgba(34,197,94,0.25)">
+            <p style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;margin:0">
+              <strong style="color:rgba(255,255,255,0.85)">Response time:</strong> We typically respond to DMs within a few hours during open days. Instagram DMs are the fastest way to reach us.
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-form-card">
+          <h3>Send a Message</h3>
+          <p>Drop us a note and we'll get back to you.</p>
+          <form class="contact-form" onsubmit="submitContact(event)">
+            <div class="form-group">
+              <label for="cf-name">Your Name</label>
+              <input type="text" id="cf-name" placeholder="First and last name" required>
+            </div>
+            <div class="form-group">
+              <label for="cf-email">Email Address</label>
+              <input type="email" id="cf-email" placeholder="you@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="cf-subject">Subject</label>
+              <select id="cf-subject">
+                <option value="general">General Question</option>
+                <option value="item">Question About an Item</option>
+                <option value="hold">Hold Request</option>
+                <option value="sell">Selling / Trade-In</option>
+                <option value="pickup">Pickup Coordination</option>
+                <option value="other">Something Else</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="cf-msg">Message</label>
+              <textarea id="cf-msg" placeholder="What's on your mind? If you're asking about a specific item, mention the item name..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary full">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">JAMIESSHOESS</div>
+        <span class="footer-logo-tag">Sneakers &amp; Vintage · Springfield, MO</span>
+        <p class="footer-tagline">Shopping vintage reduces waste &amp; pollution, while giving you a more unique style.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/jamiesshoess" target="_blank" rel="noopener" class="social-btn">Instagram</a>
+          <a href="https://www.facebook.com/p/jamiesshoess-100080011887058/" target="_blank" rel="noopener" class="social-btn">Facebook</a>
+          <a href="https://www.tiktok.com/@jamiesshoess417" target="_blank" rel="noopener" class="social-btn">TikTok</a>
+        </div>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <a href="index.html#products">All Items</a>
+        <a href="index.html#products">Shoes</a>
+        <a href="index.html#products">Clothing</a>
+        <a href="index.html#products">Vintage</a>
+      </div>
+      <div>
+        <h4>Info</h4>
+        <a href="about.html">About</a>
+        <a href="location.html">Directions</a>
+        <a href="faq.html">FAQ</a>
+        <p class="hours" style="margin-top:12px">Wed–Thu: 12pm–6pm<br>Fri–Sat: 12pm–7pm</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 JAMIESSHOESS · Stay blessed 🙏</p>
+      <p>Made with ♻️ for the planet</p>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+<aside class="cart-sidebar" id="cartSidebar" aria-label="Shopping cart">
+  <div class="sidebar-header">
+    <h3>Your Cart</h3>
+    <button onclick="toggleCart()" class="close-btn" aria-label="Close cart">×</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-footer" id="cartFooter"></div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('header')?.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+  function toggleMobileMenu() {
+    const nav = document.getElementById('mainNav');
+    nav?.classList.toggle('open');
+    const btn = document.querySelector('.mobile-menu-btn');
+    if (btn) btn.textContent = nav?.classList.contains('open') ? '×' : '☰';
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    document.querySelectorAll('.faq-question').forEach(b => b.setAttribute('aria-expanded','false'));
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded','true');
+    }
+  }
+
+  function submitContact(e) {
+    e.preventDefault();
+    const name = document.getElementById('cf-name').value;
+    alert(`Thanks ${name}! 🙏\n\nWe got your message and will get back to you soon.\n\nFor the fastest response, DM us on Instagram @jamiesshoess.`);
+    e.target.reset();
+  }
+</script>
+</body>
+</html>

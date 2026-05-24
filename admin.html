@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — JAMIESSHOESS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: var(--cream); }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-soft); margin-bottom: 6px; }
+    input[type=text], input[type=number], input[type=url], input[type=email], select, textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid var(--border); border-radius: var(--r-sm);
+      font-size: 14px; outline: none; font-family: var(--ff-body);
+      color: var(--text); background: white; transition: border-color 0.2s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--orange); }
+    textarea { resize: vertical; min-height: 76px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  </style>
+</head>
+<body>
+
+<header id="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="https://images.squarespace-cdn.com/content/v1/62fbad74b2e83466d4f8bc87/9cd7d415-e20d-43c5-846f-766328bd5a1c/logo.jpg?format=300w" alt="JAMIESSHOESS" class="logo-img">
+      <span class="logo-tag">Admin Panel</span>
+    </a>
+    <div class="header-actions">
+      <a href="index.html" class="btn-primary" style="font-size:13px;padding:10px 20px">← View Store</a>
+    </div>
+  </div>
+</header>
+
+<div class="admin-page">
+  <div class="admin-top">
+    <h1>Manage Listings</h1>
+  </div>
+
+  <div class="stats-row" id="statsRow"></div>
+
+  <div class="admin-layout">
+    <!-- FORM -->
+    <div class="panel">
+      <h2 id="formTitle">Add New Item</h2>
+      <input type="hidden" id="editId">
+
+      <div class="form-group">
+        <label>Item Name *</label>
+        <input type="text" id="iName" placeholder="e.g. Vintage NASCAR Tee">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="iCat">
+            <option value="shoes">Shoes</option>
+            <option value="clothing">Clothing</option>
+            <option value="hats">Hats</option>
+            <option value="bags">Bags</option>
+            <option value="accessories">Accessories</option>
+            <option value="kids">Kids</option>
+            <option value="vintage">Vintage Items</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Price *</label>
+          <input type="number" id="iPrice" placeholder="0.00" min="0" step="0.01">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Size</label>
+          <input type="text" id="iSize" placeholder="e.g. 10, L, One Size">
+        </div>
+        <div class="form-group">
+          <label>Stock Count</label>
+          <input type="number" id="iStock" placeholder="e.g. 1" min="0">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Badge</label>
+        <select id="iBadge">
+          <option value="">None</option>
+          <option value="new">New</option>
+          <option value="hot">Hot</option>
+          <option value="vintage">Vintage</option>
+          <option value="rare">Rare</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="iDesc" placeholder="Brief description..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Image URL</label>
+        <input type="url" id="iImage" placeholder="https://..." oninput="previewImg(this)">
+        <img id="imgPreview" class="img-preview" alt="Preview">
+      </div>
+
+      <button class="btn-save" onclick="saveItem()">Add Item</button>
+      <button class="btn-cancel" id="btnCancel" onclick="resetForm()">Cancel Edit</button>
+    </div>
+
+    <!-- LISTINGS -->
+    <div class="panel">
+      <h2>Current Listings <span id="countBadge" style="font-size:16px;color:#999;font-family:Inter,sans-serif;font-weight:400"></span></h2>
+      <div class="listing-list" id="listingList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+<script>
+  const EMOJI = {shoes:'👟',clothing:'👕',hats:'🧢',bags:'👜',accessories:'💍',kids:'🧸',vintage:'🕰️'};
+
+  function renderStats() {
+    const p = getProducts();
+    const total = p.length;
+    const lowStock = p.filter(x => x.stock && x.stock <= 2).length;
+    const avgPrice = total ? (p.reduce((s,x)=>s+parseFloat(x.price),0)/total).toFixed(2) : '0.00';
+    const cats = [...new Set(p.map(x=>x.category))].length;
+    document.getElementById('statsRow').innerHTML = `
+      <div class="stat-box"><div class="stat-box-num">${total}</div><div class="stat-box-label">Total Listings</div></div>
+      <div class="stat-box"><div class="stat-box-num">${cats}</div><div class="stat-box-label">Categories</div></div>
+      <div class="stat-box"><div class="stat-box-num">$${avgPrice}</div><div class="stat-box-label">Avg Price</div></div>
+      <div class="stat-box"><div class="stat-box-num">${lowStock}</div><div class="stat-box-label">Low Stock</div></div>
+    `;
+  }
+
+  function renderListings() {
+    const p = getProducts();
+    const list = document.getElementById('listingList');
+    const count = document.getElementById('countBadge');
+    if (count) count.textContent = `(${p.length})`;
+    if (!p.length) { list.innerHTML = '<div class="empty-admin"><div style="font-size:40px">📦</div><p>No listings yet. Add your first item!</p></div>'; return; }
+    list.innerHTML = p.map(item => `
+      <div class="listing-item">
+        ${item.image
+          ? `<img class="listing-thumb" src="${item.image}" alt="${item.name}" onerror="this.style.display='none';this.nextSibling.style.display='flex'">`
+          : ''}
+        <div class="listing-emoji" style="${item.image?'display:none':''}">${EMOJI[item.category]||'🛍️'}</div>
+        <div class="listing-info">
+          <div class="listing-name">${item.name}</div>
+          <div class="listing-meta">${item.category}${item.size?' · '+item.size:''}
+            ${item.stock ? `· <span class="stock-tag ${item.stock>2?'ok':''}">${item.stock} left</span>` : ''}
+          </div>
+        </div>
+        <div class="listing-price">$${parseFloat(item.price).toFixed(2)}</div>
+        <div class="listing-actions">
+          <button class="btn-edit" onclick="editItem(${item.id})">Edit</button>
+          <button class="btn-del" onclick="delItem(${item.id})">Del</button>
+        </div>
+      </div>
+    `).join('');
+    renderStats();
+  }
+
+  function saveItem() {
+    const name = document.getElementById('iName').value.trim();
+    const price = parseFloat(document.getElementById('iPrice').value);
+    if (!name || isNaN(price) || price < 0) { toast('Name and price are required.'); return; }
+
+    const products = getProducts();
+    const editId = document.getElementById('editId').value;
+
+    const item = {
+      id: editId ? parseInt(editId) : Date.now(),
+      name,
+      category: document.getElementById('iCat').value,
+      price,
+      size: document.getElementById('iSize').value.trim(),
+      stock: parseInt(document.getElementById('iStock').value) || null,
+      badge: document.getElementById('iBadge').value,
+      description: document.getElementById('iDesc').value.trim(),
+      image: document.getElementById('iImage').value.trim(),
+    };
+
+    if (editId) {
+      const idx = products.findIndex(p => p.id === parseInt(editId));
+      if (idx !== -1) products[idx] = item; else products.push(item);
+    } else {
+      products.push(item);
+    }
+
+    localStorage.setItem('js_products', JSON.stringify(products));
+    resetForm();
+    renderListings();
+    toast(editId ? '✓ Item updated!' : '✓ Item added!');
+  }
+
+  function editItem(id) {
+    const p = getProducts().find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('editId').value = p.id;
+    document.getElementById('iName').value = p.name || '';
+    document.getElementById('iCat').value = p.category || 'shoes';
+    document.getElementById('iPrice').value = p.price || '';
+    document.getElementById('iSize').value = p.size || '';
+    document.getElementById('iStock').value = p.stock || '';
+    document.getElementById('iBadge').value = p.badge || '';
+    document.getElementById('iDesc').value = p.description || '';
+    document.getElementById('iImage').value = p.image || '';
+    previewImg({ value: p.image });
+    document.getElementById('formTitle').textContent = 'Edit Item';
+    document.getElementById('btnCancel').style.display = 'block';
+    document.querySelector('.btn-save').textContent = 'Save Changes';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function delItem(id) {
+    if (!confirm('Delete this listing?')) return;
+    const products = getProducts().filter(p => p.id !== id);
+    localStorage.setItem('js_products', JSON.stringify(products));
+    renderListings();
+    toast('Listing deleted.');
+  }
+
+  function resetForm() {
+    ['editId','iName','iPrice','iSize','iStock','iDesc','iImage'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+    document.getElementById('iCat').value = 'shoes';
+    document.getElementById('iBadge').value = '';
+    document.getElementById('imgPreview').style.display = 'none';
+    document.getElementById('formTitle').textContent = 'Add New Item';
+    document.getElementById('btnCancel').style.display = 'none';
+    document.querySelector('.btn-save').textContent = 'Add Item';
+  }
+
+  function previewImg(input) {
+    const p = document.getElementById('imgPreview');
+    if (input.value) { p.src = input.value; p.style.display = 'block'; p.onerror = () => p.style.display = 'none'; }
+    else p.style.display = 'none';
+  }
+
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  renderListings();
+  renderStats();
+</script>
+</body>
+</html>
