@@ -135,22 +135,23 @@
       --font-display:'Boogaloo',sans-serif; --font-body:'DM Sans',sans-serif;
       --text-primary:#f0f0f0; --text-muted:#888;
     }
+    html{scroll-padding-top:150px}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     [hidden]{display:none !important}
-    body{background:var(--dark);color:var(--txt);font-family:var(--ff-b);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    body{background:var(--dark);color:var(--txt);font-family:var(--ff-b);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;margin:0;padding:0}
     a{text-decoration:none;color:inherit}
     img{display:block;max-width:100%}
     button{cursor:pointer;border:none;font-family:inherit;background:none}
     body::before{content:'';display:block;height:3px;background:var(--grad);position:fixed;top:0;left:0;right:0;z-index:2000}
 
     /* ── INSTAGRAM BAR ── */
-    .insta-bar{width:100%;background:linear-gradient(90deg,#c8f500,#00e5a0);text-align:center;padding:10px 16px;font-family:var(--ff-d);font-size:1rem;letter-spacing:.08em;color:#000;font-weight:800;position:relative;z-index:1001}
+    .insta-bar{width:100%;background:linear-gradient(90deg,#c8f500,#00e5a0);text-align:center;padding:10px 16px;font-family:var(--ff-d);font-size:1rem;letter-spacing:.08em;color:#000;font-weight:800;position:relative;z-index:1001;margin:0;display:block}
     .insta-bar a{color:#000;text-decoration:none;font-weight:800}
     .insta-bar a:hover{text-decoration:underline;opacity:.85}
 
     /* ── ANNOUNCE ── */
-    .ann{background:#111;color:rgba(240,240,240,.7);height:36px;overflow:hidden;display:flex;align-items:center;position:relative}
-    .ann-track{display:flex;white-space:nowrap;animation:tick 32s linear infinite;font-size:11.5px;letter-spacing:.8px;text-transform:uppercase}
+    .ann{background:#111;color:rgba(240,240,240,.7);height:36px;overflow:hidden;display:flex;align-items:center;position:relative;z-index:101;margin:0}
+    .ann-track{display:flex;white-space:nowrap;animation:tick 32s linear infinite;font-size:11px;letter-spacing:.8px;text-transform:uppercase}
     .ann-track span{padding:0 40px}
     @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
     .ann-close{position:absolute;right:14px;color:rgba(255,255,255,.3);font-size:18px;padding:4px}
@@ -191,7 +192,7 @@
     /* ghost text */
     .hero .layer-ghost{z-index:1;display:flex;flex-wrap:wrap;align-content:flex-start;overflow:hidden;opacity:0;transition:opacity 1.4s ease}
     .hero .layer-ghost.in{opacity:1}
-    .hero .ghost-word{font-family:var(--ff-d);font-size:clamp(3.5rem,9vw,8rem);font-weight:900;letter-spacing:-.01em;color:transparent;-webkit-text-stroke:1px rgba(200,245,0,.07);text-stroke:1px rgba(200,245,0,.07);user-select:none;line-height:1.05;will-change:transform;white-space:nowrap}
+    .hero .ghost-word{font-family:var(--ff-d);font-size:clamp(3.5rem,9vw,8rem);font-weight:900;letter-spacing:-.01em;color:transparent;-webkit-text-stroke:1px rgba(200,245,0,.025);user-select:none;line-height:1.05;will-change:transform;white-space:nowrap}
     /* speed lines */
     .hero .layer-speed{z-index:2;will-change:transform;opacity:0;transition:opacity .8s ease}
     .hero .layer-speed.in{opacity:1}
@@ -223,14 +224,11 @@
     .hero .layer-car.in{opacity:1}
     .hero .car-container{position:absolute;inset:0;overflow:hidden}
     .hero .car-container::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 50% at 40% 58%,rgba(8,8,8,0) 0%,rgba(8,8,8,0) 20%,rgba(8,8,8,.35) 50%,rgba(8,8,8,.7) 75%,rgba(8,8,8,.88) 100%);z-index:2;pointer-events:none}
-    .hero .car-img{width:100%;height:100%;object-fit:cover;object-position:38% 52%;display:block;filter:brightness(.82) contrast(1.05);transform:scale(1.15);transform-origin:38% 52%}
-    .hero .car-color-grade{position:absolute;bottom:0;left:50%;transform:translateX(-60%);width:60%;height:55%;background:radial-gradient(ellipse at 40% 75%,rgba(120,230,0,.22),rgba(80,200,0,.1) 40%,transparent 70%);mix-blend-mode:screen;opacity:0.03;pointer-events:none;z-index:6}
-    .hero .car-underglow{position:absolute;bottom:38%;left:50%;transform:translateX(-60%);width:45%;height:80px;background:radial-gradient(ellipse,rgba(120,255,0,.22) 0%,rgba(80,200,0,.10) 35%,transparent 70%);border-radius:50%;z-index:5;filter:blur(20px);animation:heroUnderglow 4s ease-in-out infinite;pointer-events:none}
-    @keyframes heroUnderglow{0%,100%{opacity:.5;transform:translateX(-60%) scaleX(1) scaleY(1)}50%{opacity:.8;transform:translateX(-60%) scaleX(1.12) scaleY(1.3)}}
-    @media(min-width:1440px){.hero .car-img{transform:scale(1.25);transform-origin:38% 50%;object-position:38% 50%}}
-    @media(min-width:1920px){.hero .car-img{transform:scale(1.4);transform-origin:38% 52%;object-position:38% 52%}}
-    @media(max-width:768px){.hero .car-img{object-position:32% 60%;transform:scale(1.05)}.hero .car-container::after{background:radial-gradient(ellipse 70% 60% at 50% 58%,rgba(8,8,8,0) 0%,rgba(8,8,8,0) 20%,rgba(8,8,8,.4) 50%,rgba(8,8,8,.88) 100%)}}
-    @media(min-width:769px) and (max-width:1199px){.hero .car-img{object-position:35% 55%;transform:scale(1.18)}}
+    .hero .car-img{width:100%;height:100%;object-fit:cover;object-position:center 50%;display:block;filter:brightness(.82) contrast(1.05);transform:none}
+    .hero .car-color-grade{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60%;height:55%;background:radial-gradient(ellipse at 40% 75%,rgba(120,230,0,.22),rgba(80,200,0,.1) 40%,transparent 70%);mix-blend-mode:screen;opacity:0.03;pointer-events:none;z-index:6}
+    .hero .car-underglow{position:absolute;bottom:38%;left:50%;transform:translateX(-50%);width:45%;height:80px;background:radial-gradient(ellipse,rgba(120,255,0,.22) 0%,rgba(80,200,0,.10) 35%,transparent 70%);border-radius:50%;z-index:5;filter:blur(20px);animation:heroUnderglow 4s ease-in-out infinite;pointer-events:none}
+    @keyframes heroUnderglow{0%,100%{opacity:.5;transform:translateX(-50%) scaleX(1) scaleY(1)}50%{opacity:.8;transform:translateX(-50%) scaleX(1.12) scaleY(1.3)}}
+    @media(max-width:768px){.hero .car-img{object-position:32% 60%}.hero .car-container::after{background:radial-gradient(ellipse 70% 60% at 50% 58%,rgba(8,8,8,0) 0%,rgba(8,8,8,0) 20%,rgba(8,8,8,.4) 50%,rgba(8,8,8,.88) 100%)}}
     /* scanlines */
     .hero .layer-scanlines{z-index:6;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,.07) 3px,rgba(0,0,0,.07) 4px);opacity:.6}
     /* particles */
@@ -242,7 +240,7 @@
     .hero .layer-logo.in{opacity:1;transform:translateY(0)}
     .hero .logo-hero-img{width:clamp(200px,55%,500px);max-width:100%;height:auto;mix-blend-mode:screen;filter:drop-shadow(0 0 30px rgba(200,245,0,.5)) drop-shadow(0 4px 20px rgba(0,0,0,.9));will-change:transform;display:block;margin:0 auto}
     /* content layer — sits BELOW the floating logo layer */
-    .hero .layer-content{z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:clamp(170px,25vh,260px);padding-bottom:0;text-align:center;gap:16px;pointer-events:none;width:100%;overflow:hidden}
+    .hero .layer-content{z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:clamp(110px,16vh,190px);padding-bottom:0;text-align:center;gap:16px;pointer-events:none;width:100%;overflow:hidden}
     .hero .hero-tagline{font-family:var(--ff-d);font-size:clamp(.85rem,2.5vw,1.25rem) !important;line-height:1.45;letter-spacing:.14em;color:#f0f0f0;text-shadow:0 0 30px rgba(200,245,0,.2),0 2px 4px rgba(0,0,0,.8);opacity:0;transform:translateY(20px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);max-width:700px;width:100%;overflow-wrap:break-word;word-break:break-word;padding:0 16px;box-sizing:border-box}
     .hero .hero-tagline.in{opacity:1;transform:translateY(0)}
     .hero .hero-tagline em{color:var(--cp);font-style:normal}
@@ -256,7 +254,7 @@
     .hero .btn-hero-s{display:inline-block;font-family:var(--ff-d);font-size:clamp(1rem,2vw,1.2rem);letter-spacing:.1em;padding:.72em 2.1em;background:transparent;color:#f0f0f0;text-decoration:none;border:2px solid rgba(240,240,240,.38);border-radius:100px;transition:transform .22s ease,border-color .22s ease,color .22s ease,background .22s ease}
     .hero .btn-hero-s:hover{transform:translateY(-4px);border-color:var(--cs);color:var(--cs);background:rgba(0,229,160,.08)}
     /* route 66 */
-    .hero .layer-route66{z-index:11;display:flex;align-items:flex-start;justify-content:flex-end;padding:clamp(.9rem,2.5vh,1.8rem) clamp(.9rem,2.5vw,2rem);opacity:0;transition:opacity 1s ease .6s}
+    .hero .layer-route66{z-index:11;display:flex;align-items:flex-start;justify-content:flex-end;padding:clamp(1.2rem,2.5vh,2rem) clamp(1.2rem,2.5vw,2.2rem);opacity:0;transition:opacity 1s ease .6s}
     .hero .layer-route66.in{opacity:1}
     .hero .shield{display:flex;flex-direction:column;align-items:center;justify-content:center;width:clamp(50px,7vw,68px);height:clamp(58px,8vw,78px);background:#080808;border:2px solid rgba(240,240,240,.72);border-radius:4px 4px 50% 50%/4px 4px 38% 38%;box-shadow:0 0 18px rgba(200,245,0,.2),inset 0 0 10px rgba(200,245,0,.04);gap:0;cursor:default;transition:box-shadow .3s}
     .hero .shield:hover{box-shadow:0 0 28px rgba(200,245,0,.45),inset 0 0 10px rgba(200,245,0,.08)}
