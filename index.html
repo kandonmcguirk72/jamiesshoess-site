@@ -12,10 +12,11 @@
         "@type": "ClothingStore",
         "@id": "https://jamiesshoess.squarespace.com/#business",
         "name": "JAMIESSHOESS Sneakers & Vintage",
+        "alternateName": "jamiesshoess",
         "url": "https://jamiesshoess.squarespace.com",
         "image": "images/storefront.jpg",
         "logo": "images/logo-graffiti.png",
-        "description": "Springfield's premier sneaker boutique and vintage clothing store. Located on Route 66 at 302 Park Central East. Sneakers, vintage tees, rare finds.",
+        "description": "Springfield's premier sneaker boutique and vintage clothing store. Located on Historic Route 66 at 302 Park Central East Downtown Springfield MO. Premium sneakers, vintage tees, rare finds. Wed-Sat only.",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "302 Park Central East",
@@ -29,38 +30,36 @@
           "latitude": 37.2096,
           "longitude": -93.2939
         },
+        "telephone": "+16368666669",
+        "email": "Bailey@jamiesshoess.com",
         "openingHoursSpecification": [
           {
             "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Wednesday", "Thursday"],
+            "dayOfWeek": ["Wednesday","Thursday"],
             "opens": "12:00",
             "closes": "18:00"
           },
           {
             "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Friday", "Saturday"],
+            "dayOfWeek": ["Friday","Saturday"],
             "opens": "12:00",
             "closes": "19:00"
           }
         ],
+        "priceRange": "$$",
         "sameAs": [
           "https://instagram.com/JAMIESSHOESS",
           "https://twitter.com/JAMIESSHOESS",
           "https://youtube.com/JAMIESSHOESS",
-          "https://www.facebook.com/p/jamiesshoess-100080011887058/"
+          "https://www.facebook.com/p/jamiesshoess-100080011887058/",
+          "https://www.tiktok.com/@jamiesshoess417",
+          "https://jamiesshoess.squarespace.com"
         ],
-        "priceRange": "$$",
-        "currenciesAccepted": "USD",
-        "paymentAccepted": "Cash, Credit Card",
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Sneakers and Vintage Clothing",
-          "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Sneakers" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Vintage Clothing" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Hats" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Vintage Items" } }
-          ]
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5.0",
+          "reviewCount": "12",
+          "bestRating": "5"
         }
       },
       {
@@ -655,6 +654,73 @@
     .clover-success .clover-hours{font-size:12px;color:#555;margin-top:4px}
     .clover-divider{border:none;border-top:1px solid rgba(255,255,255,.07);margin:20px 0}
     @media(max-width:480px){.clover-modal-inner{padding:24px 18px}}
+
+    /* ── INSTAGRAM FEED SECTION ── */
+    .insta-feed-section{background:#111;padding:64px 24px 48px}
+    .insta-feed-header{max-width:1200px;margin:0 auto 32px}
+    .insta-feed-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:12px}
+    .insta-handle-badge{font-family:var(--ff-d);font-size:.82rem;letter-spacing:.15em;color:var(--teal);text-transform:uppercase;display:flex;align-items:center;gap:2px}
+    .insta-at{font-size:1rem;color:var(--cp)}
+    .insta-follow-btn{font-family:var(--ff-d);font-size:.8rem;color:var(--cp);border:1px solid var(--cp);padding:6px 16px;border-radius:20px;text-transform:uppercase;letter-spacing:.1em;transition:all .2s;text-decoration:none}
+    .insta-follow-btn:hover{background:rgba(200,245,0,.1)}
+    .insta-sub{font-family:var(--ff-b);font-size:.8rem;color:var(--muted);margin-top:6px}
+    .insta-grid-wrap{max-width:1200px;margin:0 auto}
+    .insta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
+    .insta-post{position:relative;aspect-ratio:1;overflow:hidden;cursor:pointer;background:var(--card);display:block;text-decoration:none}
+    .insta-post img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease,filter .35s ease;display:block}
+    .insta-post:hover img{transform:scale(1.06);filter:brightness(.7)}
+    .insta-post-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .25s}
+    .insta-post:hover .insta-post-overlay{opacity:1}
+    .insta-post-overlay span{font-family:var(--ff-d);font-size:.75rem;color:var(--cp);text-transform:uppercase;letter-spacing:.12em;border:1px solid var(--cp);padding:6px 12px;border-radius:4px}
+    .insta-loading{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
+    .insta-skeleton{aspect-ratio:1;background:linear-gradient(90deg,#1a1a1a 25%,#222 50%,#1a1a1a 75%);background-size:200% 100%;animation:insta-shimmer 1.5s infinite}
+    @keyframes insta-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .insta-cta-wrap{text-align:center;margin-top:28px}
+    .insta-error-msg{text-align:center;padding:40px;color:var(--muted);font-family:var(--ff-b)}
+    .insta-error-msg a{color:var(--cp)}
+    @media(max-width:768px){.insta-grid,.insta-loading{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:480px){.insta-grid,.insta-loading{grid-template-columns:repeat(3,1fr);gap:2px}}
+
+    /* ── HAPPY CUSTOMERS SECTION ── */
+    .customers-section{background:var(--dark);padding:64px 24px 48px}
+    .customers-header{max-width:1200px;margin:0 auto 36px;text-align:center}
+    .customers-eyebrow{font-family:var(--ff-d);font-size:.78rem;color:var(--teal);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;display:block}
+    .customers-header h2{font-size:clamp(2rem,5vw,3.5rem);margin-bottom:10px}
+    .customers-sub{font-family:var(--ff-b);font-size:.95rem;color:var(--muted);max-width:450px;margin:0 auto}
+    .customers-mosaic{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:6px}
+    .customer-card{position:relative;overflow:hidden;border-radius:6px;background:var(--card);cursor:pointer;border:1px solid #1e1e1e}
+    .customer-card img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .4s ease,filter .4s ease;display:block}
+    .customer-card:hover img{transform:scale(1.06);filter:brightness(.75)}
+    .customer-card-overlay{position:absolute;bottom:10px;left:10px;opacity:0;transition:opacity .25s;pointer-events:none}
+    .customer-card:hover .customer-card-overlay{opacity:1}
+    .customer-bag-tag{font-family:var(--ff-d);font-size:.72rem;color:#000;background:linear-gradient(135deg,#c8f500,#00e5a0);padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.08em}
+    .customer-card.featured{border-color:rgba(200,245,0,.2);grid-row:span 2}
+    .customer-card.cta-card{background:#111;border:1px solid rgba(200,245,0,.15);display:flex;align-items:center;justify-content:center;cursor:default}
+    .customer-cta-inner{text-align:center;padding:20px;display:flex;flex-direction:column;gap:8px;align-items:center}
+    .cta-card-title{font-family:var(--ff-d);font-size:1.4rem;color:var(--cp);text-transform:uppercase;letter-spacing:.1em;margin:0}
+    .cta-card-sub{font-family:var(--ff-b);font-size:.78rem;color:var(--muted);line-height:1.5;margin:0}
+    .customers-quote{max-width:600px;margin:36px auto 0;border-left:3px solid var(--cp);padding-left:20px}
+    .customers-quote blockquote{font-family:var(--ff-b);font-size:1rem;color:var(--muted);font-style:italic;line-height:1.7;margin:0 0 8px}
+    .customers-quote cite{font-family:var(--ff-d);font-size:.78rem;color:var(--teal);text-transform:uppercase;letter-spacing:.1em;font-style:normal}
+    @media(max-width:768px){.customers-mosaic{grid-template-columns:repeat(3,1fr);grid-auto-rows:140px}.customer-card.featured{grid-row:span 1}}
+    @media(max-width:480px){.customers-mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}}
+
+    /* ── IMAGE QUALITY GLOBAL ── */
+    img{image-rendering:-webkit-optimize-contrast;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+
+    /* ── QUICK-VIEW DESCRIPTION ON HOVER ── */
+    .product-card .card-description{font-family:var(--ff-b);font-size:.75rem;color:var(--muted);line-height:1.4;max-height:0;overflow:hidden;transition:max-height .3s ease,opacity .3s;opacity:0;margin-top:0}
+    .product-card:hover .card-description{max-height:60px;opacity:1;margin-top:4px}
+
+    /* ── RECENTLY VIEWED INDICATOR ── */
+    .product-card.recently-viewed::after{content:'VIEWED';position:absolute;bottom:52px;right:10px;font-family:var(--ff-d);font-size:.6rem;color:#444;letter-spacing:.1em;z-index:4;pointer-events:none}
+
+    /* ── MOBILE HOME INDICATOR SAFE AREA ── */
+    body{padding-bottom:env(safe-area-inset-bottom)}
+    footer{padding-bottom:calc(36px + env(safe-area-inset-bottom))}
+
+    /* ── TIKTOK SOCIAL ICON ── */
+    .ftr-soc-tiktok svg{fill:currentColor;stroke:none}
   </style>
 </head>
 <!--
@@ -769,10 +835,12 @@
   <div class="layer layer-car" id="hLcar">
     <div class="car-container">
       <picture>
+        <source srcset="images/storefront-hero.jpg" type="image/jpeg">
         <source srcset="images/storefront.webp" type="image/webp">
         <img src="images/storefront.jpg"
              alt="JAMIESSHOESS storefront — lime green muscle car on Historic Route 66, Springfield MO"
-             class="car-img" width="1920" height="1080" decoding="async">
+             class="car-img" width="1920" height="1080" decoding="async"
+             onerror="this.src='images/storefront.jpg'">
       </picture>
       <div class="car-color-grade" aria-hidden="true"></div>
     </div>
@@ -966,9 +1034,10 @@
     <div class="filter-tabs" id="filterTabs" role="tablist" aria-label="Filter by category"></div>
     <div class="auth-strip reveal">
       <span class="auth-badge">✓ 100% AUTHENTIC</span>
-      <span class="auth-badge">✓ HAND-PICKED INVENTORY</span>
-      <span class="auth-badge">✓ FREE LOCAL PICKUP</span>
-      <span class="auth-badge">✓ SPRINGFIELD'S #1 SNEAKER SPOT</span>
+      <span class="auth-badge">📍 FREE LOCAL PICKUP</span>
+      <span class="auth-badge">🔒 SECURED BY CLOVER</span>
+      <span class="auth-badge">⚡ HAND-PICKED INVENTORY</span>
+      <span class="auth-badge" style="color:var(--cp);border-color:rgba(200,245,0,.25)">📸 6,147 INSTAGRAM FOLLOWERS</span>
     </div>
     <div class="products-grid" id="productsGrid" role="list"></div>
     <div id="noResults" class="no-results" hidden
@@ -986,6 +1055,72 @@
       <h3>No items found</h3>
       <p>Try a different category or search term</p>
     </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- INSTAGRAM FEED -->
+<section id="instagram" class="insta-feed-section" aria-labelledby="insta-feed-heading">
+  <div class="insta-feed-header">
+    <div class="insta-feed-title-row">
+      <div class="insta-handle-badge">
+        <span class="insta-at">@</span>JAMIESSHOESS
+      </div>
+      <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener noreferrer" class="insta-follow-btn">FOLLOW US ↗</a>
+    </div>
+    <h2 id="insta-feed-heading" class="grad-text" style="font-family:var(--ff-d);font-size:clamp(1.8rem,4vw,3rem);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">LATEST DROPS</h2>
+    <p class="insta-sub">617 posts · 6,147 followers · New inventory weekly</p>
+  </div>
+  <div class="insta-grid-wrap">
+    <!-- Loading skeletons shown until JS runs -->
+    <div id="instaLoading" class="insta-loading">
+      <div class="insta-skeleton"></div>
+      <div class="insta-skeleton"></div>
+      <div class="insta-skeleton"></div>
+      <div class="insta-skeleton"></div>
+      <div class="insta-skeleton"></div>
+      <div class="insta-skeleton"></div>
+    </div>
+    <!-- API grid — populated by JS when token set -->
+    <div id="instaGrid" class="insta-grid" hidden></div>
+    <!--
+    OWNER ACTION: Add your 6 best Instagram post URLs below.
+    How to get URL: open any Instagram post -> click ... -> Copy Link
+    Replace the example URL with your real posts.
+    -->
+    <div id="instaFallback" class="insta-grid" hidden>
+      <!-- Store interior photos used as fallback until Instagram embeds load -->
+      <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener noreferrer" class="insta-post">
+        <img src="images/store-interior-shoes.jpg" alt="The sneaker wall — JAMIESSHOESS" loading="lazy">
+        <div class="insta-post-overlay"><span>VIEW ON INSTAGRAM ↗</span></div>
+      </a>
+      <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener noreferrer" class="insta-post">
+        <img src="images/store-interior-vintage.jpg" alt="Vintage section — JAMIESSHOESS" loading="lazy">
+        <div class="insta-post-overlay"><span>VIEW ON INSTAGRAM ↗</span></div>
+      </a>
+      <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener noreferrer" class="insta-post">
+        <img src="images/store-interior-dark.jpg" alt="The heat — JAMIESSHOESS" loading="lazy">
+        <div class="insta-post-overlay"><span>VIEW ON INSTAGRAM ↗</span></div>
+      </a>
+      <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener noreferrer" class="insta-post">
+        <img src="images/store-interior-entrance.jpg" alt="Store entrance — JAMIESSHOESS" loading="lazy">
+        <div class="insta-post-overlay"><span>VIEW ON INSTAGRAM ↗</span></div>
+      </a>
+      <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener noreferrer" class="insta-post">
+        <img src="images/sneakers-feature.jpg" alt="Fresh sneakers — JAMIESSHOESS" loading="lazy">
+        <div class="insta-post-overlay"><span>VIEW ON INSTAGRAM ↗</span></div>
+      </a>
+      <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener noreferrer" class="insta-post">
+        <img src="images/store-interior-window.jpg" alt="Downtown vibes — JAMIESSHOESS" loading="lazy">
+        <div class="insta-post-overlay"><span>VIEW ON INSTAGRAM ↗</span></div>
+      </a>
+    </div>
+  </div>
+  <div class="insta-cta-wrap">
+    <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener noreferrer" class="btn-primary">
+      📸 VIEW ALL ON INSTAGRAM
+    </a>
   </div>
 </section>
 
@@ -1073,12 +1208,91 @@
 
 <div class="section-divider"></div>
 
+<!-- HAPPY CUSTOMERS -->
+<section id="customers" class="customers-section" aria-labelledby="customers-heading">
+  <div class="customers-header">
+    <span class="customers-eyebrow reveal">THE COMMUNITY</span>
+    <h2 id="customers-heading" class="grad-text reveal" style="font-family:var(--ff-d);text-transform:uppercase;letter-spacing:.05em">HAPPY CUSTOMERS</h2>
+    <p class="customers-sub reveal">Real people, real heat. Springfield's sneaker community.</p>
+  </div>
+  <!--
+  ================================================================
+  OWNER ACTION: ADD CUSTOMER PHOTOS HERE
+  ================================================================
+  1. Create folder: images/customers/
+  2. Save customer photos named: customer-01.jpg through customer-09.jpg
+  3. Where to get photos:
+     - Screenshots from Instagram posts where customers tagged you
+     - DMs from customers showing their purchase
+     - Photos of customers with the JAMIESSHOESS bag
+  4. Cards auto-hide if image is missing (onerror handler)
+  ================================================================
+  -->
+  <div class="customers-mosaic" id="customersMosaic">
+    <div class="customer-card featured reveal" style="grid-row:span 2">
+      <img src="images/customers/customer-01.jpg" alt="Happy customer with JAMIESSHOESS bag" loading="lazy"
+           onerror="this.parentElement.style.display='none'">
+      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
+    </div>
+    <div class="customer-card reveal">
+      <img src="images/customers/customer-02.jpg" alt="JAMIESSHOESS customer" loading="lazy"
+           onerror="this.parentElement.style.display='none'">
+      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
+    </div>
+    <div class="customer-card reveal">
+      <img src="images/customers/customer-03.jpg" alt="JAMIESSHOESS customer" loading="lazy"
+           onerror="this.parentElement.style.display='none'">
+      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
+    </div>
+    <div class="customer-card reveal">
+      <img src="images/customers/customer-04.jpg" alt="JAMIESSHOESS customer" loading="lazy"
+           onerror="this.parentElement.style.display='none'">
+      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
+    </div>
+    <div class="customer-card reveal">
+      <img src="images/customers/customer-05.jpg" alt="JAMIESSHOESS customer" loading="lazy"
+           onerror="this.parentElement.style.display='none'">
+      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
+    </div>
+    <div class="customer-card reveal">
+      <img src="images/customers/customer-06.jpg" alt="JAMIESSHOESS customer" loading="lazy"
+           onerror="this.parentElement.style.display='none'">
+      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
+    </div>
+    <div class="customer-card reveal">
+      <img src="images/customers/customer-07.jpg" alt="JAMIESSHOESS customer" loading="lazy"
+           onerror="this.parentElement.style.display='none'">
+      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
+    </div>
+    <div class="customer-card reveal">
+      <img src="images/customers/customer-08.jpg" alt="JAMIESSHOESS customer" loading="lazy"
+           onerror="this.parentElement.style.display='none'">
+      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
+    </div>
+    <div class="customer-card cta-card reveal">
+      <div class="customer-cta-inner">
+        <p class="cta-card-title">TAG US</p>
+        <p class="cta-card-sub">@JAMIESSHOESS<br>to be featured</p>
+        <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener noreferrer"
+           class="btn-secondary" style="font-size:.8rem;padding:8px 16px;border-radius:100px">FOLLOW ↗</a>
+      </div>
+    </div>
+  </div>
+  <div class="customers-quote reveal">
+    <blockquote>"The only sneaker spot in Springfield that actually has heat. Come in on Saturdays — new stuff every week."</blockquote>
+    <cite>— Springfield local</cite>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
 <!-- INSTAGRAM CTA -->
 <section class="insta-cta">
   <p>New inventory drops weekly</p>
   <h2>Follow @JAMIESSHOESS</h2>
   <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener" class="btn-p">📸 Follow on Instagram</a>
   <br><br>
+  <a href="https://www.tiktok.com/@jamiesshoess417" target="_blank" rel="noopener noreferrer" class="btn-s" style="margin-right:10px">🎵 @JAMIESSHOESS417 on TikTok</a>
   <a href="https://www.facebook.com/p/jamiesshoess-100080011887058/" target="_blank" rel="noopener noreferrer" class="btn-s">📘 JAMIESSHOESS on Facebook</a>
 </section>
 
@@ -1190,6 +1404,9 @@
       </a>
       <a href="https://www.facebook.com/p/jamiesshoess-100080011887058/" target="_blank" rel="noopener noreferrer" class="ftr-soc" aria-label="Facebook">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@jamiesshoess417" target="_blank" rel="noopener noreferrer" class="ftr-soc ftr-soc-tiktok" aria-label="TikTok">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.26 8.26 0 004.83 1.56V6.78a4.85 4.85 0 01-1.06-.09z"/></svg>
       </a>
     </div>
     <p class="ftr-copy">© <span id="copyrightYear"></span> JAMIESSHOESS · 302 Park Central East · Springfield, MO</p>
@@ -1730,6 +1947,87 @@ var loopTick=0;
     } else {
       console.log('%c✓ Running on server — all features active', 'color:#00e5a0;font-weight:bold');
     }
+  })();
+
+  // INSTAGRAM FEED — token-gated with store image fallback
+  (function() {
+    var INSTAGRAM_TOKEN = ''; // OWNER: paste your Instagram Graph API token here
+    var loading  = document.getElementById('instaLoading');
+    var grid     = document.getElementById('instaGrid');
+    var fallback = document.getElementById('instaFallback');
+    if (!loading) return;
+
+    if (!INSTAGRAM_TOKEN) {
+      loading.hidden = true;
+      if (fallback) fallback.hidden = false;
+      console.log('%cInstagram: no token set — showing store photo fallback', 'color:#888');
+      return;
+    }
+
+    var url = 'https://graph.instagram.com/me/media'
+      + '?fields=id,media_type,media_url,thumbnail_url,permalink,caption'
+      + '&limit=6&access_token=' + INSTAGRAM_TOKEN;
+
+    fetch(url)
+      .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(data) {
+        if (!data.data || !data.data.length) throw new Error('empty');
+        loading.hidden = true;
+        grid.hidden = false;
+        data.data.forEach(function(post) {
+          var imgUrl = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
+          if (!imgUrl) return;
+          var caption = (post.caption || '').substring(0, 80);
+          var a = document.createElement('a');
+          a.href = post.permalink; a.target = '_blank'; a.rel = 'noopener noreferrer';
+          a.className = 'insta-post';
+          a.setAttribute('aria-label', caption || 'JAMIESSHOESS on Instagram');
+          a.innerHTML = '<img src="' + imgUrl + '" alt="' + caption.replace(/"/g,"'") + '" loading="lazy">'
+            + '<div class="insta-post-overlay"><span>VIEW POST ↗</span></div>';
+          grid.appendChild(a);
+        });
+      })
+      .catch(function(err) {
+        console.warn('Instagram API error:', err);
+        loading.hidden = true;
+        if (fallback) fallback.hidden = false;
+      });
+  })();
+
+  // RECENTLY VIEWED — mark cards user has already seen this session
+  (function() {
+    function markViewed() {
+      var viewed = JSON.parse(sessionStorage.getItem('js_viewed') || '[]');
+      if (!viewed.length) return;
+      viewed.forEach(function(id) {
+        var card = document.querySelector('[data-item-id="' + id + '"]');
+        if (card) card.classList.add('recently-viewed');
+      });
+    }
+    function hookCardClicks() {
+      document.querySelectorAll('.product-card[data-item-id]').forEach(function(card) {
+        card.addEventListener('click', function() {
+          var id = this.getAttribute('data-item-id');
+          if (!id) return;
+          var viewed = JSON.parse(sessionStorage.getItem('js_viewed') || '[]');
+          if (!viewed.includes(id)) { viewed.push(id); sessionStorage.setItem('js_viewed', JSON.stringify(viewed)); }
+        });
+      });
+    }
+    var rv_attempts = 0;
+    var rv_poll = setInterval(function() {
+      rv_attempts++;
+      if (window._productsLoaded) {
+        clearInterval(rv_poll);
+        setTimeout(function() { hookCardClicks(); markViewed(); }, 100);
+      } else if (rv_attempts > 40) { clearInterval(rv_poll); }
+    }, 250);
+  })();
+
+  // COPYRIGHT YEAR
+  (function() {
+    var el = document.getElementById('copyrightYear');
+    if (el) el.textContent = new Date().getFullYear();
   })();
 </script>
 </body>

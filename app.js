@@ -62,8 +62,8 @@ const STARTER = [
   { id:43, name:"Vintage Cardinals 3pc Lot (SIZE XL)", category:"clothing", price:35, size:"XL", description:"Vintage St. Louis Cardinals 3-piece lot — jersey, tee, and hat. Size XL.", image:"https://images.squarespace-cdn.com/content/v1/62fbad74b2e83466d4f8bc87/1737233309223-AGZZTOZEJ1HWY2GYO9JR/327E1447-02D0-4A13-8079-C4A21FA93F47.jpeg", badge:"vintage", stock:1 },
 ];
 
-const PROOF_NAMES = ["Marcus T.","Sarah K.","Jordan M.","Chris L.","Aliya B.","Devon R.","Priya S.","Tyler W.","Brandon H.","Mia C."];
-const PROOF_ITEMS = ["Vintage NASCAR Tee","JAMIESSHOESS OG Tee","Carhartt x Jamiesshoess Beanie","Vintage Grateful Dead Tee","VTG Harley Tee","JNCO Moto Tee","Vintage Notre Dame Tee","VTG Jerry Rice Tee","Vintage KC Royals Tee","John Cena Wrestling Tee"];
+const PROOF_NAMES = ["Marcus T.","Jordan K.","Tyler W.","Aisha M.","Devon R.","Keegan S.","Maya P.","Chris B.","Sam L.","Destiny W.","Brandon H.","Mia C."];
+const PROOF_ITEMS = ["VTG NASCAR AOP Tee","Nike SB Dunk Low","Vintage Notre Dame Tee","VTG Y2K Jimmy Neutron Tee","Carhartt Beanie","VTG Single Stitch Levis Tee","VTG Guess Tee","JAMIESSHOESS OG Tee","VTG St. Louis Rams Pullover","Air Jordan 1 Retro","VTG 1996 Grateful Dead Tee","VTG Cardinals 3pc Lot"];
 const INSTA_IMGS = [
   { src:"images/store-interior-shoes.jpg",   alt:"Sneaker wall at JAMIESSHOESS — 302 Park Central East, Springfield MO" },
   { src:"images/sneakers-feature.jpg",        alt:"Nike SB Dunk collection — JAMIESSHOESS Springfield" },
