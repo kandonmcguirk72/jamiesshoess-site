@@ -78,9 +78,17 @@ let cart = JSON.parse(localStorage.getItem('js_cart') || '[]');
 let currentFilter = 'all';
 let currentSort = 'default';
 
+// Live inventory from data/inventory.json (null = not yet loaded → falls back to STARTER)
+let allProducts = null;
+let inventoryLastUpdated = null;
+
+// Clover checkout state
+let cloverInstance = null;
+let checkoutState  = { itemIds: [], amount: 0, label: '' };
+
 // ── INIT ───────────────────────────────────────────────────────────────────────
 function init() {
-  // Version bump reseeds products when starter catalog changes
+  // Seed localStorage from STARTER for immediate render before JSON loads
   if (!localStorage.getItem('js_products') || localStorage.getItem('js_v') !== '3') {
     localStorage.setItem('js_products', JSON.stringify(STARTER));
     localStorage.setItem('js_v', '3');
@@ -94,10 +102,65 @@ function init() {
   startSocialProof();
   scheduleEmailPopup();
   renderStoreStatus();
+
+  // Load live Clover inventory in background; re-render when ready
+  loadInventory().then(() => {
+    if (allProducts) {
+      buildFilterTabs();
+      renderProducts();
+      renderLastUpdated();
+      setInterval(renderLastUpdated, 60000);
+    }
+  }).catch(() => {});
+
+  // Init Clover SDK when public key is available
+  const cfg = window.JAMIESSHOESS_CONFIG || {};
+  if (cfg.cloverPublicKey && typeof Clover !== 'undefined') {
+    cloverInstance = new Clover(cfg.cloverPublicKey);
+  }
 }
 
 function getProducts() {
-  return JSON.parse(localStorage.getItem('js_products') || '[]');
+  return allProducts || JSON.parse(localStorage.getItem('js_products') || '[]');
+}
+
+// ── INVENTORY LOADING ─────────────────────────────────────────────────────────
+async function loadInventory() {
+  try {
+    const res = await fetch('data/inventory.json?t=' + Date.now());
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.items && data.items.length > 0) {
+      allProducts = data.items.map(normalizeItem);
+      inventoryLastUpdated = data.lastUpdated;
+    }
+  } catch (e) { /* network error — stay on STARTER */ }
+}
+
+function normalizeItem(item) {
+  // Clover sync format: price in cents, uses quantity + imageUrl
+  // STARTER format: price in dollars, uses stock + image
+  const isClover = item.priceDisplay !== undefined;
+  return {
+    id:       item.id,
+    name:     item.name,
+    category: item.category || 'clothing',
+    price:    isClover ? item.price / 100 : item.price,
+    size:     item.size || '',
+    description: item.description || '',
+    image:    item.imageUrl || item.image || '',
+    badge:    (item.badge || '').toLowerCase(),
+    stock:    isClover ? item.quantity : (item.stock ?? 1),
+  };
+}
+
+function renderLastUpdated() {
+  const meta = document.getElementById('inventoryMeta');
+  const span = document.getElementById('lastUpdatedText');
+  if (!span || !inventoryLastUpdated) return;
+  const mins = Math.floor((Date.now() - new Date(inventoryLastUpdated)) / 60000);
+  span.textContent = mins <= 1 ? 'just now' : mins + ' min ago';
+  if (meta) meta.hidden = false;
 }
 
 // ── STORE HOURS / OPEN STATUS ──────────────────────────────────────────────────
@@ -313,10 +376,11 @@ function toggleSearch() {
 // ── CART ───────────────────────────────────────────────────────────────────────
 function addToCart(id, btn) {
   const products = getProducts();
-  const p = products.find(p => p.id === id);
+  const p = products.find(p => String(p.id) === String(id));
   if (!p || p.stock === 0) return;
 
-  const existing = cart.find(i => i.id === id);
+  // Add to cart sidebar
+  const existing = cart.find(i => String(i.id) === String(id));
   if (existing) existing.qty = (existing.qty || 1) + 1;
   else cart.push({ ...p, qty: 1 });
 
@@ -404,22 +468,33 @@ function closeAll() {
 }
 
 function checkout() {
+  const cfg = window.JAMIESSHOESS_CONFIG || {};
+  if (cfg.backendUrl && cfg.cloverPublicKey && cart.length) {
+    const total = cart.reduce((s,i) => s + i.price*(i.qty||1), 0);
+    const ids   = cart.map(i => i.id);
+    const label = `Cart — ${cart.length} item${cart.length > 1 ? 's' : ''}`;
+    closeAll();
+    openCloverCheckout(ids, label, Math.round(total * 100));
+    return;
+  }
+
+  // Fallback: DM on Instagram flow
   const total = cart.reduce((s,i) => s + i.price*(i.qty||1), 0);
-  const body = document.getElementById('cartBody');
+  const body   = document.getElementById('cartBody');
   const footer = document.getElementById('cartFooter');
   if (body) body.innerHTML = `
     <div style="text-align:center;padding:40px 20px">
       <div style="font-size:52px;margin-bottom:16px">🙏</div>
-      <h3 style="font-family:var(--ff-display);font-size:22px;font-weight:800;margin-bottom:10px">Order Received!</h3>
-      <p style="font-size:14px;color:var(--text-mid);line-height:1.7;margin-bottom:20px">
+      <h3 style="font-family:var(--ff-d);font-size:22px;font-weight:800;margin-bottom:10px">Order Received!</h3>
+      <p style="font-size:14px;color:#aaa;line-height:1.7;margin-bottom:20px">
         Your total is <strong>$${total.toFixed(2)}</strong>.<br>
-        DM us on Instagram to confirm your pickup time, or just stop by during store hours.
+        DM us on Instagram to confirm your pickup time, or just stop by.
       </p>
       <a href="https://www.instagram.com/jamiesshoess" target="_blank" rel="noopener"
-         style="display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:white;padding:12px 24px;border-radius:var(--r-full);font-size:13px;font-weight:700;text-decoration:none">
+         style="display:inline-flex;align-items:center;gap:8px;background:#c8f500;color:#000;padding:12px 24px;border-radius:100px;font-size:13px;font-weight:700;text-decoration:none">
         DM @jamiesshoess →
       </a>
-      <p style="font-size:12px;color:var(--text-soft);margin-top:20px">
+      <p style="font-size:12px;color:#666;margin-top:20px">
         📍 302 Park Central East, Springfield MO<br>Wed–Thu 12–6pm · Fri–Sat 12–7pm
       </p>
     </div>
@@ -534,3 +609,139 @@ window.resetSearch = function() {
 
 var yearEl = document.getElementById('copyrightYear');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+// ── CLOVER CHECKOUT ───────────────────────────────────────────────────────────
+function openCloverCheckout(itemIds, label, amountInCents) {
+  checkoutState = {
+    itemIds: Array.isArray(itemIds) ? itemIds : [itemIds].filter(Boolean),
+    amount:  amountInCents,
+    label,
+  };
+
+  const nameEl  = document.getElementById('cloverItemName');
+  const priceEl = document.getElementById('cloverItemPrice');
+  if (nameEl)  nameEl.textContent  = label;
+  if (priceEl) priceEl.textContent = '$' + (amountInCents / 100).toFixed(2);
+
+  // Reset form state
+  const form    = document.getElementById('cloverForm');
+  const success = document.getElementById('cloverSuccess');
+  const errEl   = document.getElementById('cloverError');
+  const payBtn  = document.getElementById('cloverPayBtn');
+  if (form)    form.style.display    = '';
+  if (success) success.hidden        = true;
+  if (errEl)   errEl.hidden          = true;
+  if (payBtn)  { payBtn.disabled = false; payBtn.textContent = 'Pay Now'; }
+
+  // Show modal
+  const modal   = document.getElementById('cloverModal');
+  const overlay = document.getElementById('cloverOverlay');
+  if (modal)   modal.hidden   = false;
+  if (overlay) overlay.hidden = false;
+  document.body.style.overflow = 'hidden';
+
+  // Mount Clover card fields
+  mountCloverFields();
+}
+
+function closeCloverModal() {
+  document.getElementById('cloverModal').hidden   = true;
+  document.getElementById('cloverOverlay').hidden = true;
+  document.body.style.overflow = '';
+}
+
+function mountCloverFields() {
+  const cfg = window.JAMIESSHOESS_CONFIG || {};
+  if (!cfg.cloverPublicKey) return;
+
+  if (!cloverInstance) {
+    if (typeof Clover === 'undefined') return;
+    cloverInstance = new Clover(cfg.cloverPublicKey);
+  }
+
+  // Clear containers so elements can be mounted fresh
+  ['clover-card-number','clover-card-date','clover-card-cvv','clover-card-postal'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '';
+  });
+
+  const fieldStyles = {
+    styles: {
+      '.input-wrapper': { 'background': '#1a1a1a', 'border-radius': '8px' },
+      '.input-wrapper input': {
+        'color': '#f0f0f0',
+        'font-size': '15px',
+        'font-family': "'DM Sans', sans-serif",
+      },
+      '.input-wrapper.invalid input': { 'color': '#ff6b6b' },
+    },
+  };
+
+  const elements = cloverInstance.elements();
+  elements.create('CARD_NUMBER',      fieldStyles).mount('#clover-card-number');
+  elements.create('CARD_DATE',        fieldStyles).mount('#clover-card-date');
+  elements.create('CARD_CVV',         fieldStyles).mount('#clover-card-cvv');
+  elements.create('CARD_POSTAL_CODE', fieldStyles).mount('#clover-card-postal');
+
+  setTimeout(function() {
+    var loader = document.getElementById('cloverLoadingState');
+    if (loader) loader.style.display = 'none';
+  }, 1500);
+}
+
+async function submitCloverPayment(e) {
+  e.preventDefault();
+  const payBtn = document.getElementById('cloverPayBtn');
+  const errEl  = document.getElementById('cloverError');
+
+  payBtn.disabled    = true;
+  payBtn.textContent = 'Processing…';
+  errEl.hidden       = true;
+
+  try {
+    if (!cloverInstance) throw new Error('Clover SDK not initialised');
+
+    const { token, errors } = await cloverInstance.createToken();
+    if (errors) {
+      const msg = Object.values(errors).filter(Boolean)[0];
+      throw new Error(msg || 'Card error — check your details');
+    }
+
+    const cfg = window.JAMIESSHOESS_CONFIG || {};
+    const res = await fetch(cfg.backendUrl + '/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token,
+        amount:  checkoutState.amount,
+        itemIds: checkoutState.itemIds,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || 'Payment failed');
+
+    // Show success screen
+    document.getElementById('cloverForm').style.display = 'none';
+    document.getElementById('cloverSuccess').hidden      = false;
+
+    // Mark sold locally so cards update instantly
+    if (checkoutState.itemIds.length && allProducts) {
+      for (const id of checkoutState.itemIds) {
+        const item = allProducts.find(p => String(p.id) === String(id));
+        if (item) item.stock = Math.max(0, (item.stock || 1) - 1);
+      }
+      renderProducts();
+    }
+
+    // Clear cart
+    cart = [];
+    saveCart();
+    updateCartBadge();
+
+  } catch (err) {
+    errEl.textContent = err.message;
+    errEl.hidden      = false;
+    payBtn.disabled   = false;
+    payBtn.textContent = 'Try Again';
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "jamiesshoess-sync",
+  "version": "1.0.0",
+  "description": "Clover inventory sync + checkout server for JAMIESSHOESS",
+  "main": "clover-sync.js",
+  "scripts": {
+    "start": "node clover-sync.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
+    "express": "^4.18.0",
+    "node-fetch": "^2.7.0"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
