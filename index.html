@@ -223,10 +223,10 @@
     .hero .layer-car.in{opacity:1}
     .hero .car-container{position:absolute;inset:0;overflow:hidden}
     .hero .car-container::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 50% at 40% 58%,rgba(8,8,8,0) 0%,rgba(8,8,8,0) 20%,rgba(8,8,8,.35) 50%,rgba(8,8,8,.7) 75%,rgba(8,8,8,.88) 100%);z-index:2;pointer-events:none}
-    .hero .car-img{width:100%;height:100%;object-fit:cover;object-position:38% 52%;display:block;filter:brightness(.65) saturate(1.45) contrast(1.08);transform:scale(1.15);transform-origin:38% 52%}
-    .hero .car-color-grade{position:absolute;bottom:0;left:50%;transform:translateX(-60%);width:60%;height:55%;background:radial-gradient(ellipse at 40% 75%,rgba(120,230,0,.22),rgba(80,200,0,.1) 40%,transparent 70%);mix-blend-mode:screen;pointer-events:none;z-index:6}
-    .hero .car-underglow{position:absolute;bottom:38%;left:50%;transform:translateX(-60%);width:45%;height:80px;background:radial-gradient(ellipse,rgba(150,255,0,.45) 0%,rgba(100,200,0,.25) 35%,transparent 70%);border-radius:50%;z-index:5;filter:blur(12px);animation:heroUnderglow 3s ease-in-out infinite;pointer-events:none}
-    @keyframes heroUnderglow{0%,100%{opacity:.7;transform:translateX(-60%) scaleX(1) scaleY(1)}50%{opacity:1;transform:translateX(-60%) scaleX(1.12) scaleY(1.3)}}
+    .hero .car-img{width:100%;height:100%;object-fit:cover;object-position:38% 52%;display:block;filter:brightness(.82) contrast(1.05);transform:scale(1.15);transform-origin:38% 52%}
+    .hero .car-color-grade{position:absolute;bottom:0;left:50%;transform:translateX(-60%);width:60%;height:55%;background:radial-gradient(ellipse at 40% 75%,rgba(120,230,0,.22),rgba(80,200,0,.1) 40%,transparent 70%);mix-blend-mode:screen;opacity:0.03;pointer-events:none;z-index:6}
+    .hero .car-underglow{position:absolute;bottom:38%;left:50%;transform:translateX(-60%);width:45%;height:80px;background:radial-gradient(ellipse,rgba(120,255,0,.22) 0%,rgba(80,200,0,.10) 35%,transparent 70%);border-radius:50%;z-index:5;filter:blur(20px);animation:heroUnderglow 4s ease-in-out infinite;pointer-events:none}
+    @keyframes heroUnderglow{0%,100%{opacity:.5;transform:translateX(-60%) scaleX(1) scaleY(1)}50%{opacity:.8;transform:translateX(-60%) scaleX(1.12) scaleY(1.3)}}
     @media(min-width:1440px){.hero .car-img{transform:scale(1.25);transform-origin:38% 50%;object-position:38% 50%}}
     @media(min-width:1920px){.hero .car-img{transform:scale(1.4);transform-origin:38% 52%;object-position:38% 52%}}
     @media(max-width:768px){.hero .car-img{object-position:32% 60%;transform:scale(1.05)}.hero .car-container::after{background:radial-gradient(ellipse 70% 60% at 50% 58%,rgba(8,8,8,0) 0%,rgba(8,8,8,0) 20%,rgba(8,8,8,.4) 50%,rgba(8,8,8,.88) 100%)}}
@@ -835,7 +835,7 @@
   <div class="layer layer-car" id="hLcar">
     <div class="car-container">
       <picture>
-        <source srcset="images/storefront-hero.jpg" type="image/jpeg">
+        <source srcset="images/storefront-clean.jpg" type="image/jpeg">
         <source srcset="images/storefront.webp" type="image/webp">
         <img src="images/storefront.jpg"
              alt="JAMIESSHOESS storefront — lime green muscle car on Historic Route 66, Springfield MO"

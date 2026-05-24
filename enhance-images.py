@@ -1,7 +1,7 @@
 from PIL import Image, ImageEnhance, ImageOps
 import os
 
-def enhance_image(path, brightness=1.12, contrast=1.15, color=1.3, sharpness=1.75):
+def enhance_image(path, brightness=1.02, contrast=1.05, color=1.0, sharpness=1.3):
     img = Image.open(path)
     img = ImageOps.exif_transpose(img)
     if img.mode != 'RGB':
@@ -24,11 +24,10 @@ def create_hero_version():
     w, h = img.size
     # Crop top 10% (sky/excess building above car)
     img = img.crop((0, int(h * 0.1), w, h))
-    # Punch the green car colors
-    img = ImageEnhance.Color(img).enhance(1.5)
-    img = ImageEnhance.Contrast(img).enhance(1.2)
-    img = ImageEnhance.Sharpness(img).enhance(2.2)
-    img = ImageEnhance.Brightness(img).enhance(1.1)
+    # Gentle pass only — no color boost (photo already saturated)
+    img = ImageEnhance.Contrast(img).enhance(1.1)
+    img = ImageEnhance.Sharpness(img).enhance(1.5)
+    img = ImageEnhance.Brightness(img).enhance(1.05)
     img.thumbnail((2400, 1400), Image.LANCZOS)
     img.save('images/storefront-hero.jpg', 'JPEG', quality=94, optimize=True)
     print('OK: Created images/storefront-hero.jpg (hero-optimized)')
