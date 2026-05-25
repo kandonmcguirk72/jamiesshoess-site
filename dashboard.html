@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JAMIESSHOESS Dashboard</title>
+  <link rel="icon" type="image/png" href="images/logo-circle-blue.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --cp:#c8f500;--cs:#00e5a0;
+      --dark:#0a0a0a;--surf:#141414;--card:#1a1a1a;--border:#1e1e1e;
+      --txt:#f0f0f0;--muted:#888;
+      --grad:linear-gradient(135deg,#c8f500,#00e5a0);
+      --danger:#ff2244;--warn:#f59e0b;--success:#22c55e;
+      --ff-d:'Boogaloo',sans-serif;--ff-b:'DM Sans',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--dark);color:var(--txt);font-family:var(--ff-b);font-size:15px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none;color:inherit}
+    button{cursor:pointer;border:none;font-family:inherit}
+    body::before{content:'';display:block;height:3px;background:var(--grad);position:fixed;top:0;left:0;right:0;z-index:200}
+
+    /* ── HEADER ── */
+    #hdr{position:sticky;top:3px;z-index:100;background:rgba(10,10,10,.97);border-bottom:1px solid rgba(200,245,0,.1);backdrop-filter:blur(8px)}
+    .hdr-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;gap:14px}
+    .hdr-brand{font-family:var(--ff-d);font-size:1.3rem;letter-spacing:.08em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hdr-chip{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;background:rgba(200,245,0,.12);color:var(--cp);padding:3px 10px;border-radius:100px;border:1px solid rgba(200,245,0,.2)}
+    .hdr-status{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)}
+    .hdr-dot{width:7px;height:7px;border-radius:50%;background:#333;flex-shrink:0}
+    .hdr-dot.online{background:var(--success);animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+    /* ── PAGE ── */
+    .page{max-width:1400px;margin:0 auto;padding:28px 24px 80px}
+
+    /* ── SECTION ── */
+    .sec{margin-bottom:40px}
+    .sec-label{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cp);margin-bottom:4px}
+    .sec-title{font-family:var(--ff-d);font-size:clamp(1.3rem,2.5vw,1.7rem);text-transform:uppercase;letter-spacing:.04em;color:var(--txt);margin-bottom:18px}
+    .sec-divider{height:1px;background:linear-gradient(90deg,rgba(200,245,0,.15),transparent);margin-bottom:28px}
+
+    /* ── QUICK ACTION BUTTONS ── */
+    .action-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+    .action-btn{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:18px 14px 16px;display:flex;flex-direction:column;align-items:center;gap:10px;transition:all .2s;cursor:pointer}
+    .action-btn:hover{border-color:var(--cp);background:#1c1c1c;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+    .action-icon{font-size:1.8rem;line-height:1}
+    .action-label{font-family:var(--ff-d);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;text-align:center;color:var(--txt)}
+    .action-btn.primary{border-color:rgba(200,245,0,.3);background:rgba(200,245,0,.05)}
+    .action-btn.primary .action-label{color:var(--cp)}
+    .action-btn.danger{border-color:rgba(255,34,68,.3);background:rgba(255,34,68,.05)}
+    .action-btn.danger .action-label{color:var(--danger)}
+
+    /* ── TERMINAL ── */
+    .terminal-wrap{display:none;background:#0a0f0a;border:1px solid rgba(200,245,0,.12);border-radius:10px;overflow:hidden;margin-top:12px}
+    .terminal-wrap.open{display:block}
+    .terminal-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:#0d110d;border-bottom:1px solid rgba(200,245,0,.1)}
+    .terminal-title{font-family:monospace;font-size:.75rem;color:var(--muted)}
+    .terminal-close{font-size:14px;color:var(--muted);padding:2px 6px;border-radius:4px;background:none;border:none;cursor:pointer}
+    .terminal-close:hover{color:var(--txt)}
+    .terminal-output{font-family:monospace;font-size:.8rem;line-height:1.6;padding:14px 16px;max-height:260px;overflow-y:auto;white-space:pre-wrap;word-break:break-all}
+    .t-out{color:#a3f7a3}
+    .t-err{color:#ff8080}
+    .t-info{color:#888}
+    .t-done-ok{color:var(--cp);font-weight:700}
+    .t-done-err{color:var(--danger);font-weight:700}
+
+    /* ── HEALTH CHECK ── */
+    .health-btn{display:inline-flex;align-items:center;gap:10px;background:var(--grad);color:#000;font-family:var(--ff-d);font-size:1rem;letter-spacing:.06em;text-transform:uppercase;padding:13px 28px;border-radius:8px;border:none;cursor:pointer;transition:opacity .2s}
+    .health-btn:hover{opacity:.9}
+    .health-results{margin-top:18px;display:none}
+    .health-score{font-family:var(--ff-d);font-size:1.4rem;margin-bottom:16px}
+    .health-score span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .health-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:8px}
+    .hcheck{display:flex;align-items:flex-start;gap:10px;background:var(--surf);border:1px solid var(--border);border-radius:8px;padding:11px 14px;font-size:.85rem}
+    .hcheck-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+    .hcheck-body{flex:1}
+    .hcheck-label{color:var(--txt);font-weight:500}
+    .hcheck-detail{font-size:.76rem;color:var(--muted);margin-top:2px}
+    .hcheck.fail{border-color:rgba(255,34,68,.25);background:rgba(255,34,68,.04)}
+    .hcheck.pass{border-color:rgba(34,197,94,.15)}
+
+    /* ── IMAGE MANAGER ── */
+    .img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+    .img-card{background:var(--surf);border:1px solid var(--border);border-radius:8px;overflow:hidden;position:relative}
+    .img-thumb{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#111}
+    .img-info{padding:8px 10px}
+    .img-name{font-size:.75rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--txt)}
+    .img-size{font-size:.68rem;color:var(--muted);margin-top:2px}
+    .img-actions{display:flex;gap:6px;margin-top:8px}
+    .btn-img-del{flex:1;padding:5px 8px;background:rgba(255,34,68,.1);color:var(--danger);border:1px solid rgba(255,34,68,.2);border-radius:5px;font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+    .btn-img-del:hover{background:rgba(255,34,68,.2)}
+    .large-flag{position:absolute;top:6px;right:6px;background:var(--warn);color:#000;font-size:.6rem;font-weight:800;padding:2px 6px;border-radius:100px}
+
+    /* ── UPLOAD ZONE ── */
+    .upload-zone{border:2px dashed rgba(200,245,0,.25);border-radius:10px;padding:32px;text-align:center;cursor:pointer;transition:all .25s;background:rgba(200,245,0,.02)}
+    .upload-zone:hover,.upload-zone.drag{border-color:var(--cp);background:rgba(200,245,0,.05)}
+    .upload-zone p{font-size:.9rem;color:var(--muted)}
+    .upload-zone strong{color:var(--cp)}
+
+    /* ── CUSTOMER PHOTOS ── */
+    .cust-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:18px}
+    .cust-card{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:#111;border:1px solid var(--border)}
+    .cust-card img{width:100%;height:100%;object-fit:cover;display:block}
+    .cust-num{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.7);color:var(--cp);font-family:var(--ff-d);font-size:.7rem;padding:2px 8px;border-radius:100px}
+    .cust-del{position:absolute;top:6px;right:6px;background:rgba(255,34,68,.8);color:#fff;font-size:.7rem;font-weight:700;padding:3px 7px;border-radius:4px;cursor:pointer;border:none}
+    .cust-del:hover{background:var(--danger)}
+
+    /* ── CODE EDITOR ── */
+    .editor-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+    .find-input,.replace-input{flex:1;min-width:140px;padding:9px 14px;background:#111;border:1.5px solid rgba(255,255,255,.08);border-radius:6px;color:var(--txt);font-size:13px;outline:none}
+    .find-input:focus,.replace-input:focus{border-color:var(--cp)}
+    .code-area{width:100%;min-height:380px;padding:16px;background:#0a0f0a;border:1px solid rgba(200,245,0,.12);border-radius:8px;color:#a3f7a3;font-family:monospace;font-size:.8rem;line-height:1.7;outline:none;resize:vertical;white-space:pre}
+    .match-count{font-size:.8rem;color:var(--muted)}
+
+    /* ── DEPLOYMENT ── */
+    .deploy-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+    .deploy-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:20px 18px}
+    .deploy-icon{font-size:1.6rem;margin-bottom:8px}
+    .deploy-name{font-family:var(--ff-d);font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;color:var(--txt)}
+    .deploy-desc{font-size:.75rem;color:var(--muted);margin-bottom:14px;line-height:1.5}
+    .btn-deploy{width:100%;padding:10px;border-radius:7px;font-family:var(--ff-d);font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+    .btn-deploy-primary{background:var(--grad);color:#000;border:none}
+    .btn-deploy-primary:hover{opacity:.9}
+    .btn-deploy-outline{background:none;color:var(--cp);border:1px solid rgba(200,245,0,.3)}
+    .btn-deploy-outline:hover{background:rgba(200,245,0,.07)}
+    .btn-deploy-link{background:none;color:var(--muted);border:1px solid rgba(255,255,255,.08)}
+    .btn-deploy-link:hover{color:var(--txt);border-color:rgba(255,255,255,.2)}
+
+    /* ── NOTES ── */
+    .notes-area{width:100%;min-height:220px;padding:16px;background:var(--surf);border:1px solid var(--border);border-radius:8px;color:var(--txt);font-family:var(--ff-b);font-size:.9rem;line-height:1.7;outline:none;resize:vertical;transition:border-color .2s}
+    .notes-area:focus{border-color:var(--cp)}
+    .notes-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .notes-saved{font-size:.75rem;color:var(--success);opacity:0;transition:opacity .3s}
+    .notes-saved.show{opacity:1}
+
+    /* ── GENERIC BUTTONS ── */
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:#000;font-family:var(--ff-d);font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;padding:10px 22px;border-radius:7px;border:none;cursor:pointer;transition:opacity .2s}
+    .btn-primary:hover{opacity:.9}
+    .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:none;color:var(--cp);font-family:var(--ff-d);font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;padding:9px 20px;border-radius:7px;border:1px solid rgba(200,245,0,.3);cursor:pointer;transition:all .2s}
+    .btn-secondary:hover{background:rgba(200,245,0,.07)}
+    .btn-danger{display:inline-flex;align-items:center;gap:8px;background:none;color:var(--danger);font-family:var(--ff-d);font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;padding:9px 20px;border-radius:7px;border:1px solid rgba(255,34,68,.3);cursor:pointer;transition:all .2s}
+    .btn-danger:hover{background:rgba(255,34,68,.07)}
+
+    /* ── TOAST ── */
+    .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);color:var(--txt);border:1px solid rgba(255,255,255,.08);padding:11px 22px;border-radius:100px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap;border-left:3px solid var(--cp)}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .toast.err{border-left-color:var(--danger)}
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar{width:5px;height:5px}
+    ::-webkit-scrollbar-track{background:#111}
+    ::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+
+    /* ── NAV ── */
+    .dash-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:32px;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:16px}
+    .nav-pill{padding:7px 16px;border-radius:100px;font-family:var(--ff-d);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:none;border:1px solid transparent;cursor:pointer;transition:all .2s}
+    .nav-pill:hover{color:var(--txt);border-color:rgba(255,255,255,.1)}
+    .nav-pill.active{background:rgba(200,245,0,.1);color:var(--cp);border-color:rgba(200,245,0,.2)}
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div id="hdr">
+  <div class="hdr-inner">
+    <span class="hdr-brand">JAMIESSHOESS</span>
+    <span class="hdr-chip">Dashboard</span>
+    <div class="hdr-status">
+      <span class="hdr-dot" id="serverDot"></span>
+      <span id="serverStatus">Connecting…</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ── NAV ── -->
+  <nav class="dash-nav">
+    <button class="nav-pill active" onclick="showSection('actions',this)">⚡ Quick Actions</button>
+    <button class="nav-pill" onclick="showSection('health',this)">🩺 Health Check</button>
+    <button class="nav-pill" onclick="showSection('images',this)">🖼️ Images</button>
+    <button class="nav-pill" onclick="showSection('customers',this)">👥 Customer Photos</button>
+    <button class="nav-pill" onclick="showSection('editor',this)">✏️ Code Editor</button>
+    <button class="nav-pill" onclick="showSection('deploy',this)">🚀 Deploy</button>
+    <button class="nav-pill" onclick="showSection('notes',this)">📝 Notes</button>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 1 — QUICK ACTIONS
+  ══════════════════════════════════════════════ -->
+  <div id="sec-actions" class="sec">
+    <div class="sec-label">Section 1</div>
+    <div class="sec-title">Quick Actions</div>
+
+    <div class="action-row">
+      <button class="action-btn primary" onclick="runCommand('npx serve . -p 8080','START SERVER',true)">
+        <span class="action-icon">🖥️</span>
+        <span class="action-label">Start Server</span>
+      </button>
+      <button class="action-btn" onclick="window.open('http://localhost:8080','_blank')">
+        <span class="action-icon">🌐</span>
+        <span class="action-label">Open Site</span>
+      </button>
+      <button class="action-btn" onclick="window.open('http://localhost:8080/admin.html','_blank')">
+        <span class="action-icon">🛠️</span>
+        <span class="action-label">Open Admin</span>
+      </button>
+      <button class="action-btn" onclick="runCommand('python enhance-images.py','ENHANCE IMAGES')">
+        <span class="action-icon">✨</span>
+        <span class="action-label">Enhance Images</span>
+      </button>
+      <button class="action-btn" onclick="runCommand('python restore-hero.py','RESTORE HERO')">
+        <span class="action-icon">🖼️</span>
+        <span class="action-label">Restore Hero</span>
+      </button>
+      <button class="action-btn danger" onclick="backupProject()">
+        <span class="action-icon">💾</span>
+        <span class="action-label">Backup Project</span>
+      </button>
+    </div>
+
+    <!-- Terminal output -->
+    <div class="terminal-wrap" id="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-title" id="termTitle">Terminal</span>
+        <button class="terminal-close" onclick="closeTerm()">✕</button>
+      </div>
+      <div class="terminal-output" id="termOutput"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 2 — HEALTH CHECK
+  ══════════════════════════════════════════════ -->
+  <div id="sec-health" class="sec" style="display:none">
+    <div class="sec-label">Section 2</div>
+    <div class="sec-title">Site Health Checker</div>
+
+    <button class="health-btn" onclick="runHealthCheck(this)">
+      <span>🩺</span> Run Health Check
+    </button>
+
+    <div class="health-results" id="healthResults">
+      <div class="health-score">Score: <span id="healthScore">—</span></div>
+      <div class="health-grid" id="healthGrid"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 3 — IMAGE MANAGER
+  ══════════════════════════════════════════════ -->
+  <div id="sec-images" class="sec" style="display:none">
+    <div class="sec-label">Section 3</div>
+    <div class="sec-title">Image Manager</div>
+
+    <div id="imgGrid" class="img-grid"></div>
+
+    <div class="upload-zone" id="uploadZone"
+         ondragover="event.preventDefault();this.classList.add('drag')"
+         ondragleave="this.classList.remove('drag')"
+         ondrop="handleDrop(event,'images')"
+         onclick="document.getElementById('imgUploadInput').click()">
+      <p>📁 <strong>Drag & drop</strong> images here or click to upload<br>
+      Auto-saved to images/ folder</p>
+      <input type="file" id="imgUploadInput" accept="image/*" multiple style="display:none" onchange="handleFileInput(this,'images')">
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 4 — CUSTOMER PHOTOS
+  ══════════════════════════════════════════════ -->
+  <div id="sec-customers" class="sec" style="display:none">
+    <div class="sec-label">Section 4</div>
+    <div class="sec-title">Customer Photos</div>
+
+    <div id="custStats" style="font-size:.85rem;color:var(--muted);margin-bottom:16px"></div>
+    <div id="custGrid" class="cust-grid"></div>
+
+    <div class="upload-zone"
+         ondragover="event.preventDefault();this.classList.add('drag')"
+         ondragleave="this.classList.remove('drag')"
+         ondrop="handleDrop(event,'images/customers')"
+         onclick="document.getElementById('custUploadInput').click()">
+      <p>📸 <strong>Add customer photos</strong> — drag here or click<br>
+      Auto-named customer-XX.jpg</p>
+      <input type="file" id="custUploadInput" accept="image/*" multiple style="display:none" onchange="handleFileInput(this,'images/customers',true)">
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 5 — CODE EDITOR
+  ══════════════════════════════════════════════ -->
+  <div id="sec-editor" class="sec" style="display:none">
+    <div class="sec-label">Section 5</div>
+    <div class="sec-title">Live Code Editor — index.html</div>
+
+    <div class="editor-toolbar">
+      <select id="editorFile" class="find-input" style="min-width:160px;flex:none" onchange="loadEditorFile()">
+        <option value="index.html">index.html</option>
+        <option value="app.js">app.js</option>
+        <option value="admin.html">admin.html</option>
+        <option value="config.js">config.js</option>
+      </select>
+      <input type="text" id="findInput" class="find-input" placeholder="Find…">
+      <input type="text" id="replaceInput" class="replace-input" placeholder="Replace with…">
+      <button class="btn-secondary" onclick="findReplace()">Apply</button>
+      <span class="match-count" id="matchCount"></span>
+    </div>
+
+    <textarea class="code-area" id="codeArea" spellcheck="false"></textarea>
+
+    <div style="display:flex;gap:10px;margin-top:12px">
+      <button class="btn-primary" onclick="saveEditorFile()">💾 Save File</button>
+      <button class="btn-secondary" onclick="loadEditorFile()">↺ Reload</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 6 — DEPLOYMENT
+  ══════════════════════════════════════════════ -->
+  <div id="sec-deploy" class="sec" style="display:none">
+    <div class="sec-label">Section 6</div>
+    <div class="sec-title">Deployment</div>
+
+    <div class="deploy-row">
+      <div class="deploy-card">
+        <div class="deploy-icon">🐙</div>
+        <div class="deploy-name">Push to GitHub</div>
+        <div class="deploy-desc">Commits all changes and pushes to the main branch (GitHub Pages).</div>
+        <button class="btn-deploy btn-deploy-primary" onclick="gitPush()">Push Now</button>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">🌐</div>
+        <div class="deploy-name">Check Live Site</div>
+        <div class="deploy-desc">Opens GitHub Pages live URL in a new tab.</div>
+        <button class="btn-deploy btn-deploy-outline" onclick="window.open('https://kandonmcguirk72.github.io/jamiesshoess-site','_blank')">Open Live Site</button>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">🟦</div>
+        <div class="deploy-name">Squarespace</div>
+        <div class="deploy-desc">Manual step — open Squarespace to sync content there.</div>
+        <button class="btn-deploy btn-deploy-link" onclick="window.open('https://jamiesshoess.squarespace.com','_blank')">Open Squarespace</button>
+      </div>
+      <div class="deploy-card">
+        <div class="deploy-icon">📊</div>
+        <div class="deploy-name">Git Status</div>
+        <div class="deploy-desc">Shows uncommitted changes and current branch status.</div>
+        <button class="btn-deploy btn-deploy-outline" onclick="runCommand('git status','GIT STATUS')">Run git status</button>
+      </div>
+    </div>
+
+    <div class="terminal-wrap" id="deployTerminal" style="margin-top:16px">
+      <div class="terminal-bar">
+        <span class="terminal-title" id="deployTermTitle">Terminal</span>
+        <button class="terminal-close" onclick="closeDeployTerm()">✕</button>
+      </div>
+      <div class="terminal-output" id="deployTermOutput"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 7 — NOTES
+  ══════════════════════════════════════════════ -->
+  <div id="sec-notes" class="sec" style="display:none">
+    <div class="sec-label">Section 7</div>
+    <div class="sec-title">Notes & To-Do</div>
+
+    <div class="notes-bar">
+      <span style="font-size:.8rem;color:var(--muted)">Auto-saved to browser localStorage</span>
+      <div style="display:flex;gap:10px;align-items:center">
+        <span class="notes-saved" id="notesSaved">Saved ✓</span>
+        <button class="btn-danger" onclick="clearNotes()">Clear Notes</button>
+      </div>
+    </div>
+    <textarea class="notes-area" id="notesArea" oninput="saveNotes()" placeholder="Your notes…"></textarea>
+  </div>
+
+</div><!-- /page -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'http://localhost:3002';
+
+// ── SECTION NAV ───────────────────────────────────────────────────────────────
+function showSection(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.style.display = 'none');
+  document.getElementById('sec-' + id).style.display = '';
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+
+  // Lazy load sections
+  if (id === 'images')    loadImages();
+  if (id === 'customers') loadCustomers();
+  if (id === 'editor')    loadEditorFile();
+  if (id === 'notes')     loadNotes();
+}
+
+// ── SERVER PING ───────────────────────────────────────────────────────────────
+async function ping() {
+  try {
+    const r = await fetch(API + '/health');
+    if (r.ok) {
+      document.getElementById('serverDot').classList.add('online');
+      document.getElementById('serverStatus').textContent = 'Dashboard server online';
+    }
+  } catch (e) {
+    document.getElementById('serverStatus').textContent = 'Server offline — run START-DASHBOARD.bat';
+  }
+}
+ping();
+setInterval(ping, 10000);
+
+// ── RUN COMMAND ───────────────────────────────────────────────────────────────
+let activeTerminal = 'terminal';
+
+function runCommand(cmd, label, openTab) {
+  activeTerminal = 'terminal';
+  openTerm(label || cmd);
+  if (openTab) {
+    setTimeout(() => window.open('http://localhost:8080','_blank'), 2500);
+  }
+  streamCommand(cmd, 'termOutput');
+}
+
+function openTerm(title) {
+  const wrap = document.getElementById('terminal');
+  wrap.classList.add('open');
+  document.getElementById('termTitle').textContent = title || 'Terminal';
+  document.getElementById('termOutput').innerHTML = '';
+}
+
+function closeTerm() {
+  document.getElementById('terminal').classList.remove('open');
+}
+
+function closeDeployTerm() {
+  document.getElementById('deployTerminal').classList.remove('open');
+}
+
+function streamCommand(cmd, outputId) {
+  const out = document.getElementById(outputId);
+  if (!out) return;
+
+  const url = API + '/run-command-stream?cmd=' + encodeURIComponent(cmd);
+  const es  = new EventSource(url);
+
+  es.onmessage = (e) => {
+    const d = JSON.parse(e.data);
+    if (d.out) appendTerm(out, d.out, 't-out');
+    if (d.err) appendTerm(out, d.err, 't-err');
+    if (d.done) {
+      appendTerm(out, d.code === 0 ? '\n✓ Done.' : '\n✗ Exit code ' + d.code, d.code === 0 ? 't-done-ok' : 't-done-err');
+      es.close();
+    }
+  };
+  es.onerror = () => {
+    appendTerm(out, '✗ Could not connect to dashboard server.', 't-err');
+    es.close();
+  };
+}
+
+function appendTerm(el, text, cls) {
+  const span = document.createElement('span');
+  span.className = cls || '';
+  span.textContent = text;
+  el.appendChild(span);
+  el.scrollTop = el.scrollHeight;
+}
+
+// ── BACKUP ────────────────────────────────────────────────────────────────────
+async function backupProject() {
+  toast('Starting backup…');
+  try {
+    const r = await fetch(API + '/backup', { method: 'POST' });
+    const d = await r.json();
+    if (d.ok) toast('Backup saved: ' + d.path.split('\\').pop());
+    else      toast('Backup: ' + (d.error || 'failed'), true);
+  } catch (e) {
+    toast('Could not connect to server', true);
+  }
+}
+
+// ── HEALTH CHECK ─────────────────────────────────────────────────────────────
+async function runHealthCheck(btn) {
+  btn.textContent = '⏳ Checking…';
+  btn.disabled = true;
+  try {
+    const r = await fetch(API + '/health-check');
+    const d = await r.json();
+    renderHealthResults(d);
+  } catch (e) {
+    toast('Server not reachable', true);
+  }
+  btn.innerHTML = '<span>🩺</span> Run Health Check';
+  btn.disabled = false;
+}
+
+function renderHealthResults({ results, passed, total }) {
+  document.getElementById('healthScore').textContent = `${passed} / ${total} checks passed`;
+  document.getElementById('healthGrid').innerHTML = results.map(r => `
+    <div class="hcheck ${r.pass ? 'pass' : 'fail'}">
+      <span class="hcheck-icon">${r.pass ? '✅' : '❌'}</span>
+      <div class="hcheck-body">
+        <div class="hcheck-label">${r.label}</div>
+        ${r.detail ? `<div class="hcheck-detail">${r.detail}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('healthResults').style.display = '';
+}
+
+// ── IMAGES ────────────────────────────────────────────────────────────────────
+async function loadImages() {
+  const grid = document.getElementById('imgGrid');
+  grid.innerHTML = '<span style="color:var(--muted);font-size:.85rem">Loading…</span>';
+  try {
+    const r = await fetch(API + '/image-info?dir=images');
+    const imgs = await r.json();
+    grid.innerHTML = imgs.length ? imgs.map(img => {
+      const kb   = (img.size / 1024).toFixed(0);
+      const big  = img.size > 2 * 1024 * 1024;
+      return `
+        <div class="img-card">
+          ${big ? '<div class="large-flag">2MB+</div>' : ''}
+          <img class="img-thumb" src="${img.rel}" loading="lazy" onerror="this.style.background='#222'">
+          <div class="img-info">
+            <div class="img-name">${img.name}</div>
+            <div class="img-size">${kb} KB</div>
+            <div class="img-actions">
+              <button class="btn-img-del" onclick="deleteImage('${img.rel}',this)">Delete</button>
+            </div>
+          </div>
+        </div>`;
+    }).join('') : '<p style="color:var(--muted)">No images found in images/</p>';
+  } catch (e) {
+    grid.innerHTML = '<p style="color:var(--danger)">Server not reachable</p>';
+  }
+}
+
+async function deleteImage(rel, btn) {
+  if (!confirm('Delete ' + rel + '?')) return;
+  try {
+    const r = await fetch(API + '/file?file=' + encodeURIComponent(rel), { method: 'DELETE' });
+    const d = await r.json();
+    if (d.ok) { btn.closest('.img-card').remove(); toast('Deleted.'); }
+    else       toast(d.error || 'Failed', true);
+  } catch (e) { toast('Server not reachable', true); }
+}
+
+async function handleFileInput(input, dir, autoCust) {
+  for (const file of input.files) {
+    await uploadFile(file, dir, autoCust);
+  }
+  input.value = '';
+  if (dir === 'images')            loadImages();
+  if (dir === 'images/customers')  loadCustomers();
+}
+
+async function handleDrop(e, dir) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag');
+  const files = [...e.dataTransfer.files].filter(f => f.type.startsWith('image/'));
+  const isCust = dir === 'images/customers';
+  for (const f of files) await uploadFile(f, dir, isCust);
+  if (dir === 'images')           loadImages();
+  if (dir === 'images/customers') loadCustomers();
+}
+
+async function uploadFile(file, dir, autoCust) {
+  let name = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  if (autoCust) {
+    // Auto-number customer photos
+    try {
+      const r   = await fetch(API + '/files?dir=' + encodeURIComponent(dir));
+      const lst = await r.json();
+      const max = lst.filter(f => /^customer-\d+\./i.test(f.name))
+                     .map(f => parseInt(f.name.match(/(\d+)/)?.[1] || 0))
+                     .reduce((a,b) => Math.max(a,b), 0);
+      const ext = name.split('.').pop();
+      name = `customer-${String(max+1).padStart(2,'0')}.${ext}`;
+    } catch(e){}
+  }
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = async (ev) => {
+      try {
+        const r = await fetch(API + '/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dir, name, data: ev.target.result }),
+        });
+        const d = await r.json();
+        if (d.ok) toast('Uploaded: ' + name);
+        else      toast('Upload failed: ' + d.error, true);
+      } catch (e) { toast('Upload failed', true); }
+      resolve();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── CUSTOMER PHOTOS ───────────────────────────────────────────────────────────
+async function loadCustomers() {
+  const grid = document.getElementById('custGrid');
+  const stat = document.getElementById('custStats');
+  grid.innerHTML = '<span style="color:var(--muted);font-size:.85rem">Loading…</span>';
+  try {
+    const r    = await fetch(API + '/image-info?dir=images/customers');
+    const imgs = await r.json();
+    stat.textContent = imgs.length + ' customer photo' + (imgs.length !== 1 ? 's' : '') + ' in slideshow';
+    grid.innerHTML = imgs.length ? imgs.map((img, i) => `
+      <div class="cust-card" data-file="${img.rel}">
+        <img src="${img.rel}" loading="lazy" onerror="this.style.background='#222'">
+        <span class="cust-num">#${i+1}</span>
+        <button class="cust-del" onclick="deleteCust('${img.rel}',this)">✕</button>
+      </div>
+    `).join('') : '<p style="color:var(--muted);padding:16px">No customer photos yet.</p>';
+  } catch (e) {
+    grid.innerHTML = '<p style="color:var(--danger)">Server not reachable</p>';
+  }
+}
+
+async function deleteCust(rel, btn) {
+  if (!confirm('Remove ' + rel.split('/').pop() + '?')) return;
+  try {
+    const r = await fetch(API + '/file?file=' + encodeURIComponent(rel), { method: 'DELETE' });
+    const d = await r.json();
+    if (d.ok) { btn.closest('.cust-card').remove(); toast('Removed.'); loadCustomers(); }
+    else       toast(d.error || 'Failed', true);
+  } catch (e) { toast('Server not reachable', true); }
+}
+
+// ── CODE EDITOR ───────────────────────────────────────────────────────────────
+async function loadEditorFile() {
+  const file = document.getElementById('editorFile')?.value || 'index.html';
+  try {
+    const r = await fetch(API + '/read-file?file=' + encodeURIComponent(file));
+    const d = await r.json();
+    document.getElementById('codeArea').value = d.content || '';
+    document.getElementById('matchCount').textContent = '';
+    toast('Loaded ' + file);
+  } catch (e) { toast('Could not load file', true); }
+}
+
+function findReplace() {
+  const find    = document.getElementById('findInput').value;
+  const replace = document.getElementById('replaceInput').value;
+  const area    = document.getElementById('codeArea');
+  if (!find) return;
+  const re    = new RegExp(find.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'g');
+  const count = (area.value.match(re) || []).length;
+  if (count === 0) { document.getElementById('matchCount').textContent = 'No matches'; return; }
+  area.value = area.value.replace(re, replace);
+  document.getElementById('matchCount').textContent = `Replaced ${count} match${count>1?'es':''}`;
+  toast(`Replaced ${count} match${count>1?'es':''} — click Save to write`);
+}
+
+async function saveEditorFile() {
+  const file    = document.getElementById('editorFile')?.value || 'index.html';
+  const content = document.getElementById('codeArea').value;
+  try {
+    const r = await fetch(API + '/write-file', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ file, content }),
+    });
+    const d = await r.json();
+    if (d.ok) toast('✓ Saved ' + file);
+    else      toast('Save failed: ' + d.error, true);
+  } catch (e) { toast('Server not reachable', true); }
+}
+
+// ── DEPLOY ────────────────────────────────────────────────────────────────────
+function gitPush() {
+  const out   = document.getElementById('deployTerminal');
+  const oEl   = document.getElementById('deployTermOutput');
+  out.classList.add('open');
+  document.getElementById('deployTermTitle').textContent = 'git push';
+  oEl.innerHTML = '';
+  const cmd = 'git add . && git commit -m "Update JAMIESSHOESS site" && git push';
+  streamCommand(cmd, 'deployTermOutput');
+}
+
+// ── NOTES ─────────────────────────────────────────────────────────────────────
+const NOTES_KEY = 'js_dashboard_notes';
+const DEFAULT_NOTES = `[ ] Fix hero photo full width
+[ ] Update product listings
+[ ] Add new customer photos
+[ ] Push to GitHub when ready
+[ ] Compress large images
+[ ] Update store hours if changed`;
+
+function loadNotes() {
+  document.getElementById('notesArea').value = localStorage.getItem(NOTES_KEY) || DEFAULT_NOTES;
+}
+
+let notesTimer;
+function saveNotes() {
+  clearTimeout(notesTimer);
+  notesTimer = setTimeout(() => {
+    localStorage.setItem(NOTES_KEY, document.getElementById('notesArea').value);
+    const el = document.getElementById('notesSaved');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2000);
+  }, 600);
+}
+
+function clearNotes() {
+  if (!confirm('Clear all notes?')) return;
+  localStorage.removeItem(NOTES_KEY);
+  document.getElementById('notesArea').value = '';
+  toast('Notes cleared.');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg, isErr) {
+  const t = document.getElementById('toast');
+  clearTimeout(toastTimer);
+  t.textContent = msg;
+  t.className   = 'toast show' + (isErr ? ' err' : '');
+  toastTimer    = setTimeout(() => t.classList.remove('show'), 3200);
+}
+</script>
+</body>
+</html>

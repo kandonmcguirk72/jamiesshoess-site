@@ -2,7 +2,7 @@
 <html lang="en" style="scroll-behavior:smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>JAMIESSHOESS</title>
   <script type="application/ld+json">
   {
@@ -112,6 +112,26 @@
   </script>
   <meta name="description" content="Sneakers, vintage clothing & rare finds in Downtown Springfield, MO. Shop JAMIESSHOESS.">
   <meta name="theme-color" content="#0a0a0a">
+
+  <!-- Open Graph (Facebook, iMessage, Slack, LinkedIn) -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="JAMIESSHOESS">
+  <meta property="og:title"       content="JAMIESSHOESS — Sneakers & Vintage · Springfield MO">
+  <meta property="og:description" content="Springfield's premier sneaker boutique + vintage clothing store. 302 Park Central East on Historic Route 66. Wed–Sat only.">
+  <meta property="og:url"         content="https://jamiesshoess.squarespace.com">
+  <meta property="og:image"       content="https://jamiesshoess.squarespace.com/images/storefront.webp">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale"      content="en_US">
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:site"        content="@JAMIESSHOESS">
+  <meta name="twitter:creator"     content="@JAMIESSHOESS">
+  <meta name="twitter:title"       content="JAMIESSHOESS — Sneakers & Vintage · Springfield MO">
+  <meta name="twitter:description" content="Springfield's premier sneaker boutique + vintage clothing store. 302 Park Central East. Wed–Sat only.">
+  <meta name="twitter:image"       content="https://jamiesshoess.squarespace.com/images/storefront.webp">
+
   <link rel="icon" type="image/png" href="images/logo-circle-blue.png">
   <link rel="apple-touch-icon" href="images/logo-circle-blue.png">
   <meta name="msapplication-TileImage" content="images/logo-circle-blue.png">
@@ -448,7 +468,8 @@
     .cart-sidebar.open{right:0}
     .sidebar-header{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:1px solid rgba(255,255,255,.07)}
     .sidebar-header h3{font-family:var(--ff-d);font-size:20px;color:var(--txt)}
-    .close-btn{width:36px;height:36px;border-radius:50%;background:var(--card);color:rgba(240,240,240,.5);font-size:24px;display:flex;align-items:center;justify-content:center;line-height:1}
+    .close-btn{width:44px;height:44px;border-radius:50%;background:var(--card);color:rgba(240,240,240,.55);font-size:26px;display:flex;align-items:center;justify-content:center;line-height:1;border:none;cursor:pointer;transition:background .2s,color .2s}
+    .close-btn:hover{background:rgba(255,255,255,.08);color:var(--txt)}
     .close-btn:hover{background:rgba(255,255,255,.1)}
     .cart-body{flex:1;overflow-y:auto;padding:20px 24px}
     .cart-empty{text-align:center;padding:60px 20px;color:rgba(240,240,240,.35);font-size:15px;line-height:1.7}
@@ -476,7 +497,8 @@
     .popup-overlay.open{display:block}
     .email-popup{position:fixed;top:50%;left:50%;z-index:401;transform:translate(-50%,-50%) scale(.94);background:var(--surf);border-radius:20px;padding:48px 40px;width:90%;max-width:420px;text-align:center;opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.34,1.56,.64,1);border:1px solid rgba(255,255,255,.08)}
     .email-popup.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
-    .ep-close{position:absolute;top:16px;right:16px;background:var(--card);border-radius:50%;width:32px;height:32px;font-size:18px;color:rgba(240,240,240,.4);display:flex;align-items:center;justify-content:center}
+    .ep-close{position:absolute;top:12px;right:12px;background:var(--card);border-radius:50%;width:44px;height:44px;font-size:22px;color:rgba(240,240,240,.55);display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;transition:background .2s,color .2s}
+    .ep-close:hover{background:rgba(255,255,255,.08);color:var(--txt)}
     .ep-icon{font-size:40px;margin-bottom:16px}
     .email-popup h3{font-family:var(--ff-d);font-size:26px;color:var(--txt);margin-bottom:10px}
     .email-popup p{font-size:14px;color:rgba(240,240,240,.55);line-height:1.6;margin-bottom:24px}
@@ -586,7 +608,12 @@
     /* ── HERO PARTICLE CANVASES ── */
     #heroCanvas,#heroInteract{position:absolute;inset:0;width:100%;height:100%}
     #heroCanvas{z-index:2;pointer-events:none}
-    #heroInteract{z-index:3;pointer-events:auto;cursor:crosshair}
+    #heroInteract{z-index:3;pointer-events:auto;cursor:crosshair;touch-action:pan-y pinch-zoom}
+    /* Disable particle canvas touch on mobile so scrolling works naturally */
+    @media(hover:none) and (pointer:coarse){
+      #heroInteract{pointer-events:none}
+      .hero{cursor:default}
+    }
 
     /* ── CLOVER LOADING SKELETON ── */
     .iframe-loading{padding:4px 0 16px}
@@ -601,6 +628,62 @@
     }
 
     /* hero uses <img> — no background-image override needed */
+
+    /* ── RECENTLY SOLD TICKER ── */
+    .sold-ticker{background:#0f0f0f;border-bottom:1px solid rgba(200,245,0,.1);height:34px;display:flex;align-items:center;overflow:hidden;position:relative;z-index:99}
+    .sold-ticker-icon{display:flex;align-items:center;gap:6px;padding:0 16px;height:100%;background:rgba(200,245,0,.08);border-right:1px solid rgba(200,245,0,.12);font-family:var(--ff-d);font-size:.72rem;letter-spacing:.12em;color:var(--cp);text-transform:uppercase;flex-shrink:0;white-space:nowrap}
+    .sold-ticker-dot{width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse 1.6s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .sold-ticker-track-wrap{flex:1;overflow:hidden;position:relative}
+    .sold-ticker-track{display:flex;gap:32px;white-space:nowrap;animation:sold-scroll 60s linear infinite;padding-left:24px;align-items:center;height:100%}
+    .sold-ticker-track:hover{animation-play-state:paused}
+    .sold-ticker-item{font-size:.78rem;color:rgba(240,240,240,.75);flex-shrink:0}
+    .sold-ticker-item strong{color:var(--txt);font-weight:600}
+    .sold-ticker-item .sold-name{color:var(--cs)}
+    .sold-ticker-item .sold-time{color:var(--muted);font-size:.72rem;margin-left:6px}
+    @keyframes sold-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @media(max-width:600px){.sold-ticker-icon{padding:0 10px;font-size:.65rem}.sold-ticker-icon span:last-child{display:none}.sold-ticker-item{font-size:.72rem}}
+
+    /* ── REVIEWS SECTION ── */
+    .reviews-sec{background:#0d0d0d;padding:80px 24px;position:relative;overflow:hidden}
+    .reviews-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,245,0,.3),transparent)}
+    .reviews-wrap{max-width:640px;margin:0 auto;position:relative;z-index:2}
+    .reviews-eyebrow{font-family:var(--ff-d);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cs);text-align:center;margin-bottom:6px}
+    .reviews-title{font-family:var(--ff-d);font-size:clamp(2rem,5vw,3.4rem);text-transform:uppercase;letter-spacing:.04em;text-align:center;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;line-height:1.1}
+    .reviews-sub{text-align:center;color:rgba(240,240,240,.6);font-size:1rem;margin-bottom:36px;line-height:1.65}
+    .review-card{background:var(--card);border:1px solid #1e1e1e;border-radius:14px;padding:36px 32px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+    @media(max-width:560px){.review-card{padding:28px 22px}}
+    .review-stars{display:flex;justify-content:center;gap:8px;margin-bottom:22px;font-size:38px;line-height:1}
+    .star{cursor:pointer;color:#3a3a3a;transition:transform .15s ease,color .15s ease,text-shadow .2s;user-select:none;padding:0;background:none;border:none;font:inherit}
+    .star:hover,.star.hovered{transform:scale(1.18)}
+    .star.filled{color:var(--cp);text-shadow:0 0 16px rgba(200,245,0,.55)}
+    .review-rating-label{font-family:var(--ff-d);font-size:.85rem;text-align:center;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:22px;min-height:18px;transition:color .2s}
+    .review-rating-label.set{color:var(--cp)}
+    .review-fields{display:flex;flex-direction:column;gap:14px}
+    .review-fields input,.review-fields textarea{width:100%;padding:13px 16px;background:#0f0f0f;border:1.5px solid rgba(255,255,255,.08);border-radius:8px;color:var(--txt);font-family:var(--ff-b);font-size:14px;outline:none;transition:border-color .2s;resize:none}
+    .review-fields textarea{min-height:90px;resize:vertical}
+    .review-fields input:focus,.review-fields textarea:focus{border-color:var(--cp)}
+    .review-fields input::placeholder,.review-fields textarea::placeholder{color:rgba(255,255,255,.3)}
+    .review-submit{margin-top:8px;width:100%;padding:14px;background:var(--grad);color:#000;font-family:var(--ff-d);font-size:1rem;letter-spacing:.08em;text-transform:uppercase;border:none;border-radius:100px;cursor:pointer;transition:opacity .2s,transform .15s;font-weight:700}
+    .review-submit:hover:not(:disabled){opacity:.92;transform:translateY(-1px)}
+    .review-submit:disabled{opacity:.4;cursor:not-allowed}
+    .review-direct-link{display:block;text-align:center;margin-top:18px;font-size:.78rem;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+    .review-direct-link:hover{color:var(--cs)}
+    .review-thanks{text-align:center;padding:8px 4px}
+    .review-thanks-icon{font-size:48px;margin-bottom:14px;line-height:1}
+    .review-thanks h3{font-family:var(--ff-d);font-size:1.5rem;color:var(--txt);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em}
+    .review-thanks p{color:rgba(240,240,240,.65);font-size:.95rem;line-height:1.65;margin-bottom:22px}
+    .review-thanks .btn-google{display:inline-flex;align-items:center;gap:10px;background:var(--grad);color:#000;font-family:var(--ff-d);font-size:.95rem;letter-spacing:.06em;text-transform:uppercase;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;transition:opacity .2s,transform .15s}
+    .review-thanks .btn-google:hover{opacity:.92;transform:translateY(-1px)}
+    .review-thanks .btn-email{display:inline-flex;align-items:center;gap:10px;background:none;color:var(--cs);font-family:var(--ff-d);font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;padding:11px 26px;border:1.5px solid rgba(0,229,160,.4);border-radius:100px;text-decoration:none;transition:background .2s}
+    .review-thanks .btn-email:hover{background:rgba(0,229,160,.08)}
+    .review-summary{text-align:center;margin-top:24px;font-size:.8rem;color:var(--muted);letter-spacing:.06em}
+    .review-summary strong{color:var(--cp);font-family:var(--ff-d);font-size:1rem}
+
+    /* ── iOS: prevent auto-zoom on input focus (font-size must be >=16px) ── */
+    @media(max-width:768px){
+      input[type=text],input[type=email],input[type=url],input[type=number],input[type=search],input[type=tel],input[type=password],select,textarea{font-size:16px !important}
+    }
 
     /* ── PRINT STYLESHEET ── */
     @media print {
@@ -703,6 +786,29 @@
     @media(max-width:768px){.customers-mosaic{grid-template-columns:repeat(3,1fr);grid-auto-rows:140px}.customer-card.featured{grid-row:span 1}}
     @media(max-width:480px){.customers-mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}}
 
+    /* ── CUSTOMERS SLIDESHOW ── */
+    .slideshow-wrap{max-width:680px;margin:0 auto;position:relative;user-select:none}
+    .slideshow{position:relative;overflow:hidden;border-radius:12px;background:var(--card);aspect-ratio:1;box-shadow:0 8px 32px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06)}
+    .slideshow-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1);will-change:transform;height:100%}
+    .slide{flex:0 0 100%;position:relative;height:100%;overflow:hidden}
+    .slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;-webkit-user-drag:none;pointer-events:none}
+    .slide-bottom{position:absolute;bottom:0;left:0;right:0;padding:18px 20px;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.4) 50%,transparent 100%);display:flex;flex-direction:column;gap:5px;pointer-events:none}
+    .slide-tag{font-family:var(--ff-d);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .slide-caption{font-family:var(--ff-d);font-size:clamp(.92rem,2.5vw,1.08rem);letter-spacing:.06em;text-transform:uppercase;color:#f0f0f0;text-shadow:0 1px 6px rgba(0,0,0,.9)}
+    .slide-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:10;width:44px;height:44px;border-radius:50%;background:rgba(10,10,10,.6);border:1px solid rgba(255,255,255,.15);color:#f0f0f0;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:background .2s,border-color .2s,color .2s;cursor:pointer;padding:0}
+    .slide-arrow:hover{background:rgba(200,245,0,.2);border-color:var(--cp);color:var(--cp)}
+    .slide-prev{left:12px}
+    .slide-next{right:12px}
+    .slideshow-footer{max-width:680px;margin:14px auto 0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px}
+    .slide-counter{font-family:var(--ff-d);font-size:.75rem;letter-spacing:.14em;color:var(--muted);white-space:nowrap;min-width:42px}
+    .slide-dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1}
+    .slide-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.18);cursor:pointer;transition:background .2s,transform .2s;border:none;padding:0;flex-shrink:0}
+    .slide-dot.active{background:var(--cp);transform:scale(1.35)}
+    .slide-progress{height:2px;width:80px;background:rgba(255,255,255,.1);border-radius:1px;overflow:hidden;flex-shrink:0}
+    .slide-progress-bar{height:100%;width:100%;background:linear-gradient(90deg,var(--cp),var(--cs));transform-origin:left;transform:scaleX(0)}
+    .slide-progress-bar.run{transition:transform 4s linear;transform:scaleX(1)}
+    @media(max-width:768px){.slideshow-wrap{max-width:100%}.slide-arrow{width:44px;height:44px;font-size:22px}.slide-prev{left:8px}.slide-next{right:8px}.slide-progress{width:50px}}
+
     /* ── IMAGE QUALITY GLOBAL ── */
     img{image-rendering:-webkit-optimize-contrast;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 
@@ -751,6 +857,17 @@
   <button class="ann-close" onclick="document.getElementById('announceBar').style.display='none'" aria-label="Close">×</button>
 </div>
 
+<!-- RECENTLY SOLD TICKER -->
+<div class="sold-ticker" id="soldTicker" aria-label="Recently sold items">
+  <div class="sold-ticker-icon">
+    <span class="sold-ticker-dot"></span>
+    <span>Recently Sold</span>
+  </div>
+  <div class="sold-ticker-track-wrap">
+    <div class="sold-ticker-track" id="soldTickerTrack">Loading…</div>
+  </div>
+</div>
+
 <!-- HEADER -->
 <header id="hdr">
   <div class="hdr-inner">
@@ -776,6 +893,7 @@
       <a href="about.html" class="nav-link">About</a>
       <a href="location.html" class="nav-link">Visit Us</a>
       <a href="faq.html" class="nav-link">FAQ</a>
+      <a href="#reviews" class="nav-link" onclick="closeNav()">Reviews</a>
       <a href="admin.html" class="nav-link hl" id="addListingLink">+ Add Listing</a>
     </nav>
     <div class="hdr-actions">
@@ -1017,7 +1135,17 @@
         </div>
         <p class="prod-count" id="productsCount"></p>
       </div>
-      <div class="sort-wrap">
+      <div class="sort-wrap" style="display:flex;gap:8px;flex-wrap:wrap">
+        <select id="sizeFilter" onchange="setSizeFilter(this.value)" aria-label="Filter by size" style="padding:9px 16px;border-radius:100px;border:1.5px solid rgba(255,255,255,.1);background:#1a1a1a;font-size:13px;font-family:var(--ff-b);color:var(--txt);cursor:pointer;outline:none">
+          <option value="">All Sizes</option>
+        </select>
+        <select id="badgeFilter" onchange="setBadgeFilter(this.value)" aria-label="Filter by condition" style="padding:9px 16px;border-radius:100px;border:1.5px solid rgba(255,255,255,.1);background:#1a1a1a;font-size:13px;font-family:var(--ff-b);color:var(--txt);cursor:pointer;outline:none">
+          <option value="">All Conditions</option>
+          <option value="rare">⭐ Rare / 1 of 1</option>
+          <option value="vintage">🕰️ Vintage</option>
+          <option value="new">🆕 New Drop</option>
+          <option value="instock">✅ In Stock Only</option>
+        </select>
         <select id="sortSelect" onchange="sortProducts(this.value)" aria-label="Sort products">
           <option value="default">Featured</option>
           <option value="price-low">Price: Low → High</option>
@@ -1213,69 +1341,160 @@
     <h2 id="customers-heading" class="grad-text reveal" style="font-family:var(--ff-d);text-transform:uppercase;letter-spacing:.05em">HAPPY CUSTOMERS</h2>
     <p class="customers-sub reveal">Real people, real heat. Springfield's sneaker community.</p>
   </div>
-  <!--
-  ================================================================
-  OWNER ACTION: ADD CUSTOMER PHOTOS HERE
-  ================================================================
-  1. Create folder: images/customers/
-  2. Save customer photos named: customer-01.jpg through customer-09.jpg
-  3. Where to get photos:
-     - Screenshots from Instagram posts where customers tagged you
-     - DMs from customers showing their purchase
-     - Photos of customers with the JAMIESSHOESS bag
-  4. Cards auto-hide if image is missing (onerror handler)
-  ================================================================
-  -->
-  <div class="customers-mosaic" id="customersMosaic">
-    <div class="customer-card featured reveal" style="grid-row:span 2">
-      <img src="images/customers/customer-01.jpg" alt="Happy customer with JAMIESSHOESS bag" loading="lazy"
-           onerror="this.parentElement.style.display='none'">
-      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
+  <div class="slideshow-wrap">
+    <div class="slideshow" id="customerSlideshow">
+      <div class="slideshow-track" id="slideshowTrack"></div>
+      <button class="slide-arrow slide-prev" id="slidePrev" aria-label="Previous photo">&#8249;</button>
+      <button class="slide-arrow slide-next" id="slideNext" aria-label="Next photo">&#8250;</button>
+    </div><!-- /.slideshow -->
+    <div class="slideshow-footer">
+      <span class="slide-counter" id="slideCounter">1 / 1</span>
+      <div class="slide-dots" id="slideDots"></div>
+      <div class="slide-progress"><div class="slide-progress-bar" id="slideProgressBar"></div></div>
     </div>
-    <div class="customer-card reveal">
-      <img src="images/customers/customer-02.jpg" alt="JAMIESSHOESS customer" loading="lazy"
-           onerror="this.parentElement.style.display='none'">
-      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
-    </div>
-    <div class="customer-card reveal">
-      <img src="images/customers/customer-03.jpg" alt="JAMIESSHOESS customer" loading="lazy"
-           onerror="this.parentElement.style.display='none'">
-      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
-    </div>
-    <div class="customer-card reveal">
-      <img src="images/customers/customer-04.jpg" alt="JAMIESSHOESS customer" loading="lazy"
-           onerror="this.parentElement.style.display='none'">
-      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
-    </div>
-    <div class="customer-card reveal">
-      <img src="images/customers/customer-05.jpg" alt="JAMIESSHOESS customer" loading="lazy"
-           onerror="this.parentElement.style.display='none'">
-      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
-    </div>
-    <div class="customer-card reveal">
-      <img src="images/customers/customer-06.jpg" alt="JAMIESSHOESS customer" loading="lazy"
-           onerror="this.parentElement.style.display='none'">
-      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
-    </div>
-    <div class="customer-card reveal">
-      <img src="images/customers/customer-07.jpg" alt="JAMIESSHOESS customer" loading="lazy"
-           onerror="this.parentElement.style.display='none'">
-      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
-    </div>
-    <div class="customer-card reveal">
-      <img src="images/customers/customer-08.jpg" alt="JAMIESSHOESS customer" loading="lazy"
-           onerror="this.parentElement.style.display='none'">
-      <div class="customer-card-overlay"><span class="customer-bag-tag">🛍 THE BAG</span></div>
-    </div>
-    <div class="customer-card cta-card reveal">
-      <div class="customer-cta-inner">
-        <p class="cta-card-title">TAG US</p>
-        <p class="cta-card-sub">@JAMIESSHOESS<br>to be featured</p>
-        <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener noreferrer"
-           class="btn-secondary" style="font-size:.8rem;padding:8px 16px;border-radius:100px">FOLLOW ↗</a>
-      </div>
-    </div>
-  </div>
+  </div><!-- /.slideshow-wrap -->
+  <script>
+  (function(){
+    // ── CUSTOMER PHOTOS — auto-generated slideshow ──────────────────────────
+    // To add/remove photos: drop them in images/customers/ via dashboard, then
+    // update the list below (or use dashboard auto-numbering: customer-XX.png).
+    var CUSTOMERS = [
+      { n:'01', tag:'🛍 THE BAG',        caption:'THEY FOUND THE HEAT'        },
+      { n:'02', tag:'👟 FRESH PICKUP',   caption:'THE PLUG CAME THROUGH'      },
+      { n:'03', tag:'🛍 THE BAG',        caption:'LEFT HAPPY. ALWAYS.'        },
+      { n:'04', tag:'👕 VINTAGE FIND',   caption:'ONE OF ONE.'                },
+      { n:'05', tag:'🛍 THE HAUL',       caption:'WENT CRAZY IN THERE'        },
+      { n:'06', tag:'👟 SNEAKER CHECK',  caption:'FOUND THE ONE.'             },
+      { n:'07', tag:'🛍 DOUBLE BAG',     caption:'CAME TOGETHER. LEFT RIGHT.' },
+      { n:'08', tag:'📍 ROUTE 66',       caption:'DOWNTOWN SPRINGFIELD'       },
+      { n:'09', tag:'🛍 THE BAG',        caption:'THE FIT. THE BAG. DONE.'    },
+      { n:'10', tag:'🚗 DOWNTOWN VIBES', caption:'302 PARK CENTRAL EAST'      },
+      { n:'11', tag:'🛍 THE FAMILY',     caption:'EVERYONE’S WELCOME.'   },
+      { n:'12', tag:'🛍 THE FAMILY',     caption:'WHOLE SQUAD COPPED.'        },
+      { n:'13', tag:'🛍 THE HAUL',       caption:'THEY DIDN’T HOLD BACK.' },
+      { n:'15', tag:'👟 SNEAKER CHECK',  caption:'THEY KNOW WHAT THEY WANT.'  },
+      { n:'16', tag:'🧢 THE COUNTER',    caption:'ALWAYS TAKEN CARE OF.'      },
+      { n:'17', tag:'🛍 THE BAG',        caption:'COPPED & SMILING.'          },
+      { n:'18', tag:'👕 NEW DRIP',       caption:'FIT OF THE WEEK.'           },
+      { n:'19', tag:'🛍 THE PICKUP',     caption:'CAUGHT THE DROP.'           },
+      { n:'20', tag:'👟 GRAILS',         caption:'PATIENCE PAID OFF.'         },
+      { n:'21', tag:'🛍 THE BAG',        caption:'ANOTHER ONE.'               },
+      { n:'22', tag:'📍 SPRINGFIELD',    caption:'LOCAL LOVE.'                }
+    ];
+
+    var track = document.getElementById('slideshowTrack');
+    var dots  = document.getElementById('slideDots');
+    var cnt   = document.getElementById('slideCounter');
+    var bar   = document.getElementById('slideProgressBar');
+    if (!track) return;
+
+    // Render slides + dots
+    track.innerHTML = CUSTOMERS.map(function(c, i){
+      return '<div class="slide' + (i === 0 ? ' active' : '') + '" data-index="' + i + '">' +
+               '<img src="images/customers/customer-' + c.n + '.jpg" ' +
+                    'alt="JAMIESSHOESS customer #' + c.n + ' — Springfield, MO" ' +
+                    'loading="' + (i < 2 ? 'eager' : 'lazy') + '" decoding="async" ' +
+                    'width="640" height="640" ' +
+                    'onerror="this.parentElement.style.display=\'none\'">' +
+               '<div class="slide-bottom">' +
+                 '<span class="slide-tag">' + c.tag + '</span>' +
+                 '<span class="slide-caption">' + c.caption + '</span>' +
+               '</div>' +
+             '</div>';
+    }).join('');
+
+    dots.innerHTML = CUSTOMERS.map(function(_, i){
+      return '<button class="slide-dot' + (i === 0 ? ' active' : '') + '" data-i="' + i + '" aria-label="Go to slide ' + (i+1) + '"></button>';
+    }).join('');
+
+    var slides = track.querySelectorAll('.slide');
+    var dotEls = dots.querySelectorAll('.slide-dot');
+    var idx = 0;
+    var auto = null;
+    var paused = false;
+    var INTERVAL = 4200;
+
+    function go(n) {
+      idx = (n + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+      slides.forEach(function(s, i){ s.classList.toggle('active', i === idx); });
+      dotEls.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+      cnt.textContent = (idx + 1) + ' / ' + slides.length;
+      restartBar();
+    }
+
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
+
+    function restartBar() {
+      if (!bar) return;
+      bar.classList.remove('run');
+      bar.style.transitionDuration = '0s';
+      bar.style.transform = 'scaleX(0)';
+      // force reflow then trigger animation
+      void bar.offsetWidth;
+      bar.style.transitionDuration = (INTERVAL / 1000) + 's';
+      if (!paused) bar.style.transform = 'scaleX(1)';
+    }
+
+    function startAuto() {
+      stopAuto();
+      auto = setInterval(function(){ if (!paused) next(); }, INTERVAL);
+    }
+    function stopAuto() { if (auto) { clearInterval(auto); auto = null; } }
+
+    // Controls
+    document.getElementById('slidePrev').addEventListener('click', function(){ prev(); startAuto(); });
+    document.getElementById('slideNext').addEventListener('click', function(){ next(); startAuto(); });
+    dots.addEventListener('click', function(e){
+      var d = e.target.closest('.slide-dot');
+      if (!d) return;
+      go(parseInt(d.dataset.i, 10));
+      startAuto();
+    });
+
+    // Pause on hover (desktop)
+    var box = document.getElementById('customerSlideshow');
+    box.addEventListener('mouseenter', function(){ paused = true;  bar.style.transform = 'scaleX(' + getBarProgress() + ')'; });
+    box.addEventListener('mouseleave', function(){ paused = false; restartBar(); });
+
+    function getBarProgress() {
+      var t = window.getComputedStyle(bar).transform;
+      // fallback — just reset bar
+      return 0;
+    }
+
+    // Touch swipe (mobile)
+    var startX = 0, dx = 0, swiping = false;
+    track.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; swiping = true; paused = true; }, { passive: true });
+    track.addEventListener('touchmove',  function(e){ if (swiping) dx = e.touches[0].clientX - startX; }, { passive: true });
+    track.addEventListener('touchend',   function(){
+      if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+      swiping = false; dx = 0; paused = false; startAuto();
+    }, { passive: true });
+
+    // Pause when offscreen
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting) { paused = false; startAuto(); restartBar(); }
+          else                    { paused = true;  stopAuto(); }
+        });
+      }, { threshold: 0.2 }).observe(box);
+    }
+
+    // Keyboard
+    document.addEventListener('keydown', function(e){
+      if (!box.getBoundingClientRect().top || box.getBoundingClientRect().bottom < 0) return;
+      if (e.key === 'ArrowLeft')  { prev(); startAuto(); }
+      if (e.key === 'ArrowRight') { next(); startAuto(); }
+    });
+
+    // Kick it off
+    go(0);
+    startAuto();
+  })();
+  </script>
   <div class="customers-quote reveal">
     <blockquote>"The only sneaker spot in Springfield that actually has heat. Come in on Saturdays — new stuff every week."</blockquote>
     <cite>— Springfield local</cite>
@@ -1292,6 +1511,59 @@
   <br><br>
   <a href="https://www.tiktok.com/@jamiesshoess417" target="_blank" rel="noopener noreferrer" class="btn-s" style="margin-right:10px">🎵 @JAMIESSHOESS417 on TikTok</a>
   <a href="https://www.facebook.com/p/jamiesshoess-100080011887058/" target="_blank" rel="noopener noreferrer" class="btn-s">📘 JAMIESSHOESS on Facebook</a>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ── REVIEWS ── -->
+<section id="reviews" class="reviews-sec" aria-labelledby="reviews-heading">
+  <div class="reviews-wrap">
+    <span class="reviews-eyebrow">Tell us about your visit</span>
+    <h2 id="reviews-heading" class="reviews-title">LEAVE A REVIEW</h2>
+    <p class="reviews-sub">Your feedback keeps the heat coming. Happy customers help us reach more people — bad days help us get better.</p>
+
+    <div class="review-card">
+
+      <!-- Step 1: rating form -->
+      <div id="reviewForm">
+        <div class="review-stars" id="reviewStars" role="radiogroup" aria-label="Rating">
+          <button type="button" class="star" data-v="1" aria-label="1 star">★</button>
+          <button type="button" class="star" data-v="2" aria-label="2 stars">★</button>
+          <button type="button" class="star" data-v="3" aria-label="3 stars">★</button>
+          <button type="button" class="star" data-v="4" aria-label="4 stars">★</button>
+          <button type="button" class="star" data-v="5" aria-label="5 stars">★</button>
+        </div>
+        <div class="review-rating-label" id="ratingLabel">Tap a star to rate your visit</div>
+
+        <div class="review-fields">
+          <input type="text"  id="reviewName"    placeholder="Your name (optional)" maxlength="60">
+          <textarea           id="reviewComment" placeholder="Tell us what you thought (optional)" maxlength="500"></textarea>
+          <button type="button" class="review-submit" id="reviewSubmit" disabled onclick="submitReview()">Submit Review</button>
+        </div>
+
+        <a href="https://www.google.com/search?q=JAMIESSHOESS+Sneakers+Vintage+302+Park+Central+East+Springfield+MO" target="_blank" rel="noopener" class="review-direct-link">Or post directly on Google →</a>
+      </div>
+
+      <!-- Step 2a: happy path (4-5 stars) -->
+      <div id="reviewHappy" class="review-thanks" hidden>
+        <div class="review-thanks-icon">🙌</div>
+        <h3>Thanks for the love!</h3>
+        <p>Reviews on Google help us reach more people who'd love this stuff. Would you share that same review with us there?</p>
+        <a href="#" id="googleReviewLink" target="_blank" rel="noopener" class="btn-google">⭐ Post on Google</a>
+      </div>
+
+      <!-- Step 2b: feedback path (1-3 stars) -->
+      <div id="reviewSad" class="review-thanks" hidden>
+        <div class="review-thanks-icon">🙏</div>
+        <h3>We hear you.</h3>
+        <p>That's not the experience we want anyone to have. Bailey personally reads every email — let us know what happened so we can make it right.</p>
+        <a href="#" id="feedbackEmailLink" class="btn-email">✉ Email Bailey Direct</a>
+      </div>
+
+    </div>
+
+    <div class="review-summary" id="reviewSummary"></div>
+  </div>
 </section>
 
 <div class="section-divider" aria-hidden="true"></div>
@@ -2026,6 +2298,92 @@ var loopTick=0;
   (function() {
     var el = document.getElementById('copyrightYear');
     if (el) el.textContent = new Date().getFullYear();
+  })();
+
+  // ── REVIEWS ──────────────────────────────────────────────────────────────
+  (function() {
+    var GOOGLE_REVIEW_URL = 'https://www.google.com/search?q=JAMIESSHOESS+Sneakers+Vintage+302+Park+Central+East+Springfield+MO+review';
+    var FEEDBACK_EMAIL    = 'Bailey@jamiesshoess.com';
+    var STORAGE_KEY       = 'js_reviews';
+
+    var stars     = document.querySelectorAll('#reviewStars .star');
+    var label     = document.getElementById('ratingLabel');
+    var submitBtn = document.getElementById('reviewSubmit');
+    var summary   = document.getElementById('reviewSummary');
+    if (!stars.length) return;
+
+    var rating = 0;
+    var LABELS = ['', 'Bad', 'Not great', 'Okay', 'Pretty good', 'Loved it'];
+
+    function paint(n) {
+      stars.forEach(function(s, i) {
+        s.classList.toggle('filled', i < n);
+      });
+    }
+
+    stars.forEach(function(s, i) {
+      s.addEventListener('mouseenter', function(){ paint(i + 1); });
+      s.addEventListener('focus',      function(){ paint(i + 1); });
+      s.addEventListener('click', function() {
+        rating = i + 1;
+        paint(rating);
+        label.textContent = LABELS[rating];
+        label.classList.add('set');
+        submitBtn.disabled = false;
+      });
+    });
+
+    document.getElementById('reviewStars').addEventListener('mouseleave', function(){
+      paint(rating);
+    });
+
+    window.submitReview = function() {
+      if (!rating) return;
+      var name    = (document.getElementById('reviewName').value    || '').trim();
+      var comment = (document.getElementById('reviewComment').value || '').trim();
+
+      // Save locally so owner can see all reviews in admin
+      try {
+        var all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        all.push({
+          rating: rating,
+          name: name || 'Anonymous',
+          comment: comment,
+          date: new Date().toISOString(),
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+      } catch (e) {}
+
+      document.getElementById('reviewForm').hidden = true;
+
+      if (rating >= 4) {
+        // Happy path - send to Google
+        document.getElementById('googleReviewLink').href = GOOGLE_REVIEW_URL;
+        document.getElementById('reviewHappy').hidden = false;
+      } else {
+        // Feedback path - private email
+        var subject = encodeURIComponent('Feedback from website (' + rating + ' stars)');
+        var body    = encodeURIComponent(
+          'From: ' + (name || 'Anonymous') + '\n' +
+          'Rating: ' + rating + ' / 5\n\n' +
+          (comment || '(no comment left)') + '\n\n' +
+          '— Sent from JAMIESSHOESS website'
+        );
+        document.getElementById('feedbackEmailLink').href = 'mailto:' + FEEDBACK_EMAIL + '?subject=' + subject + '&body=' + body;
+        document.getElementById('reviewSad').hidden = false;
+      }
+
+      summary.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+
+    // Show running count + avg
+    try {
+      var all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if (all.length) {
+        var avg = (all.reduce(function(s,r){ return s + r.rating; }, 0) / all.length).toFixed(1);
+        summary.innerHTML = '<strong>' + all.length + '</strong> review' + (all.length !== 1 ? 's' : '') + ' so far · avg <strong>' + avg + ' ★</strong>';
+      }
+    } catch (e) {}
   })();
 </script>
 </body>

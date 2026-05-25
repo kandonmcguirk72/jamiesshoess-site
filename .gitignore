@@ -1,2 +1,9 @@
 .env
 node_modules/
+dashboard.log
+dashboard.err.log
+tunnel.log
+tunnel.err.log
+.claude-prompt.tmp
+data/inventory.json
+images/customers/_originals/

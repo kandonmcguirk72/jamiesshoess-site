@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title id="pageTitle">Loading… — JAMIESSHOESS</title>
+  <meta name="description" id="metaDesc" content="JAMIESSHOESS — Sneakers & vintage in Downtown Springfield, MO">
+  <link rel="icon" type="image/png" href="images/logo-circle-blue.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <meta property="og:type" content="product">
+  <meta property="og:site_name" content="JAMIESSHOESS">
+  <meta property="og:title" id="ogTitle" content="JAMIESSHOESS">
+  <meta property="og:description" id="ogDesc" content="">
+  <meta property="og:image" id="ogImage" content="">
+  <style>
+    :root{
+      --cp:#c8f500;--cs:#00e5a0;
+      --dark:#0a0a0a;--surf:#141414;--card:#1a1a1a;--border:#1e1e1e;
+      --txt:#f0f0f0;--muted:#888;
+      --grad:linear-gradient(135deg,#c8f500,#00e5a0);
+      --danger:#ff2244;--success:#22c55e;
+      --ff-d:'Boogaloo',sans-serif;--ff-b:'DM Sans',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--dark);color:var(--txt);font-family:var(--ff-b);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh}
+    a{text-decoration:none;color:inherit}
+    button{cursor:pointer;border:none;font-family:inherit}
+    body::before{content:'';display:block;height:3px;background:var(--grad);position:fixed;top:0;left:0;right:0;z-index:200}
+
+    /* Header */
+    #hdr{position:sticky;top:3px;z-index:100;background:rgba(10,10,10,.97);border-bottom:1px solid rgba(200,245,0,.1);backdrop-filter:blur(8px)}
+    .hdr-inner{max-width:1280px;margin:0 auto;padding:0 24px;height:62px;display:flex;align-items:center;gap:16px}
+    .hdr-brand{font-family:var(--ff-d);font-size:1.3rem;letter-spacing:.08em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hdr-back{margin-left:auto;font-family:var(--ff-d);font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:8px 16px;border-radius:6px;border:1px solid rgba(255,255,255,.08);transition:all .2s}
+    .hdr-back:hover{color:var(--cp);border-color:rgba(200,245,0,.3)}
+
+    /* Breadcrumb */
+    .crumbs{max-width:1280px;margin:0 auto;padding:18px 24px 8px;font-size:.78rem;color:var(--muted);letter-spacing:.04em}
+    .crumbs a{color:var(--muted);transition:color .15s}
+    .crumbs a:hover{color:var(--cp)}
+    .crumbs span{margin:0 8px;color:rgba(255,255,255,.2)}
+
+    /* Layout */
+    .prod-page{max-width:1280px;margin:0 auto;padding:18px 24px 80px;display:grid;grid-template-columns:1.1fr 1fr;gap:48px}
+    @media(max-width:880px){.prod-page{grid-template-columns:1fr;gap:28px}}
+
+    /* Image side */
+    .prod-image-wrap{position:sticky;top:90px;align-self:start;background:#0d0d0d;border-radius:14px;overflow:hidden;border:1px solid var(--border);aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+    @media(max-width:880px){.prod-image-wrap{position:static}}
+    .prod-image-wrap img{width:100%;height:100%;object-fit:contain;background:#0d0d0d}
+    .prod-image-fallback{font-size:9rem;color:rgba(255,255,255,.05)}
+
+    /* Info side */
+    .prod-cat-tag{font-family:var(--ff-d);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cs);margin-bottom:6px;display:flex;align-items:center;gap:10px}
+    .prod-badge-tag{font-family:var(--ff-d);font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:100px;background:var(--grad);color:#000}
+    .prod-badge-tag.vintage{background:#1a1a1a;color:#fff;border:1px solid #333}
+    .prod-badge-tag.sold{background:var(--danger);color:#fff}
+    .prod-name{font-family:var(--ff-d);font-size:clamp(1.7rem,4vw,2.6rem);text-transform:uppercase;letter-spacing:.02em;color:var(--txt);line-height:1.15;margin-bottom:16px}
+    .prod-price{font-family:var(--ff-d);font-size:clamp(2rem,5vw,3rem);background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:8px;letter-spacing:-.01em}
+    .prod-stock-tag{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;padding:5px 12px;border-radius:100px;margin-bottom:22px}
+    .prod-stock-tag.ok  {background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.25)}
+    .prod-stock-tag.low {background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.25)}
+    .prod-stock-tag.out {background:rgba(255,34,68,.12);color:var(--danger);border:1px solid rgba(255,34,68,.25)}
+    .prod-stock-tag::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor;animation:pulse 1.4s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+    .prod-meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px;padding:18px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .prod-meta-cell .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:3px}
+    .prod-meta-cell .val{font-family:var(--ff-d);font-size:1rem;color:var(--txt);text-transform:capitalize}
+
+    .prod-desc{font-size:1rem;line-height:1.75;color:rgba(240,240,240,.78);margin-bottom:30px}
+
+    .prod-cta-row{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+    .btn-buy{width:100%;padding:16px;background:var(--grad);color:#000;font-family:var(--ff-d);font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;border:none;border-radius:100px;cursor:pointer;transition:opacity .2s,transform .15s}
+    .btn-buy:hover:not(:disabled){opacity:.93;transform:translateY(-2px)}
+    .btn-buy:disabled{opacity:.4;cursor:not-allowed}
+    .btn-dm{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;background:none;color:var(--cs);border:1.5px solid rgba(0,229,160,.35);border-radius:100px;font-family:var(--ff-d);font-size:.95rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+    .btn-dm:hover{background:rgba(0,229,160,.06)}
+
+    .trust-row{display:flex;gap:14px;flex-wrap:wrap;font-size:.75rem;color:var(--muted);margin-top:6px}
+    .trust-row > div{display:flex;align-items:center;gap:5px}
+
+    /* Related */
+    .related-sec{max-width:1280px;margin:0 auto;padding:32px 24px 80px;border-top:1px solid var(--border)}
+    .related-title{font-family:var(--ff-d);font-size:1.5rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:18px}
+    .related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    @media(max-width:768px){.related-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+    .rel-card{background:#0f0f0f;border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all .25s;display:block}
+    .rel-card:hover{border-color:var(--cp);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.5)}
+    .rel-img-wrap{aspect-ratio:3/4;overflow:hidden;background:#0a0a0a}
+    .rel-img-wrap img{width:100%;height:100%;object-fit:cover}
+    .rel-info{padding:10px 12px}
+    .rel-name{font-size:.78rem;color:var(--txt);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+    .rel-price{font-family:var(--ff-d);font-size:.92rem;color:var(--cp)}
+
+    /* Not found */
+    .not-found{text-align:center;padding:80px 24px;max-width:480px;margin:0 auto}
+    .not-found-icon{font-size:5rem;margin-bottom:14px}
+    .not-found h1{font-family:var(--ff-d);font-size:2rem;margin-bottom:10px}
+    .not-found p{color:var(--muted);margin-bottom:24px}
+    .not-found a{display:inline-block;background:var(--grad);color:#000;font-family:var(--ff-d);padding:12px 28px;border-radius:100px;text-transform:uppercase;letter-spacing:.06em}
+
+    /* Toast */
+    .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);color:var(--txt);border:1px solid rgba(255,255,255,.08);padding:11px 22px;border-radius:100px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap;border-left:3px solid var(--cp)}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    @media(max-width:768px){
+      input[type=text],input[type=email],input[type=url],input[type=number],select,textarea{font-size:16px !important}
+    }
+  </style>
+</head>
+<body>
+
+<div id="hdr">
+  <div class="hdr-inner">
+    <a href="index.html" class="hdr-brand">JAMIESSHOESS</a>
+    <a href="index.html#products" class="hdr-back">← Back to Shop</a>
+  </div>
+</div>
+
+<div id="prodContent">
+  <nav class="crumbs">
+    <a href="index.html">Home</a><span>›</span>
+    <a href="index.html#products" id="crumbCat">Shop</a><span>›</span>
+    <span id="crumbName">Loading…</span>
+  </nav>
+
+  <div class="prod-page">
+    <div class="prod-image-wrap" id="prodImageWrap">
+      <div class="prod-image-fallback">🛍️</div>
+    </div>
+    <div class="prod-info">
+      <div class="prod-cat-tag" id="prodCatTag">—</div>
+      <h1 class="prod-name" id="prodName">Loading…</h1>
+      <div class="prod-price" id="prodPrice">$—</div>
+      <div id="prodStockTag"></div>
+
+      <div class="prod-meta-grid" id="prodMetaGrid"></div>
+
+      <p class="prod-desc" id="prodDesc"></p>
+
+      <div class="prod-cta-row">
+        <button class="btn-buy" id="btnAddCart" onclick="addToCartAndGo()">+ Add to Cart</button>
+        <a class="btn-dm" id="btnDM" href="https://www.instagram.com/jamiesshoess" target="_blank" rel="noopener">
+          💬 DM @JAMIESSHOESS to reserve
+        </a>
+      </div>
+
+      <div class="trust-row">
+        <div>✓ 100% Authentic</div>
+        <div>📍 Free Local Pickup</div>
+        <div>🔒 Secure Checkout</div>
+        <div>⏰ Wed–Sat hours</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="related-sec">
+    <h2 class="related-title">More From This Category</h2>
+    <div class="related-grid" id="relatedGrid"></div>
+  </section>
+</div>
+
+<!-- Not found state -->
+<div id="notFound" class="not-found" style="display:none">
+  <div class="not-found-icon">👟</div>
+  <h1>Item Not Found</h1>
+  <p>This item may have sold or been removed.</p>
+  <a href="index.html#products">← Back to Shop</a>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script>
+// ── PRODUCT DETAIL PAGE ────────────────────────────────────────────────────────
+function getProductId() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('id');
+}
+
+function findProduct(id) {
+  // Try live products (Clover) first, then localStorage
+  const all = (typeof getProducts === 'function') ? getProducts() : [];
+  return all.find(p => String(p.id) === String(id));
+}
+
+function renderProduct() {
+  const id = getProductId();
+  if (!id) { showNotFound(); return; }
+
+  const tryRender = () => {
+    const p = findProduct(id);
+    if (!p) {
+      // Maybe live inventory still loading — retry once
+      setTimeout(() => {
+        const p2 = findProduct(id);
+        if (p2) buildProductView(p2);
+        else showNotFound();
+      }, 800);
+      return;
+    }
+    buildProductView(p);
+  };
+
+  if (window._productsLoaded || (typeof getProducts === 'function' && getProducts().length)) tryRender();
+  else setTimeout(tryRender, 400);
+}
+
+function buildProductView(p) {
+  const stock = p.stock ?? 1;
+  const soldOut = stock === 0;
+  const lowStock = stock > 0 && stock <= 3;
+
+  // Page metadata
+  document.getElementById('pageTitle').textContent = p.name + ' — JAMIESSHOESS';
+  document.getElementById('metaDesc').content = (p.description || p.name) + ' · JAMIESSHOESS Springfield MO';
+  document.getElementById('ogTitle').content  = p.name + ' — JAMIESSHOESS';
+  document.getElementById('ogDesc').content   = p.description || ('Shop ' + p.name + ' at JAMIESSHOESS Springfield');
+  document.getElementById('ogImage').content  = p.image || '';
+
+  // Breadcrumb
+  document.getElementById('crumbCat').textContent = capitalize(p.category || 'Shop');
+  document.getElementById('crumbCat').href = 'index.html#products';
+  document.getElementById('crumbName').textContent = p.name;
+
+  // Image
+  const wrap = document.getElementById('prodImageWrap');
+  if (p.image) wrap.innerHTML = `<img src="${p.image}" alt="${p.name}" loading="eager">`;
+
+  // Category tag + badge
+  const badgeMap = { rare:'⭐ Rare', vintage:'🕰️ Vintage', new:'🆕 New Drop' };
+  let catTag = '<span style="text-transform:uppercase">' + (p.category || 'Other') + '</span>';
+  if (p.badge && badgeMap[p.badge]) catTag += `<span class="prod-badge-tag ${p.badge}">${badgeMap[p.badge]}</span>`;
+  if (soldOut) catTag += `<span class="prod-badge-tag sold">SOLD</span>`;
+  document.getElementById('prodCatTag').innerHTML = catTag;
+
+  document.getElementById('prodName').textContent  = p.name;
+  document.getElementById('prodPrice').textContent = '$' + parseFloat(p.price).toFixed(2);
+
+  // Stock tag
+  let stockHtml = '';
+  if (soldOut)       stockHtml = '<div class="prod-stock-tag out">Sold Out</div>';
+  else if (lowStock) stockHtml = `<div class="prod-stock-tag low">Only ${stock} left</div>`;
+  else                stockHtml = '<div class="prod-stock-tag ok">In Stock</div>';
+  document.getElementById('prodStockTag').innerHTML = stockHtml;
+
+  // Meta grid
+  const meta = [];
+  if (p.size)     meta.push({ label:'Size',     val: p.size });
+  if (p.category) meta.push({ label:'Category', val: p.category });
+  if (p.badge)    meta.push({ label:'Condition',val: p.badge });
+  meta.push({ label:'Pickup', val:'Free in-store' });
+  document.getElementById('prodMetaGrid').innerHTML = meta.map(m => `
+    <div class="prod-meta-cell"><div class="label">${m.label}</div><div class="val">${m.val}</div></div>
+  `).join('');
+
+  // Description
+  document.getElementById('prodDesc').textContent = p.description || 'Hand-picked, authenticated, ready for pickup at our Downtown Springfield location.';
+
+  // CTAs
+  const btnBuy = document.getElementById('btnAddCart');
+  if (soldOut) { btnBuy.disabled = true; btnBuy.textContent = 'Sold Out'; }
+
+  // DM link with prefilled item
+  const dmText = encodeURIComponent(`Hi! I'm interested in: ${p.name} ($${parseFloat(p.price).toFixed(2)})`);
+  document.getElementById('btnDM').href = `https://ig.me/m/jamiesshoess?text=${dmText}`;
+
+  // Schema.org JSON-LD for SEO
+  const schema = {
+    '@context':'https://schema.org',
+    '@type':'Product',
+    name: p.name,
+    description: p.description || p.name,
+    image: p.image || '',
+    sku: String(p.id),
+    brand: { '@type':'Brand', name:'JAMIESSHOESS' },
+    offers: {
+      '@type':'Offer',
+      url: window.location.href,
+      priceCurrency:'USD',
+      price: parseFloat(p.price).toFixed(2),
+      availability: soldOut ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock',
+      itemCondition: p.badge === 'vintage' ? 'https://schema.org/UsedCondition' : 'https://schema.org/NewCondition',
+    },
+  };
+  const ld = document.createElement('script');
+  ld.type = 'application/ld+json';
+  ld.textContent = JSON.stringify(schema);
+  document.head.appendChild(ld);
+
+  // Related products
+  renderRelated(p);
+
+  // Save current product on window for the add-to-cart fn
+  window._currentProduct = p;
+}
+
+function renderRelated(current) {
+  const grid = document.getElementById('relatedGrid');
+  if (!grid) return;
+  const all = getProducts().filter(p =>
+    String(p.id) !== String(current.id) &&
+    p.category === current.category &&
+    (p.stock ?? 1) > 0
+  ).slice(0, 4);
+
+  if (!all.length) { grid.parentElement.style.display = 'none'; return; }
+
+  grid.innerHTML = all.map(p => `
+    <a class="rel-card" href="product.html?id=${encodeURIComponent(p.id)}">
+      <div class="rel-img-wrap">${p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy">` : '<div style="font-size:3rem;height:100%;display:flex;align-items:center;justify-content:center;color:#222">🛍️</div>'}</div>
+      <div class="rel-info">
+        <div class="rel-name">${p.name}</div>
+        <div class="rel-price">$${parseFloat(p.price).toFixed(2)}</div>
+      </div>
+    </a>
+  `).join('');
+}
+
+function addToCartAndGo() {
+  const p = window._currentProduct;
+  if (!p) return;
+  if (typeof addToCart === 'function') addToCart(p.id);
+  toast('✓ Added to cart');
+  setTimeout(() => { if (typeof toggleCart === 'function') toggleCart(); }, 700);
+}
+
+function showNotFound() {
+  document.getElementById('prodContent').style.display = 'none';
+  document.getElementById('notFound').style.display    = 'block';
+}
+
+function capitalize(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+
+let toastTimer;
+function toast(msg, isErr) {
+  const t = document.getElementById('toast');
+  clearTimeout(toastTimer);
+  t.textContent = msg;
+  t.className = 'toast show' + (isErr ? ' err' : '');
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Init when ready
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderProduct);
+else renderProduct();
+</script>
+</body>
+</html>

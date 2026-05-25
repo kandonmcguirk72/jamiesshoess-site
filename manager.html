@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Store Manager — JAMIESSHOESS</title>
+  <link rel="icon" type="image/png" href="images/logo-circle-blue.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --cp:#c8f500;--cs:#00e5a0;
+      --dark:#0a0a0a;--surf:#141414;--card:#1a1a1a;--border:#1e1e1e;
+      --txt:#f0f0f0;--muted:#888;
+      --grad:linear-gradient(135deg,#c8f500,#00e5a0);
+      --danger:#ff4444;--warn:#f59e0b;--success:#22c55e;--info:#3b82f6;
+      --ff-d:'Boogaloo',sans-serif;--ff-b:'DM Sans',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--dark);color:var(--txt);font-family:var(--ff-b);font-size:15px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none;color:inherit}
+    button{cursor:pointer;border:none;font-family:inherit}
+    body::before{content:'';display:block;height:3px;background:var(--grad);position:fixed;top:0;left:0;right:0;z-index:200}
+
+    /* ── HEADER ── */
+    #hdr{position:sticky;top:3px;z-index:100;background:rgba(10,10,10,.97);border-bottom:1px solid rgba(200,245,0,.1);backdrop-filter:blur(8px)}
+    .hdr-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:62px;display:flex;align-items:center;gap:14px}
+    .hdr-brand{font-family:var(--ff-d);font-size:1.3rem;letter-spacing:.08em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hdr-chip{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;background:rgba(0,229,160,.12);color:var(--cs);padding:3px 10px;border-radius:100px;border:1px solid rgba(0,229,160,.2)}
+    .hdr-nav{margin-left:auto;display:flex;gap:6px;align-items:center}
+    .hdr-link{padding:7px 14px;border-radius:6px;font-size:.78rem;font-family:var(--ff-d);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:all .2s}
+    .hdr-link:hover{color:var(--txt);background:rgba(255,255,255,.04)}
+    .hdr-link.active{color:var(--cp);background:rgba(200,245,0,.08)}
+
+    /* ── PAGE ── */
+    .page{max-width:1400px;margin:0 auto;padding:28px 24px 100px}
+
+    /* ── HERO BANNER ── */
+    .manager-hero{background:linear-gradient(135deg,rgba(200,245,0,.06),rgba(0,229,160,.04));border:1px solid rgba(200,245,0,.15);border-radius:14px;padding:32px 28px;margin-bottom:32px;position:relative;overflow:hidden}
+    .manager-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
+    .hero-eyebrow{font-family:var(--ff-d);font-size:.78rem;letter-spacing:.2em;color:var(--cs);text-transform:uppercase;margin-bottom:4px}
+    .hero-title{font-family:var(--ff-d);font-size:clamp(1.8rem,3.5vw,2.6rem);text-transform:uppercase;letter-spacing:.04em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;line-height:1.1}
+    .hero-sub{color:var(--muted);font-size:.95rem;max-width:640px;line-height:1.65}
+
+    /* ── KPI ROW ── */
+    .kpi-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:36px}
+    .kpi{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:18px 20px;position:relative;overflow:hidden}
+    .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);opacity:.5}
+    .kpi-num{font-family:var(--ff-d);font-size:2.2rem;font-weight:700;color:var(--cp);line-height:1;letter-spacing:-.02em}
+    .kpi-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-top:6px}
+    .kpi-detail{font-size:.72rem;color:rgba(240,240,240,.4);margin-top:3px}
+    .kpi.warn .kpi-num{color:var(--warn)}
+    .kpi.danger .kpi-num{color:var(--danger)}
+    .kpi.success .kpi-num{color:var(--success)}
+
+    /* ── SECTION ── */
+    .sec{margin-bottom:48px}
+    .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+    .sec-label{font-family:var(--ff-d);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cs);margin-bottom:4px}
+    .sec-title{font-family:var(--ff-d);font-size:clamp(1.4rem,2.8vw,1.8rem);text-transform:uppercase;letter-spacing:.04em;color:var(--txt)}
+    .sec-action{font-family:var(--ff-d);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cp);border:1px solid rgba(200,245,0,.3);padding:7px 14px;border-radius:6px;background:none;transition:all .2s}
+    .sec-action:hover{background:rgba(200,245,0,.06)}
+
+    /* ── AUDIT ── */
+    .audit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}
+    .audit-cat{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:20px 22px}
+    .audit-cat-title{font-family:var(--ff-d);font-size:1rem;text-transform:uppercase;letter-spacing:.08em;color:var(--txt);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+    .audit-cat-emoji{font-size:1.1rem}
+    .audit-cat-stat{font-family:var(--ff-d);font-size:.8rem;color:var(--cp);font-weight:400;letter-spacing:.06em}
+    .audit-item{display:flex;align-items:flex-start;gap:9px;padding:6px 0;font-size:.85rem}
+    .audit-item-icon{flex-shrink:0;width:18px;font-size:.95rem;margin-top:1px}
+    .audit-item-body{flex:1}
+    .audit-item-label{color:var(--txt);line-height:1.45}
+    .audit-item-detail{font-size:.74rem;color:var(--muted);margin-top:2px}
+    .audit-item.fail .audit-item-label{color:rgba(255,255,255,.85)}
+    .audit-item.critical-fail{padding:7px 10px;background:rgba(255,68,68,.06);border-left:2px solid var(--danger);border-radius:0 6px 6px 0;margin:2px 0}
+    .audit-item.warn-fail{padding:7px 10px;background:rgba(245,158,11,.05);border-left:2px solid var(--warn);border-radius:0 6px 6px 0;margin:2px 0}
+
+    /* ── INVENTORY ── */
+    .inv-grid{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start}
+    @media(max-width:900px){.inv-grid{grid-template-columns:1fr}}
+    .inv-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:24px}
+    .inv-bar-wrap{margin:14px 0 18px}
+    .inv-bar{height:8px;background:#0d0d0d;border-radius:4px;overflow:hidden;display:flex}
+    .inv-bar > div{height:100%;transition:width .6s ease}
+    .inv-bar-stock{background:var(--success)}
+    .inv-bar-low{background:var(--warn)}
+    .inv-bar-out{background:var(--danger)}
+    .inv-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.78rem;color:var(--muted)}
+    .inv-legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}
+    .inv-cat-list{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+    .inv-cat-row{display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:#0f0f0f;border-radius:6px;font-size:.85rem}
+    .inv-cat-row span:first-child{color:var(--txt);text-transform:capitalize}
+    .inv-cat-row span:last-child{color:var(--cp);font-family:var(--ff-d)}
+    .inv-top-list{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+    .inv-top{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.83rem}
+    .inv-top:last-child{border-bottom:none}
+    .inv-top-name{color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px}
+    .inv-top-price{color:var(--cp);font-family:var(--ff-d);flex-shrink:0;margin-left:8px}
+
+    /* ── ROADMAP ── */
+    .roadmap{display:flex;flex-direction:column;gap:18px}
+    .phase{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:20px 24px;position:relative;overflow:hidden}
+    .phase.active{border-color:rgba(200,245,0,.25);background:linear-gradient(135deg,rgba(200,245,0,.04),transparent 30%)}
+    .phase.done{opacity:.65}
+    .phase-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+    .phase-name{font-family:var(--ff-d);font-size:1.15rem;text-transform:uppercase;letter-spacing:.04em;color:var(--txt)}
+    .phase-when{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-family:var(--ff-d);background:#0f0f0f;padding:3px 10px;border-radius:100px;border:1px solid var(--border)}
+    .phase-status{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:2px 9px;border-radius:100px;font-family:var(--ff-d)}
+    .phase-status.done   {background:rgba(34,197,94,.15);color:var(--success);border:1px solid rgba(34,197,94,.25)}
+    .phase-status.active {background:var(--grad);color:#000}
+    .phase-status.planned{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border)}
+    .phase-items{display:flex;flex-direction:column;gap:5px}
+    .phase-item{display:flex;align-items:flex-start;gap:9px;padding:5px 0;font-size:.88rem;color:rgba(240,240,240,.85)}
+    .phase-item.done{color:rgba(240,240,240,.4);text-decoration:line-through}
+    .phase-check{width:18px;flex-shrink:0;font-size:.95rem;margin-top:1px}
+    .phase-check.done{color:var(--success)}
+
+    /* ── ACTIONS / WHAT TO DO NEXT ── */
+    .action-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+    .action{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:16px 18px;transition:border-color .2s,transform .15s;display:block}
+    .action:hover{border-color:var(--cp);transform:translateY(-2px)}
+    .action-prio{font-family:var(--ff-d);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:2px 8px;border-radius:100px;display:inline-block;margin-bottom:10px}
+    .action-prio.high{background:rgba(255,68,68,.12);color:var(--danger);border:1px solid rgba(255,68,68,.25)}
+    .action-prio.med{background:rgba(245,158,11,.12);color:var(--warn);border:1px solid rgba(245,158,11,.25)}
+    .action-prio.low{background:rgba(0,229,160,.1);color:var(--cs);border:1px solid rgba(0,229,160,.25)}
+    .action-title{font-family:var(--ff-d);font-size:1rem;color:var(--txt);margin-bottom:6px;text-transform:uppercase;letter-spacing:.03em}
+    .action-desc{font-size:.82rem;color:var(--muted);line-height:1.5}
+
+    /* ── ASK CLAUDE ── */
+    .ask-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+    .prompt-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:16px 18px;cursor:pointer;transition:all .2s;text-align:left}
+    .prompt-card:hover{border-color:var(--cs);background:#1a1a1a}
+    .prompt-card-icon{font-size:1.4rem;margin-bottom:8px}
+    .prompt-card-title{font-family:var(--ff-d);font-size:.92rem;color:var(--txt);letter-spacing:.04em;text-transform:uppercase;margin-bottom:5px}
+    .prompt-card-prompt{font-size:.78rem;color:var(--muted);font-style:italic;line-height:1.45}
+    .prompt-card.copied{border-color:var(--success)}
+
+    /* ── LOADING ── */
+    .loading{padding:32px;text-align:center;color:var(--muted);font-size:.9rem}
+    .shimmer{background:linear-gradient(90deg,#1a1a1a 25%,#222 50%,#1a1a1a 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;height:100px;border-radius:10px}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+    /* ── TOAST ── */
+    .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);color:var(--txt);border:1px solid rgba(255,255,255,.08);padding:11px 22px;border-radius:100px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap;border-left:3px solid var(--cp)}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar{width:5px;height:5px}
+    ::-webkit-scrollbar-track{background:#111}
+    ::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+  </style>
+</head>
+<body>
+
+<div id="hdr">
+  <div class="hdr-inner">
+    <span class="hdr-brand">JAMIESSHOESS</span>
+    <span class="hdr-chip">Store Manager</span>
+    <nav class="hdr-nav">
+      <a href="index.html" class="hdr-link">Site</a>
+      <a href="admin.html" class="hdr-link">Inventory</a>
+      <a href="dashboard.html" class="hdr-link">Dev Tools</a>
+      <a href="manager.html" class="hdr-link active">Manager</a>
+    </nav>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ── HERO BANNER ── -->
+  <div class="manager-hero">
+    <div class="hero-eyebrow">Strategic Command Center</div>
+    <h1 class="hero-title">RUN YOUR STORE.<br>BUILD WHAT'S NEXT.</h1>
+    <p class="hero-sub">This is your daily operations + long-term planning view. Audit what exists, see live inventory state, follow the roadmap, and know exactly what to do next.</p>
+  </div>
+
+  <!-- ── KPI ROW ── -->
+  <div class="kpi-row" id="kpiRow">
+    <div class="kpi"><div class="kpi-num" id="kpiTotal">—</div><div class="kpi-label">Total Items</div><div class="kpi-detail" id="kpiSource">checking…</div></div>
+    <div class="kpi success"><div class="kpi-num" id="kpiInStock">—</div><div class="kpi-label">In Stock</div></div>
+    <div class="kpi warn"><div class="kpi-num" id="kpiLow">—</div><div class="kpi-label">Low Stock</div><div class="kpi-detail">3 or fewer left</div></div>
+    <div class="kpi danger"><div class="kpi-num" id="kpiOut">—</div><div class="kpi-label">Sold Out</div></div>
+    <div class="kpi"><div class="kpi-num" id="kpiAudit">—</div><div class="kpi-label">Audit Score</div><div class="kpi-detail" id="kpiAuditDetail">running…</div></div>
+    <div class="kpi"><div class="kpi-num" id="kpiValue">—</div><div class="kpi-label">Inventory Value</div></div>
+  </div>
+
+  <!-- ── ACTION ITEMS ── -->
+  <div class="sec">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label">⚡ Priority Now</div>
+        <div class="sec-title">What to do next</div>
+      </div>
+    </div>
+    <div class="action-list" id="actionList">
+      <div class="shimmer"></div>
+      <div class="shimmer"></div>
+      <div class="shimmer"></div>
+    </div>
+  </div>
+
+  <!-- ── CLOVER SETUP ── -->
+  <div class="sec">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label">💳 Live Inventory</div>
+        <div class="sec-title">Clover Integration</div>
+      </div>
+      <a href="CLOVER-SETUP.md" target="_blank" class="sec-action">📖 Setup Guide</a>
+    </div>
+    <div class="inv-card" id="cloverBox" style="background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:22px 24px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+        <div>
+          <div style="font-family:var(--ff-d);font-size:1rem;text-transform:uppercase;letter-spacing:.06em;color:var(--txt)" id="cloverStatusText">Checking…</div>
+          <div style="font-size:.8rem;color:var(--muted);margin-top:3px" id="cloverStatusSub">—</div>
+        </div>
+        <div style="font-family:var(--ff-d);font-size:1.3rem;color:var(--cp)" id="cloverScore">—</div>
+      </div>
+      <div style="height:8px;background:#0d0d0d;border-radius:4px;overflow:hidden">
+        <div id="cloverProgress" style="height:100%;width:0%;background:var(--grad);transition:width .6s ease"></div>
+      </div>
+      <div id="cloverSteps" style="margin-top:18px;display:flex;flex-direction:column;gap:5px"></div>
+    </div>
+  </div>
+
+  <!-- ── INVENTORY VIEW ── -->
+  <div class="sec">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label">📦 Live Snapshot</div>
+        <div class="sec-title">Inventory</div>
+      </div>
+      <a href="admin.html" class="sec-action">Manage Listings →</a>
+    </div>
+    <div class="inv-grid">
+      <div class="inv-card">
+        <div style="font-family:var(--ff-d);font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Stock Health</div>
+        <div class="inv-bar-wrap">
+          <div class="inv-bar" id="invBar"></div>
+          <div class="inv-legend" id="invLegend"></div>
+        </div>
+        <div style="font-family:var(--ff-d);font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:18px">By Category</div>
+        <div class="inv-cat-list" id="invCatList"></div>
+      </div>
+      <div class="inv-card">
+        <div style="font-family:var(--ff-d);font-size:.9rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Top Priced Items</div>
+        <div class="inv-top-list" id="invTopList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STRATEGIC AUDIT ── -->
+  <div class="sec">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label">🔍 Full Audit</div>
+        <div class="sec-title">Site Renovation Review</div>
+      </div>
+      <button class="sec-action" onclick="loadAudit(true)">↻ Re-run</button>
+    </div>
+    <div class="audit-grid" id="auditGrid">
+      <div class="shimmer"></div>
+      <div class="shimmer"></div>
+      <div class="shimmer"></div>
+    </div>
+  </div>
+
+  <!-- ── ROADMAP ── -->
+  <div class="sec">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label">🗺 Path Forward</div>
+        <div class="sec-title">Roadmap</div>
+      </div>
+    </div>
+    <div class="roadmap" id="roadmap">
+      <div class="shimmer"></div>
+      <div class="shimmer"></div>
+    </div>
+  </div>
+
+  <!-- ── ASK CLAUDE PROMPT CARDS ── -->
+  <div class="sec">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label">🤖 Run It With Me</div>
+        <div class="sec-title">Ask Claude</div>
+      </div>
+    </div>
+    <p style="color:var(--muted);font-size:.88rem;margin-bottom:18px;max-width:640px">Click any card to copy the prompt — paste it into Claude (this terminal or claude.ai) to get help with that task.</p>
+    <div class="ask-grid">
+      <button class="prompt-card" onclick="copyPrompt(this,'Audit my JAMIESSHOESS site for SEO improvements. Tell me the top 5 changes I can make to rank higher for &quot;sneakers Springfield MO&quot; and &quot;vintage clothing Springfield&quot;.')">
+        <div class="prompt-card-icon">🔍</div>
+        <div class="prompt-card-title">SEO Audit</div>
+        <div class="prompt-card-prompt">"Top 5 SEO improvements for ranking in Springfield..."</div>
+      </button>
+      <button class="prompt-card" onclick="copyPrompt(this,'Help me write a weekly Instagram caption template for new product drops at JAMIESSHOESS. I want it to drive in-store visits Wed–Sat. Give me 5 reusable templates with placeholders.')">
+        <div class="prompt-card-icon">📸</div>
+        <div class="prompt-card-title">Instagram Captions</div>
+        <div class="prompt-card-prompt">"5 weekly drop caption templates..."</div>
+      </button>
+      <button class="prompt-card" onclick="copyPrompt(this,'Walk me through setting up the Clover ecommerce integration end-to-end. I have a Clover POS at the store. Tell me exactly what to click, in order, to get my .env keys.')">
+        <div class="prompt-card-icon">💳</div>
+        <div class="prompt-card-title">Clover Setup Guide</div>
+        <div class="prompt-card-prompt">"Walk me through Clover setup step by step..."</div>
+      </button>
+      <button class="prompt-card" onclick="copyPrompt(this,'I want to deploy my JAMIESSHOESS site backend to Railway so inventory syncs 24/7. Give me the exact step-by-step deployment instructions.')">
+        <div class="prompt-card-icon">🚀</div>
+        <div class="prompt-card-title">Deploy to Railway</div>
+        <div class="prompt-card-prompt">"Step-by-step Railway deployment..."</div>
+      </button>
+      <button class="prompt-card" onclick="copyPrompt(this,'Design a customer loyalty program for JAMIESSHOESS. Goal: turn one-time buyers into repeat customers. Suggest 3 tiers with concrete rewards I can offer at this small downtown store.')">
+        <div class="prompt-card-icon">💎</div>
+        <div class="prompt-card-title">Loyalty Program</div>
+        <div class="prompt-card-prompt">"3-tier loyalty program design..."</div>
+      </button>
+      <button class="prompt-card" onclick="copyPrompt(this,'Write a 30-day Instagram content calendar for JAMIESSHOESS — vintage sneakers + clothing store in Springfield MO. Include post types, captions, hashtags, and best posting times for Wed-Sat hours.')">
+        <div class="prompt-card-icon">📅</div>
+        <div class="prompt-card-title">30-Day Content Calendar</div>
+        <div class="prompt-card-prompt">"Full month of Instagram posts..."</div>
+      </button>
+      <button class="prompt-card" onclick="copyPrompt(this,'Help me write product descriptions that sell. Take 3 items from my current inventory and rewrite their names + descriptions to be more compelling and SEO-friendly.')">
+        <div class="prompt-card-icon">✏️</div>
+        <div class="prompt-card-title">Product Copy Polish</div>
+        <div class="prompt-card-prompt">"Rewrite my product descriptions..."</div>
+      </button>
+      <button class="prompt-card" onclick="copyPrompt(this,'My site is at C:\\Users\\kando\\jamies-shoes\\. Look at index.html and tell me the 3 highest-impact UI changes I should make in the next hour to improve conversions.')">
+        <div class="prompt-card-icon">🎯</div>
+        <div class="prompt-card-title">1-Hour UI Wins</div>
+        <div class="prompt-card-prompt">"Top 3 UI fixes for conversion..."</div>
+      </button>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'http://localhost:3002';
+const CATEGORY_EMOJI = {
+  'UX': '📱',
+  'SEO': '🔍',
+  'Conversion': '💰',
+  'Inventory': '📦',
+  'Performance': '⚡',
+  'Operations': '🏪',
+};
+
+// ── LOAD INVENTORY ────────────────────────────────────────────────────────────
+async function loadInventory() {
+  try {
+    const r = await fetch(API + '/inventory-summary');
+    const d = await r.json();
+    document.getElementById('kpiTotal').textContent   = d.total;
+    document.getElementById('kpiInStock').textContent = d.inStock;
+    document.getElementById('kpiLow').textContent     = d.lowStock;
+    document.getElementById('kpiOut').textContent     = d.outOfStock;
+    document.getElementById('kpiValue').textContent   = '$' + Math.round(d.totalValue).toLocaleString();
+    document.getElementById('kpiSource').textContent  = d.source === 'clover' ? '🟢 from Clover (live)' : 'starter catalog';
+
+    // Bar
+    const total = d.total || 1;
+    const inStockSafe = d.inStock - d.lowStock;
+    document.getElementById('invBar').innerHTML = `
+      <div class="inv-bar-stock" style="width:${(inStockSafe / total) * 100}%"></div>
+      <div class="inv-bar-low"   style="width:${(d.lowStock   / total) * 100}%"></div>
+      <div class="inv-bar-out"   style="width:${(d.outOfStock / total) * 100}%"></div>
+    `;
+    document.getElementById('invLegend').innerHTML = `
+      <span><span class="inv-legend-dot" style="background:var(--success)"></span>${inStockSafe} healthy</span>
+      <span><span class="inv-legend-dot" style="background:var(--warn)"></span>${d.lowStock} low</span>
+      <span><span class="inv-legend-dot" style="background:var(--danger)"></span>${d.outOfStock} sold out</span>
+    `;
+
+    // Categories
+    const cats = Object.entries(d.categories).sort((a,b) => b[1] - a[1]);
+    document.getElementById('invCatList').innerHTML = cats.map(([cat,n]) => `
+      <div class="inv-cat-row"><span>${cat}</span><span>${n}</span></div>
+    `).join('') || '<div style="color:var(--muted);font-size:.8rem;padding:8px">No category data</div>';
+
+    // Top items
+    document.getElementById('invTopList').innerHTML = d.topItems.length ? d.topItems.map(it => `
+      <div class="inv-top"><span class="inv-top-name">${it.name}</span><span class="inv-top-price">${it.price}</span></div>
+    `).join('') : '<div style="color:var(--muted);font-size:.8rem;padding:8px">No items yet</div>';
+  } catch (e) {
+    document.getElementById('kpiSource').textContent = 'server offline';
+  }
+}
+
+// ── LOAD AUDIT ────────────────────────────────────────────────────────────────
+async function loadAudit(force) {
+  const grid = document.getElementById('auditGrid');
+  if (force) grid.innerHTML = '<div class="shimmer"></div><div class="shimmer"></div><div class="shimmer"></div>';
+  try {
+    const r = await fetch(API + '/audit');
+    const d = await r.json();
+    document.getElementById('kpiAudit').textContent       = d.score.pct + '%';
+    document.getElementById('kpiAuditDetail').textContent = d.score.passed + ' / ' + d.score.total + ' checks';
+
+    grid.innerHTML = Object.entries(d.categories).map(([cat, items]) => {
+      const passed = items.filter(i => i.pass).length;
+      return `
+        <div class="audit-cat">
+          <div class="audit-cat-title">
+            <span><span class="audit-cat-emoji">${CATEGORY_EMOJI[cat]||'•'}</span> ${cat}</span>
+            <span class="audit-cat-stat">${passed} / ${items.length}</span>
+          </div>
+          ${items.map(it => {
+            const cls = !it.pass ? (it.severity === 'critical' ? 'critical-fail' : 'warn-fail') : '';
+            return `
+              <div class="audit-item ${it.pass ? 'pass' : 'fail'} ${cls}">
+                <span class="audit-item-icon">${it.pass ? '✅' : (it.severity==='critical'?'🔴':'🟡')}</span>
+                <div class="audit-item-body">
+                  <div class="audit-item-label">${it.label}</div>
+                  ${it.detail || it.impact ? `<div class="audit-item-detail">${it.detail || it.impact}</div>` : ''}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }).join('');
+
+    // Build action items from failed criticals
+    buildActions(d);
+  } catch (e) {
+    grid.innerHTML = '<div class="audit-cat">Server offline — start dashboard server (port 3002)</div>';
+  }
+}
+
+function buildActions(audit) {
+  const fails = [];
+  for (const [cat, items] of Object.entries(audit.categories)) {
+    for (const it of items) {
+      if (!it.pass) fails.push({ ...it, category: cat });
+    }
+  }
+  // Priority: critical first, then warn, then info
+  const order = { critical: 0, warn: 1, info: 2 };
+  fails.sort((a,b) => order[a.severity] - order[b.severity]);
+
+  const list = document.getElementById('actionList');
+  if (!fails.length) {
+    list.innerHTML = '<div style="background:var(--surf);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:20px;text-align:center;color:var(--success)">🎉 No outstanding issues. Site is healthy — focus on growth (see Roadmap below).</div>';
+    return;
+  }
+
+  list.innerHTML = fails.slice(0, 6).map(f => `
+    <div class="action">
+      <span class="action-prio ${f.severity === 'critical' ? 'high' : f.severity === 'warn' ? 'med' : 'low'}">${f.severity === 'critical' ? 'High Priority' : f.severity === 'warn' ? 'Medium' : 'Low'}</span>
+      <div class="action-title">${f.label}</div>
+      <div class="action-desc">${f.impact || f.detail || 'Recommended fix'} · ${f.category}</div>
+    </div>
+  `).join('');
+}
+
+// ── LOAD ROADMAP ──────────────────────────────────────────────────────────────
+async function loadRoadmap() {
+  try {
+    const r = await fetch(API + '/roadmap');
+    const d = await r.json();
+    document.getElementById('roadmap').innerHTML = d.phases.map(p => `
+      <div class="phase ${p.status}">
+        <div class="phase-head">
+          <div class="phase-name">${p.name}</div>
+          <div class="phase-when">${p.timeframe}</div>
+          <div class="phase-status ${p.status}">${p.status === 'done' ? '✓ Done' : p.status === 'active' ? '◉ Active' : '○ Planned'}</div>
+        </div>
+        <div class="phase-items">
+          ${p.items.map(i => `
+            <div class="phase-item ${i.done ? 'done' : ''}">
+              <span class="phase-check ${i.done ? 'done' : ''}">${i.done ? '✓' : '○'}</span>
+              <span>${i.text}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {
+    document.getElementById('roadmap').innerHTML = '<div class="phase">Server offline</div>';
+  }
+}
+
+// ── COPY PROMPT ───────────────────────────────────────────────────────────────
+function copyPrompt(btn, txt) {
+  navigator.clipboard.writeText(txt).then(() => {
+    btn.classList.add('copied');
+    toast('Prompt copied — paste it into Claude');
+    setTimeout(() => btn.classList.remove('copied'), 2000);
+  }).catch(() => toast('Copy failed', true));
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg, isErr) {
+  const t = document.getElementById('toast');
+  clearTimeout(toastTimer);
+  t.textContent = msg;
+  t.className = 'toast show' + (isErr ? ' err' : '');
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── CLOVER STATUS ─────────────────────────────────────────────────────────────
+async function loadCloverStatus() {
+  try {
+    const r = await fetch(API + '/clover-status');
+    const d = await r.json();
+    const pct = Math.round(d.doneSteps / d.totalSteps * 100);
+    document.getElementById('cloverProgress').style.width = pct + '%';
+    document.getElementById('cloverScore').textContent    = d.doneSteps + ' / ' + d.totalSteps;
+    if (d.configured) {
+      document.getElementById('cloverStatusText').innerHTML = '<span style="color:var(--success)">🟢 Live</span> — Clover sync active';
+      document.getElementById('cloverStatusSub').textContent = d.items + ' items · last sync: ' + (d.lastSync ? new Date(d.lastSync).toLocaleString() : 'just now');
+    } else {
+      document.getElementById('cloverStatusText').innerHTML = '<span style="color:var(--warn)">⚠ Not Configured</span> — Site shows starter catalog';
+      document.getElementById('cloverStatusSub').textContent = 'Follow the Setup Guide to enable real-time inventory';
+    }
+    document.getElementById('cloverSteps').innerHTML = d.steps.map(s => `
+      <div style="display:flex;align-items:center;gap:9px;font-size:.85rem;padding:4px 0">
+        <span style="font-size:.95rem">${s.done ? '✅' : '⬜'}</span>
+        <span style="color:${s.done ? 'var(--txt)' : 'var(--muted)'}">${s.label}</span>
+      </div>
+    `).join('');
+  } catch (e) {
+    document.getElementById('cloverStatusText').textContent = 'Server offline';
+  }
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadInventory();
+loadAudit();
+loadRoadmap();
+loadCloverStatus();
+
+// Auto-refresh every 60s
+setInterval(() => { loadInventory(); }, 60000);
+</script>
+</body>
+</html>

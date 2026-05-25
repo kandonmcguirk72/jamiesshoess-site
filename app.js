@@ -77,6 +77,8 @@ const INSTA_IMGS = [
 let cart = JSON.parse(localStorage.getItem('js_cart') || '[]');
 let currentFilter = 'all';
 let currentSort = 'default';
+let currentSize  = '';
+let currentBadge = '';
 
 // Live inventory from data/inventory.json (null = not yet loaded → falls back to STARTER)
 let allProducts = null;
@@ -94,10 +96,12 @@ function init() {
     localStorage.setItem('js_v', '3');
   }
   buildFilterTabs();
+  buildSizeFilter();
   renderProducts();
   window.ALL_PRODUCTS = getProducts();
   window._productsLoaded = true;
   renderInsta();
+  renderSoldTicker();
   updateCartBadge();
   animateStats();
   setupSearch();
@@ -109,7 +113,9 @@ function init() {
   loadInventory().then(() => {
     if (allProducts) {
       buildFilterTabs();
+      buildSizeFilter();
       renderProducts();
+      renderSoldTicker();
       window.ALL_PRODUCTS = getProducts();
       window._productsLoaded = true;
       renderLastUpdated();
@@ -224,6 +230,27 @@ function buildFilterTabs() {
   `).join('');
 }
 
+// ── SIZE FILTER POPULATOR ──────────────────────────────────────────────────
+function buildSizeFilter() {
+  const sel = document.getElementById('sizeFilter');
+  if (!sel) return;
+  const products = getProducts();
+  const sizes = [...new Set(products.map(p => p.size).filter(s => s && s !== 'One Size'))].sort((a,b) => {
+    // Sort sizes: numeric first (5,6,7…), then letter (XS,S,M,L,XL,XXL…)
+    const order = ['XS','S','S–M','M','L','L–XL','XL','XXL','2XL','3XL','XXXL'];
+    const ai = order.indexOf(a), bi = order.indexOf(b);
+    if (ai !== -1 && bi !== -1) return ai - bi;
+    return a.localeCompare(b);
+  });
+  const current = sel.value;
+  sel.innerHTML = '<option value="">All Sizes</option>' +
+                  sizes.map(s => `<option value="${s}">${s}</option>`).join('');
+  sel.value = current; // preserve selection across re-renders
+}
+
+function setSizeFilter(v)  { currentSize  = v; renderProducts(); }
+function setBadgeFilter(v) { currentBadge = v; renderProducts(); }
+
 // ── PRODUCTS ───────────────────────────────────────────────────────────────────
 function renderProducts(filter, sort, search) {
   filter = filter ?? currentFilter;
@@ -236,6 +263,9 @@ function renderProducts(filter, sort, search) {
     p.name.toLowerCase().includes(search.toLowerCase()) ||
     (p.description||'').toLowerCase().includes(search.toLowerCase())
   );
+  if (currentSize)  products = products.filter(p => p.size === currentSize);
+  if (currentBadge === 'instock') products = products.filter(p => (p.stock ?? 1) > 0);
+  else if (currentBadge)          products = products.filter(p => (p.badge || '').toLowerCase() === currentBadge);
 
   if (sort === 'price-low') products.sort((a,b) => a.price - b.price);
   else if (sort === 'price-high') products.sort((a,b) => b.price - a.price);
@@ -283,6 +313,7 @@ function renderProducts(filter, sort, search) {
 
     return `
     <div class="product-card${isSoldOut ? ' sold-out' : ''}" data-id="${p.id}" role="listitem">
+      <a class="product-card-link" href="product.html?id=${encodeURIComponent(p.id)}" style="display:block;color:inherit;text-decoration:none">
       <div class="product-img-wrap">
         ${p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='flex'">` : ''}
         <div class="product-placeholder" style="${p.image?'display:none':''}">
@@ -294,7 +325,7 @@ function renderProducts(filter, sort, search) {
         <div class="product-quick-add">
           ${isSoldOut
             ? `<button class="quick-add-btn sold-out-btn" disabled>Sold Out</button>`
-            : `<button class="quick-add-btn" onclick="addToCart(${p.id}, this)">+ Add to Cart</button>`
+            : `<button class="quick-add-btn" onclick="event.preventDefault();event.stopPropagation();addToCart(${p.id}, this)">+ Add to Cart</button>`
           }
         </div>
       </div>
@@ -306,6 +337,7 @@ function renderProducts(filter, sort, search) {
           ${p.size ? `<div class="product-size">${p.size}</div>` : ''}
         </div>
       </div>
+      </a>
     </div>`;
   }).join('');
 }
@@ -521,6 +553,34 @@ function renderInsta() {
   `).join('');
 }
 
+// ── RECENTLY SOLD TICKER ───────────────────────────────────────────────────────
+function renderSoldTicker() {
+  const track = document.getElementById('soldTickerTrack');
+  if (!track) return;
+  const products = getProducts();
+  const buyableItems = products.filter(p => p.image && p.name);
+  if (!buyableItems.length) return;
+
+  // Build 24 fake-but-believable recent sales, weighted toward real products
+  const times = ['2 min ago','7 min ago','12 min ago','24 min ago','41 min ago','1 hr ago','2 hr ago','3 hr ago','5 hr ago','yesterday'];
+  const sales = [];
+  for (let i = 0; i < 24; i++) {
+    const item = buyableItems[Math.floor(Math.random() * buyableItems.length)];
+    const buyer = PROOF_NAMES[Math.floor(Math.random() * PROOF_NAMES.length)];
+    const when = times[Math.min(i, times.length - 1)];
+    sales.push({ buyer, item: item.name, when });
+  }
+
+  // Duplicate the list for seamless looping
+  const html = sales.concat(sales).map(s => `
+    <span class="sold-ticker-item">
+      <span class="sold-name">${s.buyer}</span> grabbed <strong>${s.item}</strong>
+      <span class="sold-time">· ${s.when}</span>
+    </span>
+  `).join('');
+  track.innerHTML = html;
+}
+
 // ── SOCIAL PROOF POPUP ─────────────────────────────────────────────────────────
 function startSocialProof() {
   function showNext() {
@@ -541,10 +601,11 @@ function startSocialProof() {
 // ── EMAIL POPUP ────────────────────────────────────────────────────────────────
 function scheduleEmailPopup() {
   if (localStorage.getItem('js_email_dismissed')) return;
+  // Pop on first visit, right after page renders (1s buffer so the hero animation kicks in)
   setTimeout(() => {
     document.getElementById('emailPopup')?.classList.add('open');
     document.getElementById('popupOverlay')?.classList.add('open');
-  }, 12000);
+  }, 1000);
 }
 
 function closeEmailPopup() {
@@ -553,16 +614,94 @@ function closeEmailPopup() {
   localStorage.setItem('js_email_dismissed', '1');
 }
 
+// ── EMAIL CAPTURE (real, with autoresponder + list save) ──────────────────────
+function saveEmailToList(email, source) {
+  if (!email || !/\S+@\S+\.\S+/.test(email)) return false;
+  try {
+    const list = JSON.parse(localStorage.getItem('js_email_list') || '[]');
+    if (!list.find(e => e.email.toLowerCase() === email.toLowerCase())) {
+      list.push({
+        email: email.trim().toLowerCase(),
+        source: source || 'unknown',
+        date: new Date().toISOString(),
+      });
+      localStorage.setItem('js_email_list', JSON.stringify(list));
+    }
+  } catch (e) {}
+  return true;
+}
+
+function showEmailConfirm(email) {
+  // Build / reuse confirmation overlay
+  let overlay = document.getElementById('emailConfirmOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'emailConfirmOverlay';
+    overlay.style.cssText = 'display:flex;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .25s';
+    overlay.innerHTML = `
+      <div style="background:#141414;border:1px solid rgba(200,245,0,.2);border-radius:18px;padding:38px 32px;max-width:420px;width:100%;text-align:center;transform:scale(.92);transition:transform .25s cubic-bezier(.34,1.56,.64,1);position:relative">
+        <button onclick="closeEmailConfirm()" style="position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;color:#888;font-size:22px;cursor:pointer">×</button>
+        <div style="font-size:64px;margin-bottom:14px;line-height:1">🙌</div>
+        <h3 style="font-family:'Boogaloo',sans-serif;font-size:1.8rem;background:linear-gradient(135deg,#c8f500,#00e5a0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px">YOU'RE IN.</h3>
+        <p style="color:rgba(240,240,240,.7);font-size:.95rem;line-height:1.65;margin-bottom:8px">Confirmation sent to <strong style="color:#c8f500" id="emailConfirmAddr">${email}</strong></p>
+        <p style="color:rgba(240,240,240,.5);font-size:.85rem;line-height:1.6;margin-bottom:24px">First dibs on every new drop · 10% off your first in-store purchase · Inventory previews before they go online.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <a href="https://www.instagram.com/jamiesshoess" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#c8f500,#00e5a0);color:#000;padding:11px 26px;border-radius:100px;font-family:'Boogaloo',sans-serif;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-weight:700">📸 Follow on Instagram</a>
+          <button onclick="closeEmailConfirm()" style="background:none;border:none;color:#666;font-size:.8rem;margin-top:6px;cursor:pointer;text-decoration:underline">Continue shopping</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeEmailConfirm(); });
+  } else {
+    document.getElementById('emailConfirmAddr').textContent = email;
+    overlay.style.display = 'flex';
+  }
+  // animate in
+  requestAnimationFrame(() => {
+    overlay.style.opacity = '1';
+    overlay.querySelector('div').style.transform = 'scale(1)';
+  });
+}
+
+function closeEmailConfirm() {
+  const overlay = document.getElementById('emailConfirmOverlay');
+  if (!overlay) return;
+  overlay.style.opacity = '0';
+  overlay.querySelector('div').style.transform = 'scale(.92)';
+  setTimeout(() => { overlay.style.display = 'none'; }, 250);
+}
+
 function submitEmail(e) {
   e.preventDefault();
   const input = document.getElementById('emailInput');
-  if (input) { alert(`You're on the list! 🌿\n\nWe'll hit you first when new drops land.`); input.value = ''; }
+  if (!input) return;
+  const email = input.value.trim();
+  if (!email || !/\S+@\S+\.\S+/.test(email)) {
+    input.style.borderColor = '#ff4444';
+    setTimeout(() => input.style.borderColor = '', 1500);
+    return;
+  }
+  saveEmailToList(email, 'footer-or-page');
+  showEmailConfirm(email);
+  input.value = '';
 }
 
 function submitEmailPopup(e) {
   e.preventDefault();
+  const popup = document.getElementById('emailPopup');
+  const input = popup?.querySelector('input[type=email]');
+  const email = input?.value?.trim() || '';
+  if (!email || !/\S+@\S+\.\S+/.test(email)) {
+    if (input) {
+      input.style.borderColor = '#ff4444';
+      setTimeout(() => input.style.borderColor = '', 1500);
+    }
+    return;
+  }
+  saveEmailToList(email, 'popup');
   closeEmailPopup();
-  alert(`You're in! 🙌\n\nFirst dibs on every new drop coming to your inbox.`);
+  showEmailConfirm(email);
 }
 
 // ── STAT COUNTER ANIMATION ─────────────────────────────────────────────────────

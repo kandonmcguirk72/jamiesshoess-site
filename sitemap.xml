@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://jamiesshoess.squarespace.com/</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://jamiesshoess.squarespace.com/images/storefront.webp</image:loc>
+      <image:title>JAMIESSHOESS Storefront — 302 Park Central East</image:title>
+      <image:caption>JAMIESSHOESS sneaker and vintage clothing store, Downtown Springfield MO</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Products section anchor -->
+  <url>
+    <loc>https://jamiesshoess.squarespace.com/#products</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- About page -->
+  <url>
+    <loc>https://jamiesshoess.squarespace.com/about.html</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Location / Visit Us -->
+  <url>
+    <loc>https://jamiesshoess.squarespace.com/location.html</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- FAQ -->
+  <url>
+    <loc>https://jamiesshoess.squarespace.com/faq.html</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Reviews section -->
+  <url>
+    <loc>https://jamiesshoess.squarespace.com/#reviews</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Happy Customers section -->
+  <url>
+    <loc>https://jamiesshoess.squarespace.com/#customers</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>
