@@ -497,7 +497,7 @@ app.get('/audit', (req, res) => {
     'Wasted trips = bad reviews');
   addCheck('Operations', 'critical',
     'Phone or email contact',
-    html.match(/Bailey@jamiesshoess|6368666669|@jamiesshoess/i),
+    html.match(/Jamie@jamiesshoess|6368666669|@jamiesshoess/i),
     'Customers can reach you',
     'Lost sales without this');
   addCheck('Operations', 'warn',
@@ -616,7 +616,7 @@ app.get('/roadmap', (req, res) => {
         timeframe: '1 MONTH',
         status: 'planned',
         items: [
-          { done: false, text: 'Low-stock SMS/email alerts to Bailey' },
+          { done: false, text: 'Low-stock SMS/email alerts to Jamie' },
           { done: false, text: 'Daily sales summary email (auto-generated)' },
           { done: false, text: 'Customer database (emails captured → newsletter)' },
           { done: false, text: 'Returning customer recognition (cart restored)' },
