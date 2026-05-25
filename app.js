@@ -96,6 +96,7 @@ function init() {
     localStorage.setItem('js_v', '3');
   }
   buildFilterTabs();
+  buildNavCategoryMenu();
   buildSizeFilter();
   renderProducts();
   window.ALL_PRODUCTS = getProducts();
@@ -113,6 +114,7 @@ function init() {
   loadInventory().then(() => {
     if (allProducts) {
       buildFilterTabs();
+      buildNavCategoryMenu();
       buildSizeFilter();
       renderProducts();
       renderSoldTicker();
@@ -206,27 +208,52 @@ function renderStoreStatus() {
   el.className = 'store-status ' + (open ? 'is-open' : 'is-closed');
 }
 
+// ── CATEGORY DEFINITIONS (single source of truth) ─────────────────────────────
+const CATEGORY_DEFS = [
+  { key: 'all',         label: 'All Items',       emoji: '🛍️' },
+  { key: 'shoes',       label: 'Shoes',           emoji: '👟' },
+  { key: 'clothing',    label: 'Clothing',        emoji: '👕' },
+  { key: 'hats',        label: 'Hats',            emoji: '🧢' },
+  { key: 'bags',        label: 'Bags',            emoji: '👜' },
+  { key: 'accessories', label: 'Accessories',     emoji: '💍' },
+  { key: 'kids',        label: 'Kids',            emoji: '🧸' },
+  { key: 'vintage',     label: 'Vintage Items',   emoji: '🕰️' },
+  { key: 'pokemon',     label: 'Pokémon Cards',   emoji: '🃏' },
+];
+
+function getActiveCategories() {
+  const products = getProducts();
+  // Only count categories that have at least one IN-STOCK item
+  const cats = new Set();
+  products.forEach(p => {
+    if ((p.stock ?? 1) > 0 && p.category) cats.add(p.category);
+  });
+  return cats;
+}
+
 // ── FILTER TABS ────────────────────────────────────────────────────────────────
 function buildFilterTabs() {
   const container = document.getElementById('filterTabs');
   if (!container) return;
-  const products = getProducts();
-  const activeCats = new Set(products.map(p => p.category));
-  const tabs = [
-    { key: 'all',         label: 'All Items' },
-    { key: 'shoes',       label: '👟 Shoes' },
-    { key: 'clothing',    label: '👕 Clothing' },
-    { key: 'hats',        label: '🧢 Hats' },
-    { key: 'bags',        label: '👜 Bags' },
-    { key: 'accessories', label: '💍 Accessories' },
-    { key: 'kids',        label: '🧸 Kids' },
-    { key: 'vintage',     label: '🕰️ Vintage Items' },
-    { key: 'pokemon',     label: '🃏 Pokémon Cards' },
-  ].filter(t => t.key === 'all' || activeCats.has(t.key));
+  const activeCats = getActiveCategories();
+  const tabs = CATEGORY_DEFS.filter(t => t.key === 'all' || activeCats.has(t.key));
   container.innerHTML = tabs.map(t => `
     <button class="filter-tab${t.key === currentFilter ? ' active' : ''}"
       onclick="filterProducts('${t.key}', this)"
-      role="tab" aria-selected="${t.key === currentFilter}">${t.label}</button>
+      role="tab" aria-selected="${t.key === currentFilter}">${t.key === 'all' ? '' : t.emoji + ' '}${t.label}</button>
+  `).join('');
+}
+
+// ── NAV CATEGORY DROPDOWN (header "Shop ▾" menu) ─────────────────────────────
+function buildNavCategoryMenu() {
+  const container = document.getElementById('navCategoryMenu');
+  if (!container) return;
+  const activeCats = getActiveCategories();
+  const items = CATEGORY_DEFS.filter(c => c.key === 'all' || activeCats.has(c.key));
+  container.innerHTML = items.map(c => `
+    <a class="nav-drop-item" href="#products" onclick="filterProducts('${c.key}');closeNav()">
+      <span>${c.emoji}</span>${c.label}
+    </a>
   `).join('');
 }
 

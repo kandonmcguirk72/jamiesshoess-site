@@ -629,6 +629,21 @@
 
     /* hero uses <img> — no background-image override needed */
 
+    /* ── STORY CTA CARD ── */
+    .story-cta{background:#0d0d0d;padding:48px 24px;position:relative;overflow:hidden}
+    .story-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,245,0,.3),transparent)}
+    .story-cta::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,160,.3),transparent)}
+    .story-cta-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:auto 1fr auto;gap:32px;align-items:center}
+    @media(max-width:760px){.story-cta-inner{grid-template-columns:1fr;text-align:center;gap:20px}.story-cta-img{margin:0 auto}}
+    .story-cta-img{width:120px;height:120px;border-radius:50%;overflow:hidden;flex-shrink:0;border:3px solid var(--cp);box-shadow:0 0 28px rgba(200,245,0,.25),0 8px 24px rgba(0,0,0,.5);background:#1a1a1a}
+    .story-cta-img img{width:100%;height:100%;object-fit:cover;object-position:center}
+    .story-cta-text{flex:1}
+    .story-cta-eyebrow{font-family:var(--ff-d);font-size:.75rem;letter-spacing:.18em;color:var(--cs);text-transform:uppercase;margin-bottom:6px}
+    .story-cta-title{font-family:var(--ff-d);font-size:clamp(1.3rem,3vw,1.9rem);text-transform:uppercase;letter-spacing:.04em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.15;margin-bottom:8px}
+    .story-cta-desc{color:rgba(240,240,240,.7);font-size:.95rem;line-height:1.6;max-width:560px}
+    .story-cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:#000;font-family:var(--ff-d);font-size:.95rem;letter-spacing:.06em;text-transform:uppercase;padding:13px 26px;border-radius:100px;font-weight:700;white-space:nowrap;transition:transform .2s,box-shadow .2s;flex-shrink:0}
+    .story-cta-btn:hover{transform:translateY(-2px);box-shadow:0 0 24px rgba(200,245,0,.35)}
+
     /* ── RECENTLY SOLD TICKER ── */
     .sold-ticker{background:#0f0f0f;border-bottom:1px solid rgba(200,245,0,.1);height:34px;display:flex;align-items:center;overflow:hidden;position:relative;z-index:99}
     .sold-ticker-icon{display:flex;align-items:center;gap:6px;padding:0 16px;height:100%;background:rgba(200,245,0,.08);border-right:1px solid rgba(200,245,0,.12);font-family:var(--ff-d);font-size:.72rem;letter-spacing:.12em;color:var(--cp);text-transform:uppercase;flex-shrink:0;white-space:nowrap}
@@ -825,6 +840,222 @@
 
     /* ── TIKTOK SOCIAL ICON ── */
     .ftr-soc-tiktok svg{fill:currentColor;stroke:none}
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       POLISH PASS v1 — micro-interactions, scroll reveal, custom cursor,
+       view transitions, primary CTA breathing pulse.
+       All additive; remove this block to revert.
+       ═══════════════════════════════════════════════════════════════════════ */
+
+    /* — Real scroll-reveal: hidden until in-view, fades up — */
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);will-change:opacity,transform}
+    .reveal.in-view{opacity:1;transform:translateY(0)}
+    .reveal[data-stagger="1"]{transition-delay:.08s}
+    .reveal[data-stagger="2"]{transition-delay:.16s}
+    .reveal[data-stagger="3"]{transition-delay:.24s}
+    .reveal[data-stagger="4"]{transition-delay:.32s}
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+    /* — Custom branded cursor (desktop only) — GPU-only, no mix-blend, no heavy shadows — */
+    @media (hover:hover) and (pointer:fine){
+      /* Triple-targeted for maximum specificity — beats any inline / !important rule */
+      .has-cursor.has-cursor,
+      .has-cursor.has-cursor *,
+      .has-cursor.has-cursor *::before,
+      .has-cursor.has-cursor *::after,
+      .has-cursor.has-cursor .hero,
+      .has-cursor.has-cursor .hero *,
+      .has-cursor.has-cursor .btn-hero-p,
+      .has-cursor.has-cursor .btn-hero-s,
+      .has-cursor.has-cursor .hero-cta-row a,
+      .has-cursor.has-cursor a,
+      .has-cursor.has-cursor button,
+      .has-cursor.has-cursor input,
+      .has-cursor.has-cursor select,
+      .has-cursor.has-cursor textarea,
+      .has-cursor.has-cursor [role="button"],
+      .has-cursor.has-cursor #heroInteract{cursor:none !important}
+      #fpCursor{position:fixed;top:0;left:0;width:10px;height:10px;border-radius:50%;background:#c8f500;pointer-events:none;z-index:9999;transition:width .15s ease,height .15s ease,opacity .2s ease,background-color .2s ease;opacity:0;will-change:transform;contain:layout style paint;transform:translate3d(-100px,-100px,0)}
+      #fpCursor.active{opacity:1}
+      #fpCursor.hovered{width:24px;height:24px;background:#00e5a0}
+      #fpCursorRing{position:fixed;top:0;left:0;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(200,245,0,.4);pointer-events:none;z-index:9998;transition:width .25s ease,height .25s ease,opacity .25s ease,border-color .2s ease;opacity:0;will-change:transform;contain:layout style paint;transform:translate3d(-100px,-100px,0)}
+      #fpCursorRing.active{opacity:1}
+      #fpCursorRing.hovered{width:55px;height:55px;border-color:rgba(0,229,160,.55)}
+    }
+    @media (hover:none),(pointer:coarse){
+      #fpCursor,#fpCursorRing{display:none !important}
+    }
+
+    /* — Micro-interactions: buttons scale + softer shadow on hover — */
+    .btn-p,.btn-primary,.btn-cart,.spot-btn,.email-form .btn-primary{
+      transition:transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s ease, filter .22s ease !important;
+    }
+    .btn-p:hover,.btn-primary:hover,.btn-cart:hover,.spot-btn:hover{
+      transform:translateY(-2px) scale(1.02) !important;
+      box-shadow:0 8px 28px rgba(200,245,0,.28),0 4px 14px rgba(0,0,0,.5) !important;
+    }
+    .btn-s:hover{transform:translateY(-2px) scale(1.02) !important}
+
+    /* — Breathing pulse on primary hero CTA — */
+    @keyframes fpBreathe{
+      0%,100%{box-shadow:0 0 32px rgba(200,245,0,.4),0 4px 14px rgba(0,0,0,.5)}
+      50%{box-shadow:0 0 48px rgba(200,245,0,.65),0 4px 14px rgba(0,0,0,.5)}
+    }
+    .hero .btn-hero-p,.hero .btn-shop-drops{animation:fpBreathe 3.4s ease-in-out infinite}
+    .hero .btn-hero-p:hover,.hero .btn-shop-drops:hover{animation-play-state:paused}
+    @media(prefers-reduced-motion:reduce){.hero .btn-hero-p,.hero .btn-shop-drops{animation:none}}
+
+    /* — Product card 3D tilt toward cursor — */
+    .product-card{transform-style:preserve-3d;transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .25s ease,box-shadow .25s ease}
+    .product-card.tilt-active{transition:transform .12s linear,border-color .25s ease,box-shadow .25s ease}
+    @media (hover:none),(pointer:coarse){.product-card{transform:none !important}}
+
+    /* — View Transitions API cross-page nav — */
+    @media (prefers-reduced-motion:no-preference){
+      ::view-transition-old(root),
+      ::view-transition-new(root){animation-duration:.35s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+      ::view-transition-old(root){animation-name:fpVtFadeOut}
+      ::view-transition-new(root){animation-name:fpVtFadeIn}
+      @keyframes fpVtFadeOut{to{opacity:0;transform:translateY(-8px)}}
+      @keyframes fpVtFadeIn{from{opacity:0;transform:translateY(8px)}}
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       HERO STACK FIX v2 — overlap eliminated, lime pill sub-tagline,
+       graffiti-sticker CTA buttons with clip-path stencils
+       ═══════════════════════════════════════════════════════════════════════ */
+    .hero{display:flex !important;flex-direction:column !important;justify-content:center !important;align-items:center !important}
+    .hero .layer-logo{position:relative !important;inset:auto !important;padding:0 !important;display:flex !important;justify-content:center !important;align-items:center !important;width:100% !important;max-width:600px !important;margin:0 auto !important}
+    .hero .logo-hero-img{margin-bottom:8px !important}
+    .hero .layer-content{position:relative !important;inset:auto !important;padding:0 20px !important;width:100% !important;max-width:800px !important;margin:0 auto !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;gap:24px !important;text-align:center !important;overflow:visible !important}
+
+    /* Tagline — beefier shadow so it reads against ANY background */
+    .hero .hero-tagline{
+      position:relative !important;
+      margin:0 !important;
+      font-size:clamp(.95rem,2.2vw,1.35rem) !important;
+      letter-spacing:.15em !important;
+      padding:0 16px !important;
+      text-shadow:0 0 14px rgba(0,0,0,.9),0 2px 8px rgba(0,0,0,.85) !important;
+    }
+
+    /* Sub-tagline — lime pill that pops */
+    .hero .hero-sub{
+      position:relative !important;
+      margin:0 !important;
+      color:#c8f500 !important;
+      font-family:'Boogaloo',sans-serif !important;
+      font-size:clamp(.8rem,1.6vw,1rem) !important;
+      letter-spacing:.18em !important;
+      text-transform:uppercase !important;
+      text-shadow:0 0 12px rgba(0,0,0,.9),0 2px 6px rgba(0,0,0,.8) !important;
+      background:rgba(10,10,10,.5) !important;
+      padding:5px 16px !important;
+      border-radius:50px !important;
+      display:inline-block !important;
+      backdrop-filter:blur(4px) !important;
+      -webkit-backdrop-filter:blur(4px) !important;
+    }
+
+    .hero .hero-cta-row{position:relative !important;display:flex !important;gap:20px !important;justify-content:center !important;align-items:center !important;flex-wrap:wrap !important;margin-top:16px !important;padding:10px !important;width:100% !important}
+
+    /* ── GRAFFITI STICKER BUTTONS — shared base ── */
+    .hero .btn-hero-p,
+    .hero .btn-hero-s,
+    .hero .hero-cta-row a{
+      font-family:'Boogaloo',sans-serif !important;
+      font-size:1.1rem !important;
+      text-transform:uppercase !important;
+      letter-spacing:.1em !important;
+      padding:16px 34px !important;
+      cursor:pointer !important;
+      text-decoration:none !important;
+      position:relative !important;
+      transition:all .25s cubic-bezier(.34,1.56,.64,1) !important;
+      clip-path:polygon(6% 0%,100% 0%,94% 100%,0% 100%) !important;
+      border:none !important;
+      border-radius:0 !important;
+      display:inline-flex !important;
+      align-items:center !important;
+      justify-content:center !important;
+      gap:6px !important;
+      box-shadow:none !important;
+      backdrop-filter:none !important;
+      -webkit-backdrop-filter:none !important;
+    }
+
+    /* SHOP DROPS — lime→teal gradient fill, black outline, tilt left */
+    .hero .btn-hero-p,
+    .hero .btn-shop-drops{
+      background:linear-gradient(135deg,#c8f500,#00e5a0) !important;
+      color:#000 !important;
+      font-weight:800 !important;
+      filter:drop-shadow(2px 2px 0 #000) drop-shadow(-1px -1px 0 #000) !important;
+      transform:rotate(-2deg) !important;
+    }
+    .hero .btn-hero-p:hover,
+    .hero .btn-shop-drops:hover{
+      transform:rotate(0deg) translateY(-4px) scale(1.05) !important;
+      filter:drop-shadow(2px 2px 0 #000) drop-shadow(-1px -1px 0 #000) drop-shadow(0 0 20px rgba(200,245,0,.7)) !important;
+    }
+
+    /* OUR STORY — dark fill, lime+teal split shadow, tilt right */
+    .hero .btn-our-story{
+      background:#0d0d0d !important;
+      color:#c8f500 !important;
+      filter:drop-shadow(2px 2px 0 #c8f500) drop-shadow(-1px -1px 0 #00e5a0) !important;
+      transform:rotate(1.5deg) !important;
+    }
+    .hero .btn-our-story:hover{
+      background:#141414 !important;
+      color:#fff !important;
+      transform:rotate(0deg) translateY(-4px) !important;
+      filter:drop-shadow(2px 2px 0 #c8f500) drop-shadow(-1px -1px 0 #00e5a0) drop-shadow(0 0 16px rgba(200,245,0,.5)) !important;
+    }
+
+    /* FIND US — dark fill, teal+lime split shadow, tilt left */
+    .hero .btn-find-us{
+      background:#0d0d0d !important;
+      color:#00e5a0 !important;
+      filter:drop-shadow(2px 2px 0 #00e5a0) drop-shadow(-1px -1px 0 #c8f500) !important;
+      transform:rotate(-1.5deg) !important;
+    }
+    .hero .btn-find-us:hover{
+      background:#141414 !important;
+      color:#fff !important;
+      transform:rotate(0deg) translateY(-4px) !important;
+      filter:drop-shadow(2px 2px 0 #00e5a0) drop-shadow(-1px -1px 0 #c8f500) drop-shadow(0 0 16px rgba(0,229,160,.5)) !important;
+    }
+
+    /* iPhone / tablet — stack everything cleanly, kill rotation */
+    @media (max-width:768px){
+      .hero .layer-logo{max-width:85% !important;margin-bottom:4px !important}
+      .hero .layer-content{padding:30px 16px !important;padding-top:50px !important;gap:20px !important}
+      .hero .hero-tagline{font-size:.9rem !important;letter-spacing:.1em !important;padding:0 10px !important}
+      .hero .hero-sub{font-size:.75rem !important;letter-spacing:.12em !important;padding:5px 14px !important}
+      .hero .hero-cta-row{flex-direction:column !important;gap:16px !important;width:100% !important;align-items:center !important}
+      .hero .btn-hero-p,
+      .hero .btn-hero-s,
+      .hero .hero-cta-row a{
+        width:75% !important;
+        max-width:260px !important;
+        font-size:1rem !important;
+        padding:14px 28px !important;
+        transform:rotate(0deg) !important;
+        text-align:center !important;
+        justify-content:center !important;
+      }
+      .hero .btn-hero-p:hover,
+      .hero .btn-hero-s:hover,
+      .hero .hero-cta-row a:hover{transform:rotate(0deg) translateY(-2px) !important}
+    }
+    @media (max-width:400px){
+      .hero .layer-logo{max-width:90% !important}
+      .hero .hero-tagline{font-size:.8rem !important}
+      .hero .btn-hero-p,
+      .hero .btn-hero-s,
+      .hero .hero-cta-row a{width:88% !important}
+    }
   </style>
 </head>
 <!--
@@ -878,19 +1109,12 @@
     <nav class="main-nav" id="mainNav" aria-label="Main navigation">
       <div class="nav-drop">
         <a href="#products" class="nav-link" onclick="closeNav()">Shop ▾</a>
-        <div class="nav-drop-menu">
-          <a class="nav-drop-item" href="#products" onclick="filterProducts('shoes');closeNav()"><span>👟</span>Shoes</a>
-          <a class="nav-drop-item" href="#products" onclick="filterProducts('clothing');closeNav()"><span>👕</span>Clothing</a>
-          <a class="nav-drop-item" href="#products" onclick="filterProducts('hats');closeNav()"><span>🧢</span>Hats</a>
-          <a class="nav-drop-item" href="#products" onclick="filterProducts('bags');closeNav()"><span>👜</span>Bags</a>
-          <a class="nav-drop-item" href="#products" onclick="filterProducts('accessories');closeNav()"><span>💍</span>Accessories</a>
-          <a class="nav-drop-item" href="#products" onclick="filterProducts('kids');closeNav()"><span>🧸</span>Kids</a>
-          <a class="nav-drop-item" href="#products" onclick="filterProducts('vintage');closeNav()"><span>🕰️</span>Vintage Items</a>
-          <a class="nav-drop-item" href="#products" onclick="filterProducts('pokemon');closeNav()"><span>🃏</span>Pokémon Cards</a>
+        <div class="nav-drop-menu" id="navCategoryMenu">
+          <!-- Populated dynamically by JS — only shows categories that have items in stock -->
           <a class="nav-drop-item" href="#products" onclick="filterProducts('all');closeNav()"><span>🛍️</span>All Items</a>
         </div>
       </div>
-      <a href="about.html" class="nav-link">About</a>
+      <a href="about.html" class="nav-link nav-link-story" style="color:var(--cs);font-weight:600">✨ Our Story</a>
       <a href="location.html" class="nav-link">Visit Us</a>
       <a href="faq.html" class="nav-link">FAQ</a>
       <a href="#reviews" class="nav-link" onclick="closeNav()">Reviews</a>
@@ -983,8 +1207,9 @@
     <h1 class="hero-tagline" id="hTagline">SNEAKERS · VINTAGE · <em>SPRINGFIELD, MO</em></h1>
     <p class="hero-sub" id="hSub">ON ROUTE 66 · 302 PARK CENTRAL EAST</p>
     <div class="hero-cta-row" id="hCta">
-      <a href="#products" class="btn-hero-p">SHOP DROPS</a>
-      <a href="#hrs" class="btn-hero-s">FIND US 📍</a>
+      <a href="#products" class="btn-hero-p btn-shop-drops">SHOP DROPS</a>
+      <a href="about.html" class="btn-hero-s btn-our-story">OUR STORY ✨</a>
+      <a href="#hrs" class="btn-hero-s btn-find-us">FIND US 📍</a>
     </div>
   </div>
 
@@ -1027,6 +1252,21 @@
 <div class="mission-strip">
   Shopping vintage reduces waste &amp; pollution, while giving you a more unique style. Thank you for saving the earth &amp; shopping with us!
 </div>
+
+<!-- STORY CTA — Meet the owner -->
+<section class="story-cta" aria-labelledby="story-heading">
+  <div class="story-cta-inner">
+    <div class="story-cta-img">
+      <img src="images/logo-circle-blue.png" alt="JAMIESSHOESS logo" loading="lazy" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3.5rem&quot;>👟</div>'">
+    </div>
+    <div class="story-cta-text">
+      <div class="story-cta-eyebrow">Behind the store</div>
+      <h2 id="story-heading" class="story-cta-title">Why JAMIESSHOESS Exists</h2>
+      <p class="story-cta-desc">From a passion for sneakers and vintage finds in Springfield, MO to a Route 66 storefront stacked with rare 1-of-1 pieces — read how Bailey built this and what drives every drop.</p>
+    </div>
+    <a href="about.html" class="story-cta-btn">Read Our Story →</a>
+  </div>
+</section>
 
 <div class="section-divider"></div>
 
@@ -1360,7 +1600,6 @@
     // update the list below (or use dashboard auto-numbering: customer-XX.png).
     var CUSTOMERS = [
       { n:'01', tag:'🛍 THE BAG',        caption:'THEY FOUND THE HEAT'        },
-      { n:'02', tag:'👟 FRESH PICKUP',   caption:'THE PLUG CAME THROUGH'      },
       { n:'03', tag:'🛍 THE BAG',        caption:'LEFT HAPPY. ALWAYS.'        },
       { n:'04', tag:'👕 VINTAGE FIND',   caption:'ONE OF ONE.'                },
       { n:'05', tag:'🛍 THE HAUL',       caption:'WENT CRAZY IN THERE'        },
@@ -1369,17 +1608,17 @@
       { n:'08', tag:'📍 ROUTE 66',       caption:'DOWNTOWN SPRINGFIELD'       },
       { n:'09', tag:'🛍 THE BAG',        caption:'THE FIT. THE BAG. DONE.'    },
       { n:'10', tag:'🚗 DOWNTOWN VIBES', caption:'302 PARK CENTRAL EAST'      },
-      { n:'11', tag:'🛍 THE FAMILY',     caption:'EVERYONE’S WELCOME.'   },
+      { n:'11', tag:'🛍 THE FAMILY',     caption:'EVERYONE’S WELCOME.'        },
       { n:'12', tag:'🛍 THE FAMILY',     caption:'WHOLE SQUAD COPPED.'        },
-      { n:'13', tag:'🛍 THE HAUL',       caption:'THEY DIDN’T HOLD BACK.' },
+      { n:'13', tag:'🛍 THE HAUL',       caption:'THEY DIDN’T HOLD BACK.'     },
       { n:'15', tag:'👟 SNEAKER CHECK',  caption:'THEY KNOW WHAT THEY WANT.'  },
       { n:'16', tag:'🧢 THE COUNTER',    caption:'ALWAYS TAKEN CARE OF.'      },
-      { n:'17', tag:'🛍 THE BAG',        caption:'COPPED & SMILING.'          },
-      { n:'18', tag:'👕 NEW DRIP',       caption:'FIT OF THE WEEK.'           },
-      { n:'19', tag:'🛍 THE PICKUP',     caption:'CAUGHT THE DROP.'           },
-      { n:'20', tag:'👟 GRAILS',         caption:'PATIENCE PAID OFF.'         },
-      { n:'21', tag:'🛍 THE BAG',        caption:'ANOTHER ONE.'               },
-      { n:'22', tag:'📍 SPRINGFIELD',    caption:'LOCAL LOVE.'                }
+      { n:'17', tag:'🛍 THE BAG',        caption:'COPPED. NEVER FOLDED.'      },
+      { n:'18', tag:'👕 VINTAGE FIND',   caption:'VINTAGE. STILL FRESH.'      },
+      { n:'19', tag:'🛍 THE PICKUP',     caption:'STRAIGHT IN, STRAIGHT OUT.' },
+      { n:'20', tag:'👟 GRAILS',         caption:'GRAIL ALERT.'               },
+      { n:'21', tag:'🛍 THE BAG',        caption:'CAUGHT THE WAVE.'           },
+      { n:'22', tag:'📍 SPRINGFIELD',    caption:'DOWNTOWN ENERGY.'           }
     ];
 
     var track = document.getElementById('slideshowTrack');
@@ -2298,6 +2537,149 @@ var loopTick=0;
   (function() {
     var el = document.getElementById('copyrightYear');
     if (el) el.textContent = new Date().getFullYear();
+  })();
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // POLISH PASS v1 — scroll reveal · custom cursor · card tilt · view transitions
+  // ═══════════════════════════════════════════════════════════════════════
+  (function fpPolish() {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var fine   = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    // ── SCROLL REVEAL (replaces no-op .reveal class) ───────────────────────
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+    } else {
+      // No IntersectionObserver support — just show everything
+      document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('in-view'); });
+    }
+
+    // ── CUSTOM CURSOR (desktop only, fine pointer) ─────────────────────────
+    if (fine && !reduce) {
+      document.documentElement.classList.add('has-cursor');
+      // JS-level enforcement: inject a <style> rule with even higher specificity that beats anything
+      var killCursor = document.createElement('style');
+      killCursor.id = 'fpCursorKillStyle';
+      killCursor.textContent = 'html.has-cursor, html.has-cursor *, html.has-cursor *::before, html.has-cursor *::after { cursor: none !important; }';
+      document.head.appendChild(killCursor);
+      var dot  = document.createElement('div'); dot.id  = 'fpCursor';
+      var ring = document.createElement('div'); ring.id = 'fpCursorRing';
+      document.body.appendChild(dot);
+      document.body.appendChild(ring);
+
+      // mousemove only captures coordinates — DOM writes batched in rAF for 60fps cap
+      var tx = -100, ty = -100;            // target (mouse)
+      var dx = -100, dy = -100;            // dot position (snaps to mouse next tick)
+      var rx = -100, ry = -100;            // ring position (lerps behind)
+      var moving = false;
+
+      document.addEventListener('mousemove', function(e) {
+        tx = e.clientX;
+        ty = e.clientY;
+        if (!dot.classList.contains('active')) {
+          dot.classList.add('active');
+          ring.classList.add('active');
+        }
+        moving = true;
+      }, { passive: true });
+
+      (function loop() {
+        if (moving) {
+          // Dot snaps to mouse — translate3d forces GPU layer
+          dx = tx; dy = ty;
+          // Ring lerps for trail effect
+          rx += (tx - rx) * 0.22;
+          ry += (ty - ry) * 0.22;
+          dot.style.transform  = 'translate3d(' + (dx - 5)  + 'px,' + (dy - 5)  + 'px,0)';
+          ring.style.transform = 'translate3d(' + (rx - 17) + 'px,' + (ry - 17) + 'px,0)';
+          // Stop animating if cursor is essentially stationary (saves battery)
+          if (Math.abs(tx - rx) < 0.5 && Math.abs(ty - ry) < 0.5) moving = false;
+        }
+        requestAnimationFrame(loop);
+      })();
+
+      document.addEventListener('mouseleave', function() {
+        dot.classList.remove('active');
+        ring.classList.remove('active');
+      });
+
+      // Hovered state — delegated, cheap
+      var hoverSel = 'a, button, [role="button"], .product-card, .btn-hero-p, .btn-hero-s, .filter-tab, .nav-link, .star, .insta-post, .source-card, .group-card, .listing-card, .action-btn, .prompt-card, input, select, textarea, summary, .faq-question';
+      document.addEventListener('mouseover', function(e) {
+        if (e.target.closest && e.target.closest(hoverSel)) {
+          dot.classList.add('hovered');
+          ring.classList.add('hovered');
+        }
+      });
+      document.addEventListener('mouseout', function(e) {
+        if (e.target.closest && e.target.closest(hoverSel)) {
+          dot.classList.remove('hovered');
+          ring.classList.remove('hovered');
+        }
+      });
+    }
+
+    // ── PRODUCT CARD 3D TILT (desktop only) ────────────────────────────────
+    if (fine && !reduce) {
+      function attachTilt() {
+        document.querySelectorAll('.product-card:not([data-tilt-bound])').forEach(function(card) {
+          card.setAttribute('data-tilt-bound', '1');
+          card.addEventListener('mousemove', function(e) {
+            var r = card.getBoundingClientRect();
+            var cx = (e.clientX - r.left) / r.width  - 0.5;
+            var cy = (e.clientY - r.top)  / r.height - 0.5;
+            // Max 4 degrees tilt
+            var ry = cx * 8;
+            var rx = -cy * 8;
+            card.classList.add('tilt-active');
+            card.style.transform = 'perspective(800px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateY(-5px)';
+          });
+          card.addEventListener('mouseleave', function() {
+            card.classList.remove('tilt-active');
+            card.style.transform = '';
+          });
+        });
+      }
+      attachTilt();
+      // Re-attach when products render dynamically
+      var grid = document.getElementById('productsGrid');
+      if (grid && 'MutationObserver' in window) {
+        new MutationObserver(attachTilt).observe(grid, { childList: true });
+      }
+    }
+
+    // ── VIEW TRANSITIONS API for cross-page nav ────────────────────────────
+    if ('startViewTransition' in document && !reduce) {
+      document.addEventListener('click', function(e) {
+        var a = e.target.closest('a[href]');
+        if (!a) return;
+        var url = a.getAttribute('href');
+        if (!url || url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:')) return;
+        if (a.target === '_blank' || a.hasAttribute('download')) return;
+        // Same-origin only
+        var ext = /^(https?:)?\/\//.test(url);
+        if (ext) {
+          try {
+            var u = new URL(url, location.href);
+            if (u.origin !== location.origin) return;
+          } catch (err) { return; }
+        }
+        // Only animate between local HTML pages
+        if (!/\.html?$/.test(url) && url !== '/' && !/^[a-z0-9_-]+(\?|$)/i.test(url.replace(/^\.?\//,''))) return;
+        e.preventDefault();
+        document.startViewTransition(function() {
+          location.href = url;
+        });
+      });
+    }
   })();
 
   // ── REVIEWS ──────────────────────────────────────────────────────────────

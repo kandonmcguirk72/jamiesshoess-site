@@ -1,0 +1,38 @@
+# Dev-only files — not needed in production
+node_modules
+.env
+*.log
+*.err.log
+
+# Dev server (only runs locally for inventory tools)
+clover-sync.js
+dashboard-server.js
+
+# Local dev tools — depend on localhost server
+dashboard.html
+manager.html
+
+# Python scripts
+*.py
+
+# Local-only data
+data/
+images/customers/_originals/
+images/_originals-bigjpg/
+
+# Launch scripts
+START-DASHBOARD.bat
+START-SERVER.bat
+SEND-TO-CLAUDE.bat
+
+# Userscripts (local dev only)
+userscripts/
+
+# Chrome extension files
+extension/
+
+# Setup docs (kept in repo, not deployed)
+CLOVER-SETUP.md
+
+# Temp files
+.claude-prompt.tmp
