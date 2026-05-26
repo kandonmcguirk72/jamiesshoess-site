@@ -7,3 +7,5 @@ tunnel.err.log
 .claude-prompt.tmp
 data/inventory.json
 images/customers/_originals/
+
+.vercel

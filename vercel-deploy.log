@@ -1,0 +1,55 @@
+<claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
+The "--name" option is deprecated (https://vercel.link/name-flag)
+
+  Set up "~\jamies-shoes"
+Loading teams…
+Searching for existing projects…
+  No framework detected. Default Project Settings:
+  Build Command: `npm run vercel-build` or `npm run build`
+  Development Command: None
+  Install Command: `yarn install`, `pnpm install`, `npm install`, or `bun install`
+  Output Directory: `public` if it exists, or `.`
+  Linked      kandonmcguirk72-4990s-projects/jamiesshoess
+> Connecting GitHub repository: https://github.com/kandonmcguirk72/jamiesshoess-site
+Error: Failed to link kandonmcguirk72/jamiesshoess-site. You need to add a Login Connection to your GitHub account first. (400)
+Visit https://vercel.com/docs/accounts/create-an-account#login-methods-and-connections for more information.
+Deploying kandonmcguirk72-4990s-projects/jamiesshoess
+Uploading [--------------------] (0.0B/11.7MB)
+Uploading [=====---------------] (2.9MB/11.7MB)
+Uploading [==========----------] (5.9MB/11.7MB)
+Uploading [===============-----] (8.8MB/11.7MB)
+Uploading [====================] (11.7MB/11.7MB)
+  Inspect     https://vercel.com/kandonmcguirk72-4990s-projects/jamiesshoess/46ETa4R7hrjJRQj2FfeoeEsq9TWc
+▲ Production  https://jamiesshoess-n8u7ohkds-kandonmcguirk72-4990s-projects.vercel.app
+Building…
+Building…
+Running build in Washington, D.C., USA (East) – iad1
+Build machine configuration: 2 cores, 8 GB
+Retrieving list of deployment files...
+Previous build caches not available.
+Downloading 69 deployment files...
+[2K[1A[2K[G▲ Production  https://jamiesshoess-n8u7ohkds-kandonmcguirk72-4990s-projects.vercel.app
+Completing…
+▲ Aliased     https://jamiesshoess.vercel.app
+{
+  "status": "ok",
+  "deployment": {
+    "id": "dpl_46ETa4R7hrjJRQj2FfeoeEsq9TWc",
+    "url": "https://jamiesshoess-n8u7ohkds-kandonmcguirk72-4990s-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/kandonmcguirk72-4990s-projects/jamiesshoess/46ETa4R7hrjJRQj2FfeoeEsq9TWc",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_46ETa4R7hrjJRQj2FfeoeEsq9TWc"
+  },
+  "message": "Deployment jamiesshoess-n8u7ohkds-kandonmcguirk72-4990s-projects.vercel.app ready.",
+  "next": [
+    {
+      "command": "vercel inspect jamiesshoess-n8u7ohkds-kandonmcguirk72-4990s-projects.vercel.app",
+      "when": "Inspect deployment"
+    },
+    {
+      "command": "vercel deploy --prod",
+      "when": "Promote to production"
+    }
+  ]
+}

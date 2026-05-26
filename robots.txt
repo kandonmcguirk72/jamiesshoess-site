@@ -12,4 +12,4 @@ Disallow: /.env
 Disallow: /data/
 Disallow: /node_modules/
 
-Sitemap: https://jamiesshoess.squarespace.com/sitemap.xml
+Sitemap: https://jamiesshoess.vercel.app/sitemap.xml
