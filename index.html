@@ -15,7 +15,7 @@
         "alternateName": "jamiesshoess",
         "url": "https://jamiesshoess.vercel.app",
         "image": "images/storefront.jpg",
-        "logo": "images/logo-graffiti.png",
+        "logo": "https://jamiesshoess.vercel.app/brand/logos/primary-logo-1.png",
         "description": "Springfield's premier sneaker boutique and vintage clothing store. Located on Historic Route 66 at 302 Park Central East Downtown Springfield MO. Premium sneakers, vintage tees, rare finds. Wed-Sat only.",
         "address": {
           "@type": "PostalAddress",
@@ -139,7 +139,7 @@
   <link rel="canonical" href="https://jamiesshoess.vercel.app/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Permanent+Marker&family=Caveat+Brush&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Permanent+Marker&family=Caveat+Brush&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Dancing+Script:wght@700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- GSAP + ScrollTrigger for premium scroll-triggered animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
@@ -880,6 +880,18 @@
 
       --ff-graffiti:'Permanent Marker', 'Caveat Brush', cursive;
       --ff-script:'Caveat Brush', cursive;
+
+      /* RENOVATION v1 — Tyler's official font stack (with Google Fonts fallbacks) */
+      --font-display:'Barlow Condensed', sans-serif;
+      --font-sub:'Barlow Condensed', sans-serif;
+      --font-script:'Dancing Script', cursive;
+      --font-body:'Space Grotesk', sans-serif;
+
+      /* RENOVATION v1 — surfaces & borders per renovation prompt */
+      --surface-raised:#0f1110;
+      --surface-sunken:#060807;
+      --border-subtle:rgba(0,236,241,0.12);
+      --border-bright:rgba(0,236,241,0.35);
     }
 
     /* Halftone gradient utility — Tyler said use sparingly with Cash green */
@@ -1276,7 +1288,7 @@
   <!-- L9: Graffiti logo -->
   <div class="layer layer-logo" id="hLlogo">
     <img src="images/logo-graffiti.png" alt="JAMIESSHOESS"
-         class="logo-hero-img" width="400" height="160" decoding="async">
+         class="logo-hero-img" width="500" height="200" decoding="async">
   </div>
 
   <!-- L10: Tagline + CTAs -->
@@ -1391,9 +1403,15 @@
 
 <!-- STORE PHOTOS GRID -->
 <section class="sgrid-sec">
-  <div class="sgrid-hdr">
-    <span class="eyebrow">Come See For Yourself</span>
-    <h2 class="grid-title">Inside The Store</h2>
+  <div class="sgrid-hdr" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div>
+      <span class="eyebrow">Come See For Yourself</span>
+      <h2 class="grid-title">Inside The Store</h2>
+    </div>
+    <!-- Original green graffiti logo lives ON this section only — pays homage next to the storefront photos -->
+    <img src="images/logo-graffiti.png" alt="JAMIESSHOESS original graffiti mark"
+         style="width:clamp(120px,18vw,200px);height:auto;opacity:.92;transform:rotate(-3deg);filter:drop-shadow(2px 4px 0 rgba(0,0,0,.7))"
+         loading="lazy" decoding="async">
   </div>
   <div class="store-grid">
     <div class="sc">
