@@ -860,17 +860,24 @@
     @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
     /* ═══════════════════════════════════════════════════════════════════════
-       BRAND PASS v1 — Tyler Crowe brand spec (Dec 2025)
-       NOTE: Mint/Flash/Cash hex values are PLACEHOLDERS until Tyler's
-       source files arrive in brand/ — see brand/colors.json
+       BRAND PASS v2 — Tyler Crowe brand spec (Dec 2025) — VERIFIED COLORS
+       Sampled from tyler-brand-deck.pdf p.27 — see brand/colors.json
        ═══════════════════════════════════════════════════════════════════════ */
     :root{
-      --mint:#a8e6c9;        /* PLACEHOLDER */
-      --mint-deep:#7dd9b4;
-      --flash:#ff6b35;       /* PLACEHOLDER — likely orange/yellow-adjacent */
-      --flash-deep:#e55a2b;
-      --cash:#7dd87d;        /* PLACEHOLDER — green for halftones */
-      --cash-deep:#5cb85c;
+      /* Tyler's official brand palette */
+      --minted:#00ECF1;       /* MINTED — primary teal/cyan, heavy hitter */
+      --minted-deep:#00b4b8;
+      --flash:#F322B3;        /* FLASH — hot pink magenta, second primary */
+      --flash-deep:#c11890;
+      --cash:#5AE131;         /* CASH — bright green, use SPARINGLY (halftones) */
+      --cash-deep:#3eb320;
+      --sole:#FFFFFF;         /* SOLE — pure white accent surface */
+      --leather:#080A09;      /* LEATHER — near-black background canvas */
+
+      /* Legacy aliases for the old variable names (don't break existing CSS) */
+      --mint:#00ECF1;
+      --mint-deep:#00b4b8;
+
       --ff-graffiti:'Permanent Marker', 'Caveat Brush', cursive;
       --ff-script:'Caveat Brush', cursive;
     }

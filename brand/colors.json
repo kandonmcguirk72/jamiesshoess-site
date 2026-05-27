@@ -1,38 +1,59 @@
 {
-  "_comment": "Placeholder hex values — REPLACE these by sampling from Tyler's source files when they arrive. Best-guess approximations from the brand spec only.",
-  "_lastUpdated": "2026-05-26",
-  "_status": "PLACEHOLDERS — needs Tyler's actual files",
+  "_comment": "VERIFIED hex values extracted from Tyler Crowe's brand deck (JS_Presentation-3.pdf, page 27).",
+  "_lastUpdated": "2026-05-27",
+  "_status": "VERIFIED — sampled from Tyler's PDF on page 27",
+  "_source": "brand/source/tyler-brand-deck.pdf",
+  "_designerNotes": "Names are Tyler's official brand color names. Use these exact names in code comments and design conversations.",
 
   "palette": {
-    "mint": {
-      "hex": "#a8e6c9",
-      "name": "Mint",
-      "usage": "Primary teal/mint. Heavy hitter, use frequently. Body accents, buttons, links, callouts.",
-      "verified": false
+    "minted": {
+      "hex": "#00ECF1",
+      "name": "MINTED",
+      "usage": "Primary teal/mint. Heavy hitter, use frequently. The 'wow' color — eyebrows, accents, callouts.",
+      "verified": true
     },
     "flash": {
-      "hex": "#ff6b35",
-      "name": "Flash",
-      "usage": "Second primary. Heavy hitter, use frequently. CTAs, hot moments, drop announcements.",
-      "verified": false
+      "hex": "#F322B3",
+      "name": "FLASH",
+      "usage": "Hot pink magenta. Second primary, heavy hitter. CTAs, drop announcements, hype moments.",
+      "verified": true
     },
     "cash": {
-      "hex": "#7dd87d",
-      "name": "Cash",
-      "usage": "Green, used SPARINGLY. Primarily as halftone gradient. Special moments only.",
-      "verified": false
-    },
-    "black": {
-      "hex": "#0a0a0a",
-      "name": "Background Black",
-      "usage": "Primary background everywhere. Per Tyler's social JPG exports.",
+      "hex": "#5AE131",
+      "name": "CASH",
+      "usage": "Bright green. Used SPARINGLY — primarily as halftone gradient + special accents.",
       "verified": true
     },
-    "white": {
-      "hex": "#f5f5f0",
-      "name": "Off-White",
-      "usage": "Body text, primary readability surface.",
+    "sole": {
+      "hex": "#FFFFFF",
+      "name": "SOLE",
+      "usage": "Pure white. Foundation, contrast, clean negative space.",
       "verified": true
+    },
+    "leather": {
+      "hex": "#080A09",
+      "name": "LEATHER",
+      "usage": "Near-black. Primary background, depth, the canvas everything sits on.",
+      "verified": true
+    }
+  },
+
+  "fonts": {
+    "_note": "Tyler's font picks from page 28. Google Fonts substitutes researched separately for web use.",
+    "tyler_recommended": [
+      "Monta Stella",
+      "Heavy Turbo",
+      "Monte Stella",
+      "Bold Turbo",
+      "Carlson Script",
+      "Termina",
+      "Kabisat Demo"
+    ],
+    "google_fonts_substitutes": {
+      "display_athletic": "Anton OR Bebas Neue (substitutes for Monta Stella / Heavy Turbo)",
+      "display_bold": "Big Shoulders Display (substitute for Bold Turbo)",
+      "script": "Caveat Brush OR Permanent Marker (substitute for Carlson Script)",
+      "body_sans": "Inter OR DM Sans (substitute for Termina)"
     }
   },
 
@@ -40,15 +61,15 @@
     "era": "90s colors",
     "rules": [
       "Bright but not eclectic",
-      "No yellows as dominant",
-      "Not monochromatic",
-      "Halftones over solid gradients"
+      "Hot pink + cyan core (classic 90s combo)",
+      "Black is the canvas",
+      "Halftones over solid gradients",
+      "Distressed / hand-painted feel"
     ]
   },
 
   "do_not_use": [
-    "Pure white #ffffff (too cold, use #f5f5f0 instead)",
-    "Pure black #000000 (too flat, use #0a0a0a instead)",
+    "Pure white #ffffff in copy text (use SOLE but as accent surface, not body color)",
     "Yellow as a primary",
     "Pastels"
   ]
