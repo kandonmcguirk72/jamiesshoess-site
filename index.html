@@ -37,21 +37,14 @@
   --cash:    #5AE131;
   --flash:   #F322B3;
   --leather: #080A09;
-
-  --s1: #080A09;
-  --s2: #0d0f0e;
-  --s3: #111413;
-  --s4: #050706;
-
+  --s1: #080A09; --s2: #0d0f0e; --s3: #111413; --s4: #050706;
   --minted-a12: rgba(0,236,241,.12);
   --flash-a12:  rgba(243,34,179,.12);
   --cash-a12:   rgba(90,225,49,.12);
-
   --fd: 'Bebas Neue', sans-serif;
   --fs: 'Permanent Marker', cursive;
   --fb: 'Space Grotesk', sans-serif;
   --fl: 'Orbitron', monospace;
-
   --ease: cubic-bezier(.22,1,.36,1);
   --ease-io: cubic-bezier(.45,0,.55,1);
 }
@@ -63,6 +56,15 @@ body{background:var(--s1);color:var(--sole);font-family:var(--fb);font-size:16px
 a{text-decoration:none;color:inherit}
 img,video{display:block;max-width:100%}
 button{cursor:pointer;border:none;background:none;font-family:inherit}
+
+/* ── ACCESSIBILITY ──────────────────────────────────────── */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip-link{position:absolute;left:1rem;top:-100%;background:var(--minted);color:var(--leather);font-family:var(--fl);font-size:11px;font-weight:700;letter-spacing:.15em;padding:10px 20px;z-index:10000;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:top .2s}
+.skip-link:focus{top:1rem}
+:focus-visible{outline:2px solid var(--minted);outline-offset:3px;border-radius:2px}
+
+/* ── GRAIN TEXTURE ──────────────────────────────────────── */
+body::after{content:'';position:fixed;inset:0;z-index:9992;pointer-events:none;opacity:.032;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:overlay}
 
 /* ── PRELOADER ──────────────────────────────────────────── */
 #preloader{position:fixed;inset:0;z-index:9999;background:var(--s4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .5s var(--ease),visibility .5s}
@@ -96,15 +98,22 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 .nav-links a{font-family:var(--fl);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:8px 14px;border-radius:4px;transition:color .2s,background .2s}
 .nav-links a:hover,.nav-links a.active{color:var(--minted);background:var(--minted-a12)}
 .nav-actions{margin-left:auto;display:flex;align-items:center;gap:12px}
-.nav-cta{font-family:var(--fl);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--flash);color:var(--leather);padding:9px 22px;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background .2s,transform .15s;white-space:nowrap}
+.nav-cta{font-family:var(--fl);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--flash);color:var(--leather);padding:9px 22px;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background .2s,transform .15s;white-space:nowrap;display:inline-block}
 .nav-cta:hover{background:var(--minted);transform:scale(1.04)}
 .nav-ham{display:none;flex-direction:column;gap:5px;padding:8px;width:40px;height:40px;justify-content:center}
 .nav-ham span{display:block;height:2px;background:rgba(255,255,255,.7);transition:all .3s var(--ease)}
 @media(max-width:900px){.nav-links{display:none}.nav-ham{display:flex}}
-.mob-menu{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(5,7,6,.97);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s;backdrop-filter:blur(20px)}
+.mob-menu{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(5,7,6,.97);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s;backdrop-filter:blur(20px)}
 .mob-menu.open{opacity:1;visibility:visible}
-.mob-menu a{font-family:var(--fd);font-size:clamp(2.5rem,8vw,4rem);letter-spacing:.08em;color:var(--sole);transition:color .2s}
+.mob-menu a{font-family:var(--fd);font-size:clamp(2.5rem,8vw,4rem);letter-spacing:.08em;color:var(--sole);transition:color .2s;position:relative}
 .mob-menu a:hover{color:var(--minted)}
+.mob-menu a:nth-child(1):hover{color:var(--minted)}
+.mob-menu a:nth-child(2):hover{color:var(--flash)}
+.mob-menu a:nth-child(3):hover{color:var(--cash)}
+.mob-menu a:nth-child(4):hover{color:var(--minted)}
+.mob-menu a:nth-child(5):hover{color:var(--flash)}
+.mob-menu a:nth-child(6):hover{color:var(--cash)}
+.mob-menu-close{position:absolute;top:1.5rem;right:1.5rem;font-family:var(--fl);font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.35);background:none;border:none;cursor:pointer;padding:8px}
 
 /* ── HERO ─────────────────────────────────────────────────── */
 .hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--leather)}
@@ -124,8 +133,10 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 .hero-eyebrow{font-family:var(--fl);font-size:10px;font-weight:700;letter-spacing:.35em;color:var(--minted);margin-bottom:2rem;display:inline-flex;align-items:center;gap:12px;opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease) .2s,transform .8s var(--ease) .2s}
 .hero-eyebrow.in{opacity:1;transform:translateY(0)}
 .hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:rgba(0,236,241,.4)}
-.hero-logo-wrap{margin:0 auto 1.5rem;opacity:0;transform:translateY(-30px);transition:opacity .9s var(--ease) .4s,transform .9s var(--ease) .4s}
+.hero-logo-wrap{margin:0 auto 1.5rem;opacity:0;transform:translateY(-30px);transition:opacity .9s var(--ease) .4s,transform .9s var(--ease) .4s;position:relative;overflow:hidden}
 .hero-logo-wrap.in{opacity:1;transform:translateY(0)}
+.hero-logo-wrap::after{content:'';position:absolute;top:0;left:-40%;width:35%;height:100%;background:linear-gradient(90deg,transparent,rgba(0,236,241,.2) 50%,transparent);transform:skewX(-12deg);animation:logoScan 4.5s ease-in-out infinite 3.5s;pointer-events:none;z-index:2}
+@keyframes logoScan{0%{left:-40%;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:140%;opacity:0}}
 .hero-logo{width:clamp(260px,48vw,500px);height:auto;margin:0 auto;mix-blend-mode:screen;filter:drop-shadow(0 0 45px rgba(0,236,241,.65)) drop-shadow(0 0 90px rgba(243,34,179,.28)) drop-shadow(0 8px 32px rgba(0,0,0,1));animation:logoPulse 4.5s ease-in-out infinite}
 @keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 35px rgba(0,236,241,.55)) drop-shadow(0 0 70px rgba(243,34,179,.2)) drop-shadow(0 8px 32px rgba(0,0,0,1))}50%{filter:drop-shadow(0 0 75px rgba(0,236,241,.9)) drop-shadow(0 0 130px rgba(243,34,179,.45)) drop-shadow(0 8px 32px rgba(0,0,0,1))}}
 .hero-sub{font-family:var(--fl);font-size:clamp(9px,1.5vw,12px);letter-spacing:.3em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-bottom:2rem;opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease) .6s,transform .8s var(--ease) .6s}
@@ -139,8 +150,8 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 .badge-c{border-color:var(--cash);color:var(--cash);background:var(--cash-a12)}
 .hero-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease) .85s,transform .8s var(--ease) .85s}
 .hero-ctas.in{opacity:1;transform:translateY(0)}
-.btn-p{font-family:var(--fl);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;background:var(--minted);color:var(--leather);padding:14px 36px;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);transition:background .2s,transform .15s;display:inline-block}
-.btn-p:hover{background:var(--cash);transform:scale(1.05) translateY(-2px)}
+.btn-p{font-family:var(--fl);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;background:var(--minted);color:var(--leather);padding:14px 36px;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);transition:background .2s,transform .15s,box-shadow .2s;display:inline-block}
+.btn-p:hover{background:var(--cash);transform:scale(1.05) translateY(-2px);box-shadow:0 8px 30px rgba(90,225,49,.35)}
 .btn-s{font-family:var(--fl);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;background:transparent;color:var(--flash);padding:14px 36px;border:2px solid var(--flash);clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);transition:all .2s;display:inline-block}
 .btn-s:hover{background:var(--flash);color:var(--leather)}
 .hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:heroBounce 2.5s ease-in-out 1.8s infinite forwards}
@@ -150,7 +161,7 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 
 /* ── COLORWAY STRIP ─────────────────────────────────────── */
 .cw-strip{display:flex;height:56px;border-top:2px solid var(--leather);border-bottom:2px solid var(--leather)}
-.cw{flex:1;display:flex;align-items:center;justify-content:center;transition:flex .4s var(--ease)}
+.cw{flex:1;display:flex;align-items:center;justify-content:center;transition:flex .4s var(--ease);cursor:pointer}
 .cw:hover{flex:2}
 .cw span{font-family:var(--fl);font-size:8px;font-weight:700;letter-spacing:.25em;mix-blend-mode:difference;color:#fff;opacity:0;transition:opacity .2s}
 .cw:hover span{opacity:1}
@@ -189,7 +200,7 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 
 /* ── STATEMENT ──────────────────────────────────────────── */
 .statement{background:var(--s1);position:relative;overflow:hidden}
-.statement-bg-logo{position:absolute;right:-5%;top:50%;transform:translateY(-50%);width:clamp(280px,55%,620px);opacity:.04;pointer-events:none;mix-blend-mode:screen;filter:drop-shadow(0 0 0 rgba(0,0,0,0))}
+.statement-bg-logo{position:absolute;right:-5%;top:50%;transform:translateY(-50%);width:clamp(280px,55%,620px);opacity:.04;pointer-events:none;mix-blend-mode:screen}
 .statement-inner{max-width:1100px;margin:0 auto}
 .statement-text{font-family:var(--fd);line-height:.88;letter-spacing:.03em}
 .statement-text .l1{font-size:clamp(4rem,10vw,9rem);color:var(--sole);display:block}
@@ -216,6 +227,12 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 .stat-card.c4 .stat-num{color:var(--minted)}
 .stat-label{font-family:var(--fl);font-size:9px;font-weight:700;letter-spacing:.25em;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:.75rem}
 .stat-desc{font-size:13px;color:rgba(255,255,255,.5);line-height:1.65}
+.stat-bar{height:2px;background:rgba(255,255,255,.06);margin-top:1.5rem;position:relative;overflow:hidden}
+.stat-bar::after{content:'';position:absolute;left:0;top:0;height:100%;width:0;transition:width 2.2s var(--ease)}
+.stat-card.c1 .stat-bar::after,.stat-card.c4 .stat-bar::after{background:linear-gradient(90deg,var(--minted),rgba(0,236,241,.4))}
+.stat-card.c2 .stat-bar::after{background:linear-gradient(90deg,var(--flash),rgba(243,34,179,.4))}
+.stat-card.c3 .stat-bar::after{background:linear-gradient(90deg,var(--cash),rgba(90,225,49,.4))}
+.stat-bar.animate::after{width:100%}
 
 /* ── VIDEO ──────────────────────────────────────────────── */
 .video-section{background:var(--s4);position:relative;overflow:hidden}
@@ -246,7 +263,7 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 .chars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:3rem;background:rgba(255,255,255,.04)}
 @media(max-width:900px){.chars-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:500px){.chars-grid{grid-template-columns:1fr 1fr}}
-.char-card{background:var(--s3);padding:2.5rem 1.5rem;text-align:center;position:relative;overflow:hidden;cursor:pointer;transition:background .3s}
+.char-card{background:var(--s3);padding:2.5rem 1.5rem;text-align:center;position:relative;overflow:hidden;cursor:pointer;transition:background .3s,transform .4s var(--ease);transform-style:preserve-3d}
 .char-card:hover{background:var(--s2)}
 .char-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;transform:scaleX(0);transition:transform .4s var(--ease)}
 .char-card:nth-child(1)::before{background:var(--minted)}
@@ -270,11 +287,36 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 .g-item{overflow:hidden;position:relative;cursor:pointer;aspect-ratio:4/3}
 .g-item.tall{grid-row:span 2;aspect-ratio:auto}
 .g-item img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),filter .5s;filter:grayscale(15%) brightness(.9)}
-.g-item:hover img{transform:scale(1.08);filter:grayscale(0%) brightness(1)}
-.g-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,10,9,.8) 0%,transparent 40%);opacity:0;transition:opacity .4s}
+.g-item:hover img{transform:scale(1.08);filter:grayscale(0%) brightness(1.05)}
+.g-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,10,9,.85) 0%,transparent 50%);opacity:0;transition:opacity .4s}
 .g-item:hover .g-overlay{opacity:1}
 .g-label{position:absolute;bottom:0;left:0;right:0;padding:1.25rem 1rem;font-family:var(--fl);font-size:9px;letter-spacing:.25em;color:var(--minted);text-transform:uppercase;transform:translateY(8px);opacity:0;transition:transform .4s var(--ease),opacity .4s}
 .g-item:hover .g-label{transform:translateY(0);opacity:1}
+.g-zoom{position:absolute;top:.75rem;right:.75rem;width:30px;height:30px;background:rgba(0,236,241,.15);border:1px solid rgba(0,236,241,.3);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;pointer-events:none}
+.g-zoom::before,.g-zoom::after{content:'';position:absolute;background:var(--minted)}
+.g-zoom::before{width:10px;height:1px}
+.g-zoom::after{width:1px;height:10px}
+.g-item:hover .g-zoom{opacity:1}
+
+/* ── LIGHTBOX ────────────────────────────────────────────── */
+.lightbox{position:fixed;inset:0;z-index:9995;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;transition:opacity .3s var(--ease);pointer-events:none}
+.lightbox.open{opacity:1;pointer-events:all}
+.lb-backdrop{position:absolute;inset:0;background:rgba(5,7,6,.93);backdrop-filter:blur(12px);cursor:pointer}
+.lb-content{position:relative;z-index:1;max-width:90vw;max-height:90vh;display:flex;flex-direction:column;align-items:center;gap:1rem}
+.lb-img{max-width:100%;max-height:80vh;object-fit:contain;border:1px solid rgba(0,236,241,.12);transform:scale(.94);transition:transform .4s var(--ease)}
+.lightbox.open .lb-img{transform:scale(1)}
+.lb-label{font-family:var(--fl);font-size:9px;letter-spacing:.3em;color:var(--minted);text-transform:uppercase}
+.lb-close{position:fixed;top:1.5rem;right:1.5rem;font-family:var(--fd);font-size:2.5rem;color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer;line-height:1;transition:color .2s,transform .2s;z-index:2}
+.lb-close:hover{color:var(--flash);transform:rotate(90deg)}
+
+/* ── STOREFRONT SIGN MOMENT ─────────────────────────────── */
+.sf-moment{position:relative;overflow:hidden}
+.sf-photo{width:100%;height:62vh;min-height:380px;object-fit:cover;object-position:center 25%;filter:brightness(.48) saturate(.55);display:block}
+.sf-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;background:linear-gradient(to bottom,rgba(8,10,9,.5) 0%,rgba(8,10,9,.18) 40%,rgba(8,10,9,.65) 100%)}
+.sf-tag{font-family:var(--fl);font-size:9px;letter-spacing:.4em;color:rgba(255,255,255,.48);margin-bottom:2rem;border:1px solid rgba(255,255,255,.12);padding:6px 20px;background:rgba(8,10,9,.35)}
+.sf-sign{width:clamp(180px,28vw,340px);height:auto;filter:drop-shadow(0 0 55px rgba(90,225,49,.8)) drop-shadow(0 0 110px rgba(90,225,49,.28)) drop-shadow(0 8px 30px rgba(0,0,0,1));margin-bottom:1.5rem;display:block;margin-left:auto;margin-right:auto}
+.sf-cap{font-family:var(--fd);font-size:clamp(1.1rem,2.8vw,2rem);letter-spacing:.07em;color:rgba(255,255,255,.78)}
+.sf-sub{font-family:var(--fl);font-size:9px;letter-spacing:.3em;color:rgba(255,255,255,.3);margin-top:.75rem}
 
 /* ── ABOUT ───────────────────────────────────────────────── */
 .about{background:var(--s1)}
@@ -303,23 +345,19 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 .logo-card:hover img{transform:scale(1.08);filter:drop-shadow(0 0 30px rgba(0,236,241,.35)) drop-shadow(0 0 20px rgba(0,0,0,.8))}
 .logo-card-label{font-family:var(--fl);font-size:9px;letter-spacing:.3em;color:rgba(255,255,255,.3)}
 
-/* ── STOREFRONT SIGN MOMENT ─────────────────────────────── */
-.sf-moment{position:relative;overflow:hidden}
-.sf-photo{width:100%;height:62vh;min-height:380px;object-fit:cover;object-position:center 25%;filter:brightness(.48) saturate(.55);display:block}
-.sf-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;background:linear-gradient(to bottom,rgba(8,10,9,.5) 0%,rgba(8,10,9,.18) 40%,rgba(8,10,9,.65) 100%)}
-.sf-tag{font-family:var(--fl);font-size:9px;letter-spacing:.4em;color:rgba(255,255,255,.48);margin-bottom:2rem;border:1px solid rgba(255,255,255,.12);padding:6px 20px;background:rgba(8,10,9,.35)}
-.sf-sign{width:clamp(180px,28vw,340px);height:auto;filter:drop-shadow(0 0 55px rgba(90,225,49,.8)) drop-shadow(0 0 110px rgba(90,225,49,.28)) drop-shadow(0 8px 30px rgba(0,0,0,1));margin-bottom:1.5rem;display:block;margin-left:auto;margin-right:auto}
-.sf-cap{font-family:var(--fd);font-size:clamp(1.1rem,2.8vw,2rem);letter-spacing:.07em;color:rgba(255,255,255,.78)}
-.sf-sub{font-family:var(--fl);font-size:9px;letter-spacing:.3em;color:rgba(255,255,255,.3);margin-top:.75rem}
-
 /* ── LOCKUPS ─────────────────────────────────────────────── */
 .lockups-section{background:var(--s3)}
-.lockups-scroll{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin-top:2.5rem;padding-bottom:2px}
+.lockups-scroll{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin-top:2.5rem;padding-bottom:2px;cursor:grab;user-select:none}
 .lockups-scroll::-webkit-scrollbar{display:none}
+.lockups-scroll:active{cursor:grabbing}
 .lockup-item{flex-shrink:0;width:300px;height:220px;background:var(--s3);display:flex;align-items:center;justify-content:center;padding:1.5rem;transition:background .3s;cursor:pointer}
 .lockup-item:hover{background:var(--s2)}
 .lockup-item img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:screen;filter:drop-shadow(0 0 20px rgba(0,0,0,.9));transition:transform .5s var(--ease)}
 .lockup-item:hover img{transform:scale(1.08)}
+.scroll-hint{font-family:var(--fl);font-size:8px;letter-spacing:.3em;color:rgba(255,255,255,.2);display:flex;align-items:center;gap:.75rem;margin-top:1rem}
+.scroll-hint::before{content:'';width:20px;height:1px;background:currentColor;flex-shrink:0}
+.scroll-hint span{flex:1}
+.scroll-hint::after{content:'';width:20px;height:1px;background:currentColor;flex-shrink:0}
 
 /* ── HOURS ───────────────────────────────────────────────── */
 .hours{background:var(--s1)}
@@ -330,6 +368,8 @@ table.hrs tr{border-bottom:1px solid rgba(255,255,255,.06)}
 table.hrs td{padding:.9rem 0;font-size:15px;color:rgba(255,255,255,.65)}
 table.hrs td:last-child{text-align:right;color:var(--minted);font-weight:600;font-family:var(--fb)}
 table.hrs .cls td:last-child{color:rgba(255,255,255,.22)}
+table.hrs tr.today td{color:var(--sole)}
+table.hrs tr.today td:last-child{color:var(--cash)}
 .loc-card{background:var(--s2);border:1px solid rgba(0,236,241,.2);padding:2.25rem;clip-path:polygon(16px 0%,100% 0%,calc(100% - 16px) 100%,0% 100%)}
 .loc-label{font-family:var(--fl);font-size:9px;letter-spacing:.35em;color:var(--minted);margin-bottom:.75rem}
 .loc-addr{font-family:var(--fd);font-size:1.5rem;letter-spacing:.04em;line-height:1.25;margin-bottom:1.5rem}
@@ -337,6 +377,13 @@ table.hrs .cls td:last-child{color:rgba(255,255,255,.22)}
 .loc-btn{font-family:var(--fl);font-size:9px;font-weight:700;letter-spacing:.2em;background:var(--minted);color:var(--leather);padding:9px 22px;display:inline-block;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background .2s}
 .loc-btn:hover{background:var(--cash)}
 .loc-note{font-family:var(--fl);font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-top:1.25rem;line-height:1.6}
+.open-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--fl);font-size:9px;font-weight:700;letter-spacing:.2em;padding:6px 14px;margin-bottom:1.5rem}
+.open-badge .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.open-badge.is-open{background:rgba(90,225,49,.1);color:var(--cash);border:1px solid rgba(90,225,49,.3)}
+.open-badge.is-open .dot{background:var(--cash);animation:blink 1.4s ease-in-out infinite}
+.open-badge.is-closed{background:rgba(243,34,179,.07);color:rgba(243,34,179,.6);border:1px solid rgba(243,34,179,.18)}
+.open-badge.is-closed .dot{background:rgba(243,34,179,.45)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
 /* ── REVIEWS ─────────────────────────────────────────────── */
 .reviews{background:var(--s2)}
@@ -346,23 +393,27 @@ table.hrs .cls td:last-child{color:rgba(255,255,255,.22)}
 .rev-stars{color:var(--cash);font-size:13px;letter-spacing:2px;margin-bottom:1rem}
 .rev-text{font-size:14px;color:rgba(255,255,255,.7);line-height:1.75;margin-bottom:1.25rem;font-style:italic}
 .rev-author{font-family:var(--fl);font-size:9px;letter-spacing:.2em;color:var(--minted)}
+.rev-platform{font-family:var(--fl);font-size:8px;letter-spacing:.15em;color:rgba(255,255,255,.2);margin-top:.3rem}
 .rev-q{position:absolute;top:1.25rem;right:1.25rem;font-size:5rem;line-height:1;color:rgba(0,236,241,.05);font-family:serif;pointer-events:none}
 
 /* ── EMAIL ───────────────────────────────────────────────── */
 .email-sec{background:var(--s1);position:relative;overflow:hidden;text-align:center}
 .email-sec::before{content:'DROPS';font-family:var(--fd);font-size:clamp(8rem,22vw,22rem);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(0,236,241,.025);pointer-events:none;white-space:nowrap;letter-spacing:.05em}
-.email-form{display:flex;max-width:480px;margin:2.5rem auto 0;border:1px solid rgba(0,236,241,.3)}
+.email-proof{font-family:var(--fl);font-size:9px;letter-spacing:.2em;color:rgba(255,255,255,.28);margin-bottom:2.5rem;display:flex;align-items:center;justify-content:center;gap:1rem}
+.email-proof::before,.email-proof::after{content:'';width:30px;height:1px;background:rgba(0,236,241,.2)}
+.email-form{display:flex;max-width:480px;margin:.5rem auto 0;border:1px solid rgba(0,236,241,.3)}
 .email-form:focus-within{border-color:var(--minted)}
+.email-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 .email-in{flex:1;background:rgba(0,0,0,.5);border:none;padding:14px 20px;color:var(--sole);font-family:var(--fb);font-size:15px;font-weight:500;outline:none}
 .email-in::placeholder{color:rgba(255,255,255,.3)}
-.email-sub{font-family:var(--fl);font-size:10px;font-weight:700;letter-spacing:.15em;background:var(--minted);color:var(--leather);padding:14px 24px;transition:background .2s;cursor:pointer}
+.email-sub{font-family:var(--fl);font-size:10px;font-weight:700;letter-spacing:.15em;background:var(--minted);color:var(--leather);padding:14px 24px;transition:background .2s;cursor:pointer;white-space:nowrap}
 .email-sub:hover{background:var(--cash)}
 .email-thanks{display:none;margin-top:1.25rem;font-family:var(--fl);font-size:10px;letter-spacing:.25em;color:var(--cash)}
 
 /* ── SOCIAL ──────────────────────────────────────────────── */
 .social-sec{background:var(--s3);text-align:center}
 .social-links{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;margin-top:2.5rem}
-.soc-btn{font-family:var(--fl);font-size:9px;font-weight:700;letter-spacing:.2em;padding:12px 26px;border:1px solid;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all .2s}
+.soc-btn{font-family:var(--fl);font-size:9px;font-weight:700;letter-spacing:.2em;padding:12px 26px;border:1px solid;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all .2s;display:inline-block}
 .soc-ig{border-color:var(--flash);color:var(--flash)}.soc-ig:hover{background:var(--flash);color:var(--leather)}
 .soc-tt{border-color:var(--minted);color:var(--minted)}.soc-tt:hover{background:var(--minted);color:var(--leather)}
 .soc-fb{border-color:var(--cash);color:var(--cash)}.soc-fb:hover{background:var(--cash);color:var(--leather)}
@@ -376,6 +427,9 @@ table.hrs .cls td:last-child{color:rgba(255,255,255,.22)}
 .faq-item.open .faq-q::after{transform:rotate(45deg);color:var(--flash)}
 .faq-a{font-size:14px;color:rgba(255,255,255,.55);line-height:1.75;max-height:0;overflow:hidden;transition:max-height .45s var(--ease-io),padding .35s}
 .faq-item.open .faq-a{max-height:240px;padding-top:1rem}
+.faq-footer{margin-top:2.5rem;font-family:var(--fl);font-size:9px;letter-spacing:.2em;color:rgba(255,255,255,.3)}
+.faq-footer a{color:var(--minted);text-decoration:underline;text-underline-offset:3px}
+.faq-footer a:hover{color:var(--flash)}
 
 /* ── AUTHENTIC STRIP ─────────────────────────────────────── */
 .auth-strip{background:var(--s4);border-top:1px solid rgba(255,255,255,.04);padding:1.5rem 2rem;display:flex;justify-content:center;flex-wrap:wrap;gap:2.5rem}
@@ -388,6 +442,12 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 .ftr-tagline{font-family:var(--fl);font-size:9px;letter-spacing:.4em;color:rgba(255,255,255,.22);margin-bottom:2.5rem}
 .ftr-copy{font-size:12px;color:rgba(255,255,255,.18);margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.06)}
 
+/* ── MOBILE STICKY CTA ───────────────────────────────────── */
+.mob-shop-btn{display:none;position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(90px);z-index:200;background:var(--flash);color:var(--leather);font-family:var(--fl);font-size:9px;font-weight:700;letter-spacing:.2em;padding:13px 32px;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);transition:transform .45s var(--ease),box-shadow .3s;white-space:nowrap;box-shadow:0 4px 30px rgba(243,34,179,.5),0 0 60px rgba(243,34,179,.15)}
+@media(max-width:768px){.mob-shop-btn{display:block}}
+.mob-shop-btn.visible{transform:translateX(-50%) translateY(0)}
+.mob-shop-btn:hover{box-shadow:0 6px 40px rgba(243,34,179,.7),0 0 80px rgba(243,34,179,.25)}
+
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media(max-width:768px){
   .statement-text .l1{font-size:clamp(3rem,12vw,5.5rem)}
@@ -397,9 +457,20 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
   .about-visual{min-height:350px}
   .logos-grid{grid-template-columns:1fr 1fr}
 }
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .hero-logo-wrap::after{display:none}
+  body::after{display:none}
+  .reveal,.reveal-left,.reveal-right{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
+
+<!-- SKIP LINK -->
+<a href="#main-content" class="skip-link">Skip to content</a>
 
 <!-- PRELOADER -->
 <div id="preloader">
@@ -413,16 +484,15 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 <div class="cur-ring" id="curRing"></div>
 
 <!-- ANNOUNCEMENT BAR -->
-<div class="ann-bar">
-  <div class="ann-track">
-    <span>OPEN WED&ndash;SAT</span><span>&middot;&middot;&middot;</span>
+<div class="ann-bar" id="annBar">
+  <div class="ann-track" id="annTrack">
+    <span id="annStatus">OPEN WED&ndash;SAT</span><span>&middot;&middot;&middot;</span>
     <span>302 PARK CENTRAL EAST</span><span>&middot;&middot;&middot;</span>
     <span>SPRINGFIELD MO 65806</span><span>&middot;&middot;&middot;</span>
     <span>HISTORIC ROUTE 66</span><span>&middot;&middot;&middot;</span>
     <span>100% AUTHENTIC</span><span>&middot;&middot;&middot;</span>
     <span>NEW DROPS WEEKLY</span><span>&middot;&middot;&middot;</span>
     <span>FREE LOCAL PICKUP</span><span>&middot;&middot;&middot;</span>
-    <!-- duplicate for loop -->
     <span>OPEN WED&ndash;SAT</span><span>&middot;&middot;&middot;</span>
     <span>302 PARK CENTRAL EAST</span><span>&middot;&middot;&middot;</span>
     <span>SPRINGFIELD MO 65806</span><span>&middot;&middot;&middot;</span>
@@ -436,10 +506,10 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
-    <a href="#" class="nav-logo">
+    <a href="#" class="nav-logo" aria-label="JAMIESSHOESS home">
       <img src="images/logo-graffiti-dark.png" alt="JAMIESSHOESS" width="160" height="42">
     </a>
-    <ul class="nav-links">
+    <ul class="nav-links" role="list">
       <li><a href="#shop">Shop</a></li>
       <li><a href="#characters">Characters</a></li>
       <li><a href="#about">Story</a></li>
@@ -449,7 +519,7 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
     </ul>
     <div class="nav-actions">
       <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener" class="nav-cta">Shop IG</a>
-      <button class="nav-ham" id="navHam" aria-label="Menu">
+      <button class="nav-ham" id="navHam" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -457,7 +527,8 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 </nav>
 
 <!-- MOBILE MENU -->
-<div class="mob-menu" id="mobMenu">
+<div class="mob-menu" id="mobMenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="mob-menu-close" id="mobClose" aria-label="Close menu">&#x2715; CLOSE</button>
   <a href="#shop" onclick="closeMob()">Shop</a>
   <a href="#characters" onclick="closeMob()">Characters</a>
   <a href="#about" onclick="closeMob()">Story</a>
@@ -466,16 +537,19 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
   <a href="#faq" onclick="closeMob()">FAQ</a>
 </div>
 
+<main id="main-content">
+
 <!-- HERO -->
 <section class="hero">
+  <h1 class="sr-only">JAMIESSHOESS &mdash; Sneakers &amp; Vintage Boutique in Springfield, MO</h1>
   <div class="hero-orb hero-orb-m"></div>
   <div class="hero-orb hero-orb-f"></div>
   <div class="hero-orb hero-orb-c"></div>
   <div class="hero-grid-pat"></div>
   <div class="hero-vignette"></div>
   <div class="hero-bg-text" aria-hidden="true">JAMIESSHOESS</div>
-  <canvas id="hero-canvas"></canvas>
-  <div class="hero-scanlines"></div>
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-scanlines" aria-hidden="true"></div>
   <div class="hero-content">
     <div class="hero-eyebrow" id="heEyebrow">Springfield, MO &nbsp;&middot;&nbsp; Historic Route 66 &nbsp;&middot;&nbsp; Est. Downtown SGF</div>
     <div class="hero-logo-wrap" id="heLogo">
@@ -491,18 +565,18 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
       <span class="badge badge-m">SGF &middot; MO</span>
     </div>
     <div class="hero-ctas" id="heCtas">
-      <a href="https://www.facebook.com/marketplace/profile/100080011887058/" target="_blank" rel="noopener" class="btn-p">Shop Now</a>
+      <a href="https://www.facebook.com/marketplace/profile/100080011887058/" target="_blank" rel="noopener" class="btn-p">Shop The Store</a>
       <a href="#about" class="btn-s">Our Story</a>
     </div>
   </div>
-  <div class="hero-scroll">
+  <div class="hero-scroll" aria-hidden="true">
     <span>Scroll</span>
     <div class="hero-scroll-line"></div>
   </div>
 </section>
 
 <!-- COLORWAY STRIP -->
-<div class="cw-strip">
+<div class="cw-strip" role="presentation">
   <div class="cw" style="background:#FFFFFF"><span style="color:#080A09">SOLE</span></div>
   <div class="cw" style="background:#00ECF1"><span style="color:#080A09">MINTED</span></div>
   <div class="cw" style="background:#5AE131"><span style="color:#080A09">CASH</span></div>
@@ -510,7 +584,7 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 </div>
 
 <!-- MARQUEE 1 -->
-<div class="marquee minted">
+<div class="marquee minted" aria-hidden="true">
   <div class="m-track">
     <span>JAMIESSHOESS</span><span class="sep">&bull;</span>
     <span>SHOP VNTG</span><span class="sep">&bull;</span>
@@ -520,7 +594,6 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
     <span>ROUTE 66</span><span class="sep">&bull;</span>
     <span>RARE FINDS</span><span class="sep">&bull;</span>
     <span>100% AUTHENTIC</span><span class="sep">&bull;</span>
-    <!-- duplicate -->
     <span>JAMIESSHOESS</span><span class="sep">&bull;</span>
     <span>SHOP VNTG</span><span class="sep">&bull;</span>
     <span>SGF &middot; MO</span><span class="sep">&bull;</span>
@@ -556,21 +629,25 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
         <div class="stat-num" data-count="50000" data-suffix="+" id="ct1">50K+</div>
         <div class="stat-label">Items Resold &amp; Rescued</div>
         <div class="stat-desc">Every vintage piece saved from landfill. Shopping vintage saves the planet.</div>
+        <div class="stat-bar"></div>
       </div>
       <div class="stat-card c2">
         <div class="stat-num" data-count="6147" data-suffix="" id="ct2">6.1K</div>
         <div class="stat-label">Instagram Followers</div>
         <div class="stat-desc">Follow @JAMIESSHOESS to see drops before they hit the site.</div>
+        <div class="stat-bar"></div>
       </div>
       <div class="stat-card c3">
         <div class="stat-num">WKLY</div>
         <div class="stat-label">New Inventory Drops</div>
         <div class="stat-desc">New heat every single week. You&rsquo;ll never see the same store twice.</div>
+        <div class="stat-bar"></div>
       </div>
       <div class="stat-card c4">
         <div class="stat-num">100%</div>
         <div class="stat-label">Authenticated</div>
         <div class="stat-desc">Every sneaker, every vintage tee &mdash; hand-picked. No fakes. Not here.</div>
+        <div class="stat-bar"></div>
       </div>
     </div>
   </div>
@@ -579,10 +656,10 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 <!-- VIDEO SHOWCASE -->
 <section class="section video-section">
   <div class="video-wrap reveal">
-    <video autoplay muted loop playsinline preload="none" poster="images/store-interior-dark.jpg">
+    <video autoplay muted loop playsinline preload="none" poster="images/store-interior-dark.jpg" aria-label="JAMIESSHOESS store reel">
       <source src="videos/store-reel.mp4" type="video/mp4">
     </video>
-    <div class="video-overlay"></div>
+    <div class="video-overlay" aria-hidden="true"></div>
     <div class="video-content">
       <img src="brand/logos/primary-logo-2.png" alt="JAMIESSHOESS" class="video-logo" width="280" height="112" loading="lazy">
       <div class="video-headline">
@@ -598,13 +675,13 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
   <div class="shop-split">
     <div class="shop-photo reveal-left">
       <img src="images/sneakers-feature.webp" alt="Sneakers at JAMIESSHOESS" width="800" height="600" loading="lazy">
-      <div class="shop-photo-overlay"></div>
+      <div class="shop-photo-overlay" aria-hidden="true"></div>
       <img src="brand/illustrations/illustration-3.png" alt="" class="shop-illus" aria-hidden="true" loading="lazy">
     </div>
     <div class="shop-copy reveal-right">
       <div class="sec-label">The Shop</div>
       <h2 class="sec-title">Real Heat.<br><span class="m">No Fakes.</span><br><span class="f">Ever.</span></h2>
-      <p>Every pair is hand-authenticated. Every vintage piece is hand-picked. We don&rsquo;t do bulk. We don&rsquo;t do replicas. If it&rsquo;s here, it&rsquo;s real and it&rsquo;s rare.</p>
+      <p>Every pair hand-authenticated. Every vintage piece hand-picked. No bulk, no replicas. If it&rsquo;s here, it&rsquo;s rare.</p>
       <p>New inventory drops every week &mdash; follow on Instagram to see it before anyone else.</p>
       <div class="shop-actions">
         <a href="https://www.facebook.com/marketplace/profile/100080011887058/" target="_blank" rel="noopener" class="btn-p">Shop Facebook</a>
@@ -615,7 +692,7 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 </section>
 
 <!-- FLASH MARQUEE -->
-<div class="marquee flash">
+<div class="marquee flash" aria-hidden="true">
   <div class="m-track">
     <span>SHOP VINTAGE</span><span class="sep">&bull;</span>
     <span>JMS SHS</span><span class="sep">&bull;</span>
@@ -623,7 +700,6 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
     <span>DOWNTOWN</span><span class="sep">&bull;</span>
     <span>AUTHENTIC</span><span class="sep">&bull;</span>
     <span>WED&ndash;SAT</span><span class="sep">&bull;</span>
-    <!-- duplicate -->
     <span>SHOP VINTAGE</span><span class="sep">&bull;</span>
     <span>JMS SHS</span><span class="sep">&bull;</span>
     <span>SPRINGFIELD MO</span><span class="sep">&bull;</span>
@@ -664,37 +740,43 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 </section>
 
 <!-- GALLERY -->
-<section class="gallery">
+<section class="gallery" aria-label="Store photos">
   <div class="gallery-grid">
     <div class="g-item tall reveal-left">
-      <img src="images/store-interior-fisheye.webp" alt="JAMIESSHOESS interior" loading="lazy">
-      <div class="g-overlay"></div>
+      <img src="images/store-interior-fisheye.webp" alt="JAMIESSHOESS interior wide angle view" loading="lazy">
+      <div class="g-overlay" aria-hidden="true"></div>
       <div class="g-label">Inside The Store</div>
+      <div class="g-zoom" aria-hidden="true"></div>
     </div>
     <div class="g-item reveal" style="transition-delay:.08s">
-      <img src="images/store-interior-shoes.webp" alt="Sneakers display" loading="lazy">
-      <div class="g-overlay"></div>
+      <img src="images/store-interior-shoes.webp" alt="Sneakers display wall" loading="lazy">
+      <div class="g-overlay" aria-hidden="true"></div>
       <div class="g-label">Sneaker Wall</div>
+      <div class="g-zoom" aria-hidden="true"></div>
     </div>
     <div class="g-item reveal" style="transition-delay:.16s">
-      <img src="images/store-interior-vintage.webp" alt="Vintage clothing" loading="lazy">
-      <div class="g-overlay"></div>
+      <img src="images/store-interior-vintage.webp" alt="Vintage clothing racks" loading="lazy">
+      <div class="g-overlay" aria-hidden="true"></div>
       <div class="g-label">Vintage Racks</div>
+      <div class="g-zoom" aria-hidden="true"></div>
     </div>
     <div class="g-item reveal-right" style="transition-delay:.12s">
       <img src="images/store-interior-counter.webp" alt="Store counter" loading="lazy">
-      <div class="g-overlay"></div>
+      <div class="g-overlay" aria-hidden="true"></div>
       <div class="g-label">The Counter</div>
+      <div class="g-zoom" aria-hidden="true"></div>
     </div>
     <div class="g-item reveal" style="transition-delay:.2s">
       <img src="images/store-interior-entrance.webp" alt="Store entrance" loading="lazy">
-      <div class="g-overlay"></div>
+      <div class="g-overlay" aria-hidden="true"></div>
       <div class="g-label">Entrance</div>
+      <div class="g-zoom" aria-hidden="true"></div>
     </div>
     <div class="g-item reveal" style="transition-delay:.28s">
       <img src="images/store-interior-window.webp" alt="Store window display" loading="lazy">
-      <div class="g-overlay"></div>
+      <div class="g-overlay" aria-hidden="true"></div>
       <div class="g-label">Window Display</div>
+      <div class="g-zoom" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -715,15 +797,15 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
   <div class="about-grid">
     <div class="about-visual reveal-left">
       <img src="images/store-interior-dark.webp" alt="JAMIESSHOESS interior" class="about-store-img" loading="lazy">
-      <div class="about-visual-overlay"></div>
-      <img src="brand/illustrations/illustration-2.png" alt="JMS character" class="about-illus" loading="lazy">
+      <div class="about-visual-overlay" aria-hidden="true"></div>
+      <img src="brand/illustrations/illustration-2.png" alt="" class="about-illus" aria-hidden="true" loading="lazy">
     </div>
     <div class="about-copy reveal-right">
       <div class="sec-label">Our Story</div>
       <h2 class="sec-title">Why <span class="m">JAMIES</span><span class="f">SHOESS</span><br>Exists</h2>
-      <p>Jamie built this from a real obsession with sneakers and vintage culture in Springfield, MO. What started as hunting for rare pieces turned into a full storefront right on Historic Route 66.</p>
-      <p>Every item in the store is hand-picked. No fakes. No replicas. No mass-bought bulk inventory. Just heat &mdash; curated for people who actually care about what they wear.</p>
-      <p>Come in, dig through the racks, find something nobody else has. That&rsquo;s the whole point.</p>
+      <p>Jamie grew up hunting sneakers and vintage in Springfield. Couldn&rsquo;t find a spot worth coming back to, so he built one &mdash; 302 Park Central East, right on Historic Route 66.</p>
+      <p>Everything is hand-picked. No fakes, no replicas, no bulk. Heat for people who care about what they wear.</p>
+      <p>Come in, dig through the racks, find something nobody else has.</p>
       <div class="about-stats">
         <div class="as"><strong>302</strong><small>Park Central East</small></div>
         <div class="as"><strong>WED&ndash;SAT</strong><small>Store Hours</small></div>
@@ -764,26 +846,27 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
   <div class="container">
     <div class="sec-label reveal">Brand Compositions</div>
     <h2 class="sec-title reveal" style="transition-delay:.1s">The <span class="m">Identity</span> <span class="f">System</span></h2>
-    <div class="lockups-scroll reveal" style="transition-delay:.15s">
+    <div class="lockups-scroll reveal" style="transition-delay:.15s" id="lockupsScroll">
       <div class="lockup-item">
-        <img src="brand/lockups/composition-1.png" alt="JS lockup 1" loading="lazy">
+        <img src="brand/lockups/composition-1.png" alt="JS lockup composition 1" loading="lazy">
       </div>
       <div class="lockup-item">
-        <img src="brand/lockups/composition-2.png" alt="JS lockup 2" loading="lazy">
+        <img src="brand/lockups/composition-2.png" alt="JS lockup composition 2" loading="lazy">
       </div>
       <div class="lockup-item">
-        <img src="brand/lockups/composition-3.png" alt="JS lockup 3" loading="lazy">
+        <img src="brand/lockups/composition-3.png" alt="JS lockup composition 3" loading="lazy">
       </div>
       <div class="lockup-item">
-        <img src="brand/lockups/composition-4.png" alt="JS lockup 4" loading="lazy">
+        <img src="brand/lockups/composition-4.png" alt="JS lockup composition 4" loading="lazy">
       </div>
       <div class="lockup-item">
-        <img src="brand/lockups/composition-5.png" alt="JS lockup 5" loading="lazy">
+        <img src="brand/lockups/composition-5.png" alt="JS lockup composition 5" loading="lazy">
       </div>
       <div class="lockup-item">
-        <img src="brand/lockups/composition-6.png" alt="JS lockup 6" loading="lazy">
+        <img src="brand/lockups/composition-6.png" alt="JS lockup composition 6" loading="lazy">
       </div>
     </div>
+    <div class="scroll-hint reveal" style="transition-delay:.25s"><span>drag to explore all compositions</span></div>
   </div>
 </section>
 
@@ -792,9 +875,10 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
   <div class="container-sm">
     <div class="sec-label reveal">Find Us</div>
     <h2 class="sec-title reveal" style="transition-delay:.1s">Come <span class="m">Through</span></h2>
+    <div id="openBadge" class="open-badge reveal" style="transition-delay:.15s"></div>
     <div class="hours-grid">
       <div class="reveal" style="transition-delay:.05s">
-        <table class="hrs">
+        <table class="hrs" id="hrsTable">
           <tr class="cls"><td>Monday</td><td>Closed</td></tr>
           <tr class="cls"><td>Tuesday</td><td>Closed</td></tr>
           <tr><td>Wednesday</td><td>12PM &ndash; 6PM</td></tr>
@@ -830,25 +914,29 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
         <div class="rev-q">&ldquo;</div>
         <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="rev-text">Best sneaker spot in Springfield. Found a pair I&rsquo;d been hunting everywhere else &mdash; they had it. Legit store, legit people.</p>
-        <div class="rev-author">@user &middot; Instagram</div>
+        <div class="rev-author">@sneakerhead_sgf</div>
+        <div class="rev-platform">Instagram</div>
       </div>
       <div class="rev-card reveal" style="transition-delay:.13s">
         <div class="rev-q">&ldquo;</div>
         <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="rev-text">The vintage section is unreal. Every piece is hand-picked, you can tell. Walked out with a &rsquo;98 NASCAR AOP for $40. Nowhere else has this stuff.</p>
-        <div class="rev-author">Springfield Local</div>
+        <div class="rev-author">Riley M.</div>
+        <div class="rev-platform">Springfield, MO</div>
       </div>
       <div class="rev-card reveal" style="transition-delay:.21s">
         <div class="rev-q">&ldquo;</div>
         <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="rev-text">Only open Wed&ndash;Sat and I plan my whole weekend around going. New stuff every single time. Downtown Springfield is lucky to have this place.</p>
-        <div class="rev-author">Regular Customer</div>
+        <div class="rev-author">Devon K.</div>
+        <div class="rev-platform">Regular Customer</div>
       </div>
       <div class="rev-card reveal" style="transition-delay:.29s">
         <div class="rev-q">&ldquo;</div>
         <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="rev-text">Amazing vintage finds! Fast pickup, incredible quality. Unique pieces you can&rsquo;t find anywhere else.</p>
+        <p class="rev-text">Found a piece in 15 minutes I&rsquo;d been hunting online for months. The vintage section goes deep. Nothing like this in SGF.</p>
         <div class="rev-author">Marcus T.</div>
+        <div class="rev-platform">Springfield, MO</div>
       </div>
     </div>
   </div>
@@ -857,13 +945,15 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 <!-- EMAIL -->
 <section class="section email-sec">
   <div class="container-sm">
-    <div class="sec-label reveal" style="justify-content:center">Be First In Line</div>
-    <h2 class="sec-title reveal" style="text-align:center;transition-delay:.1s">New <span class="m">Drops</span> Hit<br>Your Inbox <span class="f">First</span></h2>
-    <p class="reveal" style="text-align:center;color:rgba(255,255,255,.45);font-size:14px;transition-delay:.2s">No spam. Just drops. Rare pieces before anyone else hears about them.</p>
+    <div class="sec-label reveal" style="justify-content:center">Never Miss a Drop</div>
+    <h2 class="sec-title reveal" style="text-align:center;transition-delay:.1s">Every <span class="m">Drop</span>,<br>Before It <span class="f">Sells Out</span></h2>
+    <p class="email-proof reveal" style="transition-delay:.2s">Joined by 6,100+ followers who never miss a drop</p>
     <form class="email-form reveal" style="transition-delay:.3s" onsubmit="handleEmail(event)">
-      <input type="email" class="email-in" placeholder="your@email.com" required>
-      <button type="submit" class="email-sub">Notify Me</button>
+      <label for="emailInput" class="email-label">Email address</label>
+      <input type="email" id="emailInput" class="email-in" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="email-sub">Get First Access</button>
     </form>
+    <p style="text-align:center;color:rgba(255,255,255,.22);font-size:12px;margin-top:1rem;font-family:var(--fl);letter-spacing:.1em" class="reveal" style="transition-delay:.4s">No spam. One email per drop. Unsubscribe any time.</p>
     <p class="email-thanks" id="emailThanks">YOU&rsquo;RE ON THE LIST &mdash; STAY FRESH &#10003;</p>
   </div>
 </section>
@@ -913,6 +1003,9 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
         <div class="faq-a">Weekly. Sometimes more. Follow @JAMIESSHOESS on Instagram to be first &mdash; we post every drop there before anything goes anywhere else.</div>
       </div>
     </div>
+    <p class="faq-footer reveal" style="transition-delay:.35s">
+      Still have questions? <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener">DM us on Instagram &rarr;</a>
+    </p>
   </div>
 </section>
 
@@ -941,6 +1034,11 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
   </div>
 </footer>
 
+</main>
+
+<!-- MOBILE STICKY CTA -->
+<a href="https://www.facebook.com/marketplace/profile/100080011887058/" target="_blank" rel="noopener" class="mob-shop-btn" id="mobShopBtn">Shop The Store</a>
+
 <script>
 /* ── PRELOADER ── */
 window.addEventListener('load', () => {
@@ -958,6 +1056,38 @@ function startHeroEntrance() {
   });
 }
 
+/* ── IS OPEN NOW ── */
+(function() {
+  const badge = document.getElementById('openBadge');
+  if (!badge) return;
+  const now = new Date();
+  const day = now.getDay(); // 0=Sun 1=Mon 2=Tue 3=Wed 4=Thu 5=Fri 6=Sat
+  const h = now.getHours() + now.getMinutes() / 60;
+  const openDays = [3, 4, 5, 6];
+  const closeHour = (day === 5 || day === 6) ? 19 : 18;
+  const isOpen = openDays.includes(day) && h >= 12 && h < closeHour;
+  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const nextOpen = isOpen ? null : [3,4,5,6].find(d => d > day) ?? 3;
+  if (isOpen) {
+    badge.className = 'open-badge is-open reveal';
+    badge.innerHTML = '<span class="dot"></span> OPEN NOW &mdash; CLOSES ' + (closeHour === 19 ? '7PM' : '6PM');
+  } else {
+    badge.className = 'open-badge is-closed reveal';
+    const next = nextOpen !== null ? dayNames[nextOpen] : 'Wednesday';
+    badge.innerHTML = '<span class="dot"></span> CLOSED &mdash; NEXT OPEN ' + next.toUpperCase() + ' 12PM';
+  }
+  // Highlight today's row
+  const rows = document.querySelectorAll('#hrsTable tr');
+  const todayIdx = [null, null, null, 2, 3, 4, 5][day];
+  if (todayIdx !== null && rows[todayIdx]) {
+    rows[todayIdx].classList.add('today');
+    rows[todayIdx].style.fontWeight = '600';
+  }
+  // Update announcement bar
+  const annStatus = document.getElementById('annStatus');
+  if (annStatus && isOpen) annStatus.textContent = '● OPEN NOW';
+})();
+
 /* ── CURSOR ── */
 (function() {
   if (window.matchMedia('(pointer: coarse)').matches) return;
@@ -967,46 +1097,33 @@ function startHeroEntrance() {
   let mx = -100, my = -100, dx = -100, dy = -100, rx = -100, ry = -100;
   document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
   (function raf() {
-    dx += (mx - dx) * 0.22;
-    dy += (my - dy) * 0.22;
-    rx += (mx - rx) * 0.09;
-    ry += (my - ry) * 0.09;
-    dot.style.left = dx + 'px';
-    dot.style.top  = dy + 'px';
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
+    dx += (mx - dx) * 0.22; dy += (my - dy) * 0.22;
+    rx += (mx - rx) * 0.09; ry += (my - ry) * 0.09;
+    dot.style.left = dx + 'px'; dot.style.top = dy + 'px';
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
     requestAnimationFrame(raf);
   })();
 })();
 
 /* ── HERO CANVAS ── */
 (function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const canvas = document.getElementById('hero-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
   resize();
   window.addEventListener('resize', resize);
-
   const COLS = [[0,236,241],[243,34,179],[90,225,49],[255,255,255]];
   const MAX_A = [0.5, 0.35, 0.3, 0.07];
   const particles = [];
-
   function mkParticle(rand) {
     const ci = Math.floor(Math.random() * COLS.length);
-    return {
-      x: Math.random() * canvas.width,
-      y: rand ? Math.random() * canvas.height : canvas.height + 5,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: -(Math.random() * 0.6 + 0.18),
-      r: Math.random() * 1.6 + 0.4,
-      ci, life: 0,
-      maxLife: Math.random() * 160 + 90
-    };
+    return { x: Math.random() * canvas.width, y: rand ? Math.random() * canvas.height : canvas.height + 5,
+      vx: (Math.random() - 0.5) * 0.35, vy: -(Math.random() * 0.6 + 0.18),
+      r: Math.random() * 1.6 + 0.4, ci, life: 0, maxLife: Math.random() * 160 + 90 };
   }
-
   for (let i = 0; i < 65; i++) particles.push(mkParticle(true));
-
   (function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     particles.forEach(p => {
@@ -1025,24 +1142,31 @@ function startHeroEntrance() {
 })();
 
 /* ── NAV SCROLL ── */
-const nav = document.getElementById('nav');
+const navEl = document.getElementById('nav');
 window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
+  navEl.classList.toggle('scrolled', window.scrollY > 60);
   const links = document.querySelectorAll('.nav-links a');
   let cur = '';
-  document.querySelectorAll('section[id],div[id]').forEach(s => {
+  document.querySelectorAll('section[id]').forEach(s => {
     if (window.scrollY >= s.offsetTop - 120) cur = s.id;
   });
-  links.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
-  });
+  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
 }, { passive: true });
 
 /* ── MOBILE MENU ── */
 const ham = document.getElementById('navHam');
 const mob = document.getElementById('mobMenu');
-ham.addEventListener('click', () => mob.classList.toggle('open'));
-function closeMob() { mob.classList.remove('open'); }
+const mobClose = document.getElementById('mobClose');
+ham.addEventListener('click', () => {
+  const open = mob.classList.toggle('open');
+  ham.setAttribute('aria-expanded', open);
+});
+mobClose.addEventListener('click', closeMob);
+function closeMob() {
+  mob.classList.remove('open');
+  ham.setAttribute('aria-expanded', 'false');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMob(); });
 
 /* ── INTERSECTION OBSERVER REVEALS ── */
 const revealObs = new IntersectionObserver((entries) => {
@@ -1050,16 +1174,17 @@ const revealObs = new IntersectionObserver((entries) => {
     if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); }
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
 document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => revealObs.observe(el));
 
-/* ── STAT COUNTERS ── */
+/* ── STAT COUNTERS + BARS ── */
 function animateCount(el) {
   const target = parseInt(el.dataset.count);
   if (!target) return;
   const suffix = el.dataset.suffix || '';
   const dur = 2000;
   const start = performance.now();
+  const bar = el.closest('.stat-card')?.querySelector('.stat-bar');
+  if (bar) bar.classList.add('animate');
   function step(now) {
     const p = Math.min((now - start) / dur, 1);
     const ease = 1 - Math.pow(1 - p, 3);
@@ -1069,7 +1194,6 @@ function animateCount(el) {
   }
   requestAnimationFrame(step);
 }
-
 const counterObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting && e.target.dataset.count) {
@@ -1078,8 +1202,19 @@ const counterObs = new IntersectionObserver(entries => {
     }
   });
 }, { threshold: 0.5 });
-
 document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+/* Animate non-counter stat bars */
+const statBarObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const bar = e.target.querySelector('.stat-bar');
+      if (bar) setTimeout(() => bar.classList.add('animate'), 200);
+      statBarObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.stat-card').forEach(el => statBarObs.observe(el));
 
 /* ── FAQ ── */
 function toggleFaq(item) {
@@ -1095,8 +1230,87 @@ function handleEmail(e) {
   document.getElementById('emailThanks').style.display = 'block';
 }
 
+/* ── GALLERY LIGHTBOX ── */
+(function() {
+  document.querySelectorAll('.g-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const img = item.querySelector('img');
+      const label = item.querySelector('.g-label')?.textContent || '';
+      if (!img) return;
+      const lb = document.createElement('div');
+      lb.className = 'lightbox';
+      lb.setAttribute('role', 'dialog');
+      lb.setAttribute('aria-modal', 'true');
+      lb.setAttribute('aria-label', label || 'Store photo');
+      lb.innerHTML = `
+        <div class="lb-backdrop"></div>
+        <div class="lb-content">
+          <img src="${img.src}" alt="${img.alt}" class="lb-img">
+          <div class="lb-label">${label}</div>
+        </div>
+        <button class="lb-close" aria-label="Close photo">&times;</button>
+      `;
+      document.body.appendChild(lb);
+      requestAnimationFrame(() => lb.classList.add('open'));
+      const close = () => {
+        lb.classList.remove('open');
+        lb.addEventListener('transitionend', () => lb.remove(), { once: true });
+      };
+      lb.querySelector('.lb-backdrop').addEventListener('click', close);
+      lb.querySelector('.lb-close').addEventListener('click', close);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); }, { once: true });
+    });
+    item.setAttribute('role', 'button');
+    item.setAttribute('tabindex', '0');
+    item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); item.click(); } });
+  });
+})();
+
+/* ── LOCKUP DRAG SCROLL ── */
+(function() {
+  const el = document.getElementById('lockupsScroll');
+  if (!el) return;
+  let isDown = false, startX, scrollLeft;
+  el.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft; });
+  el.addEventListener('mouseleave', () => isDown = false);
+  el.addEventListener('mouseup', () => isDown = false);
+  el.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX);
+  });
+})();
+
+/* ── MOBILE STICKY CTA ── */
+(function() {
+  const btn = document.getElementById('mobShopBtn');
+  if (!btn) return;
+  const hero = document.querySelector('.hero');
+  window.addEventListener('scroll', () => {
+    const heroBottom = hero ? hero.getBoundingClientRect().bottom : 0;
+    btn.classList.toggle('visible', heroBottom < 0);
+  }, { passive: true });
+})();
+
+/* ── CHARACTER CARD TILT ── */
+(function() {
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  document.querySelectorAll('.char-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateZ(4px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(600px) rotateY(0deg) rotateX(0deg) translateZ(0)';
+    });
+  });
+})();
+
 /* ── STOREFRONT PHOTO PARALLAX ── */
 (function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const sfPhoto = document.querySelector('.sf-photo');
   if (!sfPhoto) return;
   let ticking = false;
