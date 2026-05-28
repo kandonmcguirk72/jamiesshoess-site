@@ -107,10 +107,17 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 .mob-menu a:hover{color:var(--minted)}
 
 /* ── HERO ─────────────────────────────────────────────────── */
-.hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.hero-bg{position:absolute;inset:0;z-index:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.22;filter:grayscale(30%) contrast(1.1)}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,10,9,.85) 0%,rgba(8,10,9,.6) 40%,rgba(8,10,9,.75) 70%,rgba(8,10,9,.97) 100%),linear-gradient(to right,rgba(8,10,9,.9) 0%,transparent 30%,transparent 70%,rgba(8,10,9,.9) 100%);z-index:1}
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--leather)}
+.hero-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(100px);z-index:1}
+.hero-orb-m{width:62%;height:78%;left:-14%;top:-22%;background:radial-gradient(ellipse,rgba(0,236,241,.32) 0%,rgba(0,236,241,.08) 50%,transparent 70%);animation:orb1 9s ease-in-out infinite}
+.hero-orb-f{width:56%;height:68%;right:-12%;bottom:3%;background:radial-gradient(ellipse,rgba(243,34,179,.26) 0%,rgba(243,34,179,.06) 50%,transparent 70%);animation:orb2 11s ease-in-out infinite 1.5s}
+.hero-orb-c{width:32%;height:38%;left:33%;bottom:-8%;background:radial-gradient(ellipse,rgba(90,225,49,.08) 0%,transparent 70%);animation:orb3 7s ease-in-out infinite 3s}
+@keyframes orb1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(5%,6%) scale(1.08)}66%{transform:translate(-4%,3%) scale(.93)}}
+@keyframes orb2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-6%,-5%) scale(1.12)}}
+@keyframes orb3{0%,100%{transform:translate(0,0)}50%{transform:translate(4%,-7%) scale(1.18)}}
+.hero-grid-pat{position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(0,236,241,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,236,241,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero-vignette{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 85% 85% at 50% 50%,transparent 25%,rgba(8,10,9,.65) 100%);pointer-events:none}
+.hero-bg-text{position:absolute;font-family:var(--fd);font-size:clamp(7rem,18vw,17rem);letter-spacing:.06em;color:transparent;-webkit-text-stroke:1px rgba(0,236,241,.055);pointer-events:none;z-index:2;white-space:nowrap;top:50%;left:50%;transform:translate(-50%,-50%);user-select:none;opacity:.7}
 #hero-canvas{position:absolute;inset:0;z-index:2;width:100%;height:100%;pointer-events:none}
 .hero-scanlines{position:absolute;inset:0;z-index:3;background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,rgba(0,0,0,.06) 3px,rgba(0,0,0,.06) 4px);pointer-events:none;opacity:.5}
 .hero-content{position:relative;z-index:4;text-align:center;padding:2rem;width:100%;max-width:860px}
@@ -119,8 +126,8 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 .hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:rgba(0,236,241,.4)}
 .hero-logo-wrap{margin:0 auto 1.5rem;opacity:0;transform:translateY(-30px);transition:opacity .9s var(--ease) .4s,transform .9s var(--ease) .4s}
 .hero-logo-wrap.in{opacity:1;transform:translateY(0)}
-.hero-logo{width:clamp(260px,50vw,520px);height:auto;margin:0 auto;mix-blend-mode:screen;filter:drop-shadow(0 0 50px rgba(0,236,241,.55)) drop-shadow(0 0 120px rgba(0,236,241,.2)) drop-shadow(0 8px 32px rgba(0,0,0,1));animation:logoPulse 4s ease-in-out infinite}
-@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 40px rgba(0,236,241,.5)) drop-shadow(0 0 100px rgba(0,236,241,.18)) drop-shadow(0 8px 32px rgba(0,0,0,1))}50%{filter:drop-shadow(0 0 80px rgba(0,236,241,.85)) drop-shadow(0 0 160px rgba(0,236,241,.35)) drop-shadow(0 8px 32px rgba(0,0,0,1))}}
+.hero-logo{width:clamp(260px,48vw,500px);height:auto;margin:0 auto;mix-blend-mode:screen;filter:drop-shadow(0 0 45px rgba(0,236,241,.65)) drop-shadow(0 0 90px rgba(243,34,179,.28)) drop-shadow(0 8px 32px rgba(0,0,0,1));animation:logoPulse 4.5s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 35px rgba(0,236,241,.55)) drop-shadow(0 0 70px rgba(243,34,179,.2)) drop-shadow(0 8px 32px rgba(0,0,0,1))}50%{filter:drop-shadow(0 0 75px rgba(0,236,241,.9)) drop-shadow(0 0 130px rgba(243,34,179,.45)) drop-shadow(0 8px 32px rgba(0,0,0,1))}}
 .hero-sub{font-family:var(--fl);font-size:clamp(9px,1.5vw,12px);letter-spacing:.3em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-bottom:2rem;opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease) .6s,transform .8s var(--ease) .6s}
 .hero-sub.in{opacity:1;transform:translateY(0)}
 .hero-sub span{color:var(--cash)}
@@ -216,7 +223,7 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 .video-wrap video{width:100%;height:100%;object-fit:cover;max-height:75vh;filter:brightness(.85) contrast(1.05)}
 .video-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(8,10,9,.9) 0%,rgba(8,10,9,.3) 40%,rgba(8,10,9,.1) 70%,rgba(8,10,9,.5) 100%),linear-gradient(to bottom,rgba(8,10,9,.7) 0%,transparent 30%,transparent 70%,rgba(8,10,9,.9) 100%);z-index:1}
 .video-content{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:3rem clamp(1.5rem,5vw,5rem)}
-.video-logo{width:clamp(160px,30vw,320px);mix-blend-mode:screen;filter:drop-shadow(0 0 30px rgba(0,236,241,.5));margin-bottom:1.5rem}
+.video-logo{width:clamp(140px,24vw,280px);mix-blend-mode:screen;filter:drop-shadow(0 0 25px rgba(0,236,241,.45)) drop-shadow(0 0 60px rgba(243,34,179,.2)) drop-shadow(0 6px 20px rgba(0,0,0,.9));margin-bottom:1.5rem}
 .video-headline{font-family:var(--fd);font-size:clamp(2rem,5vw,4.5rem);line-height:.95;letter-spacing:.04em;margin-bottom:1.5rem}
 .video-headline span{color:var(--minted)}
 
@@ -295,6 +302,15 @@ nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.8)}
 .logo-card img{max-width:100%;max-height:160px;object-fit:contain;mix-blend-mode:screen;filter:drop-shadow(0 0 20px rgba(0,0,0,.8));transition:transform .5s var(--ease),filter .3s}
 .logo-card:hover img{transform:scale(1.08);filter:drop-shadow(0 0 30px rgba(0,236,241,.35)) drop-shadow(0 0 20px rgba(0,0,0,.8))}
 .logo-card-label{font-family:var(--fl);font-size:9px;letter-spacing:.3em;color:rgba(255,255,255,.3)}
+
+/* ── STOREFRONT SIGN MOMENT ─────────────────────────────── */
+.sf-moment{position:relative;overflow:hidden}
+.sf-photo{width:100%;height:62vh;min-height:380px;object-fit:cover;object-position:center 25%;filter:brightness(.48) saturate(.55);display:block}
+.sf-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;background:linear-gradient(to bottom,rgba(8,10,9,.5) 0%,rgba(8,10,9,.18) 40%,rgba(8,10,9,.65) 100%)}
+.sf-tag{font-family:var(--fl);font-size:9px;letter-spacing:.4em;color:rgba(255,255,255,.48);margin-bottom:2rem;border:1px solid rgba(255,255,255,.12);padding:6px 20px;background:rgba(8,10,9,.35)}
+.sf-sign{width:clamp(180px,28vw,340px);height:auto;filter:drop-shadow(0 0 55px rgba(90,225,49,.8)) drop-shadow(0 0 110px rgba(90,225,49,.28)) drop-shadow(0 8px 30px rgba(0,0,0,1));margin-bottom:1.5rem;display:block;margin-left:auto;margin-right:auto}
+.sf-cap{font-family:var(--fd);font-size:clamp(1.1rem,2.8vw,2rem);letter-spacing:.07em;color:rgba(255,255,255,.78)}
+.sf-sub{font-family:var(--fl);font-size:9px;letter-spacing:.3em;color:rgba(255,255,255,.3);margin-top:.75rem}
 
 /* ── LOCKUPS ─────────────────────────────────────────────── */
 .lockups-section{background:var(--s3)}
@@ -452,16 +468,18 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <img src="images/storefront-hero.jpg" alt="JAMIESSHOESS storefront" width="1920" height="1080" fetchpriority="high">
-  </div>
-  <div class="hero-overlay"></div>
+  <div class="hero-orb hero-orb-m"></div>
+  <div class="hero-orb hero-orb-f"></div>
+  <div class="hero-orb hero-orb-c"></div>
+  <div class="hero-grid-pat"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-bg-text" aria-hidden="true">JAMIESSHOESS</div>
   <canvas id="hero-canvas"></canvas>
   <div class="hero-scanlines"></div>
   <div class="hero-content">
     <div class="hero-eyebrow" id="heEyebrow">Springfield, MO &nbsp;&middot;&nbsp; Historic Route 66 &nbsp;&middot;&nbsp; Est. Downtown SGF</div>
     <div class="hero-logo-wrap" id="heLogo">
-      <img src="images/logo-graffiti.png" alt="JAMIESSHOESS" class="hero-logo" width="520" height="208" decoding="async">
+      <img src="brand/logos/primary-logo-1.png" alt="JAMIESSHOESS" class="hero-logo" width="500" height="200" decoding="async" fetchpriority="high">
     </div>
     <p class="hero-sub" id="heSub">
       Sneakers &nbsp;&middot;&nbsp; Vintage &nbsp;&middot;&nbsp; <span>Rare Finds</span> &nbsp;&middot;&nbsp; 302 Park Central East
@@ -489,7 +507,6 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
   <div class="cw" style="background:#00ECF1"><span style="color:#080A09">MINTED</span></div>
   <div class="cw" style="background:#5AE131"><span style="color:#080A09">CASH</span></div>
   <div class="cw" style="background:#F322B3"><span style="color:#080A09">FLASH</span></div>
-  <div class="cw" style="background:#080A09"><span style="color:#00ECF1">LEATHER</span></div>
 </div>
 
 <!-- MARQUEE 1 -->
@@ -517,7 +534,6 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 
 <!-- STATEMENT -->
 <section class="section statement">
-  <img src="images/logo-graffiti-transparent.png" alt="" class="statement-bg-logo" aria-hidden="true">
   <div class="statement-inner">
     <div class="sec-label reveal">The Only Shop On Route 66</div>
     <div class="statement-text">
@@ -568,7 +584,7 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
     </video>
     <div class="video-overlay"></div>
     <div class="video-content">
-      <img src="images/logo-graffiti.png" alt="JAMIESSHOESS" class="video-logo" width="320" height="128">
+      <img src="brand/logos/primary-logo-2.png" alt="JAMIESSHOESS" class="video-logo" width="280" height="112" loading="lazy">
       <div class="video-headline">
         This Is<br><span>JAMIESSHOESS</span>
       </div>
@@ -621,7 +637,7 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 <section class="section chars" id="characters">
   <div class="container">
     <div class="sec-label reveal">Brand Universe</div>
-    <h2 class="sec-title reveal" style="transition-delay:.1s">Tyler&rsquo;s <span class="f">Characters</span></h2>
+    <h2 class="sec-title reveal" style="transition-delay:.1s">JS <span class="f">Universe</span></h2>
     <div class="chars-grid">
       <div class="char-card reveal" style="transition-delay:.05s">
         <img src="brand/illustrations/illustration-1.png" alt="Shop VNTG character" class="char-img" loading="lazy">
@@ -683,11 +699,22 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
   </div>
 </section>
 
+<!-- STOREFRONT SIGN MOMENT -->
+<section class="sf-moment">
+  <img src="images/storefront-hero.jpg" alt="JAMIESSHOESS storefront at 302 Park Central East" class="sf-photo" loading="lazy">
+  <div class="sf-overlay">
+    <div class="sf-tag reveal">Our Storefront &middot; 302 Park Central East &middot; Historic Route 66</div>
+    <img src="images/logo-graffiti.png" alt="JAMIESSHOESS store sign" class="sf-sign reveal" style="transition-delay:.2s" loading="lazy">
+    <p class="sf-cap reveal" style="transition-delay:.35s">Look for the graffiti sign in our window</p>
+    <p class="sf-sub reveal" style="transition-delay:.45s">Downtown Springfield, MO &middot; 65806</p>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section class="section about" id="about">
   <div class="about-grid">
     <div class="about-visual reveal-left">
-      <img src="images/storefront-clean.jpg" alt="JAMIESSHOESS storefront" class="about-store-img" loading="lazy">
+      <img src="images/store-interior-dark.webp" alt="JAMIESSHOESS interior" class="about-store-img" loading="lazy">
       <div class="about-visual-overlay"></div>
       <img src="brand/illustrations/illustration-2.png" alt="JMS character" class="about-illus" loading="lazy">
     </div>
@@ -710,11 +737,11 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
   </div>
 </section>
 
-<!-- LOGOS SHOWCASE -->
+<!-- LOGOS -->
 <section class="section logos-section">
   <div class="container">
-    <div class="sec-label reveal">Brand Identity</div>
-    <h2 class="sec-title reveal" style="transition-delay:.1s">The <span class="m">JS</span> <span class="f">Marks</span></h2>
+    <div class="sec-label reveal">Brand Marks</div>
+    <h2 class="sec-title reveal" style="transition-delay:.1s"><span class="m">Official</span> <span class="f">Logos</span></h2>
     <div class="logos-grid">
       <div class="logo-card reveal" style="transition-delay:.05s">
         <img src="brand/logos/primary-logo-1.png" alt="JAMIESSHOESS primary logo" loading="lazy">
@@ -735,8 +762,8 @@ footer{background:var(--s4);border-top:3px solid var(--minted);padding:4rem 2rem
 <!-- LOCKUPS -->
 <section class="section lockups-section">
   <div class="container">
-    <div class="sec-label reveal">Compositions</div>
-    <h2 class="sec-title reveal" style="transition-delay:.1s">Logo <span class="c">Lockups</span></h2>
+    <div class="sec-label reveal">Brand Compositions</div>
+    <h2 class="sec-title reveal" style="transition-delay:.1s">The <span class="m">Identity</span> <span class="f">System</span></h2>
     <div class="lockups-scroll reveal" style="transition-delay:.15s">
       <div class="lockup-item">
         <img src="brand/lockups/composition-1.png" alt="JS lockup 1" loading="lazy">
@@ -1068,22 +1095,26 @@ function handleEmail(e) {
   document.getElementById('emailThanks').style.display = 'block';
 }
 
-/* ── PARALLAX (light, RAF-based) ── */
+/* ── STOREFRONT PHOTO PARALLAX ── */
 (function() {
-  const heroBg = document.querySelector('.hero-bg img');
-  if (!heroBg) return;
+  const sfPhoto = document.querySelector('.sf-photo');
+  if (!sfPhoto) return;
   let ticking = false;
+  const sf = sfPhoto.closest('.sf-moment');
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
-        const y = window.scrollY;
-        heroBg.style.transform = `translateY(${y * 0.28}px) scale(1.15)`;
+        const rect = sf.getBoundingClientRect();
+        if (rect.bottom > 0 && rect.top < window.innerHeight) {
+          const progress = -rect.top / (rect.height + window.innerHeight);
+          sfPhoto.style.transform = `translateY(${progress * 60}px) scale(1.1)`;
+        }
         ticking = false;
       });
       ticking = true;
     }
   }, { passive: true });
-  heroBg.style.transform = 'translateY(0) scale(1.15)';
+  sfPhoto.style.transform = 'translateY(0) scale(1.1)';
 })();
 </script>
 </body>
